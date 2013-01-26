@@ -1,0 +1,83 @@
+# depslib dependency file v1.0
+1357356870 source:c:\users\marian\documents\codeblocks\CharsOccurrences\cunicode.cpp
+	"stdafx.h"
+	"cunicode.h"
+	"stdafx.h"
+	"cunicode.h"
+
+1252655454 c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.h
+	<windows.h>
+	<stdlib.h>
+	<shellapi.h>
+	<malloc.h>
+	<richedit.h>
+	<commdlg.h>
+	<math.h>
+
+1252654776 c:\users\marian\documents\codeblocks\CharsOccurrences\cunicode.h
+
+1252656078 source:c:\users\marian\documents\codeblocks\CharsOccurrences\CharsOccurrences.cpp
+	"stdafx.h"
+	"CharsOccurrences.h"
+	"cunicode.h"
+	"stdafx.h"
+	"listplug.h"
+	"cunicode.h"
+
+1088620512 c:\users\marian\documents\codeblocks\CharsOccurrences\CharsOccurrences.h
+
+1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
+	"stdafx.h"
+
+1359183216 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+	<winver.h>
+
+1359128902 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+	"Helpers.h"
+
+1359134454 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
+	<windows.h>
+	<map>
+	"version.h"
+	<windows.h>
+	<cstdio>
+	<malloc.h>
+	<richedit.h>
+	<commdlg.h>
+	<cmath>
+
+1359183160 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+
+1358549177 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
+	"Main.h"
+
+1358263414 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
+	<windows.h>
+
+1359384864 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+	"ListLoad.h"
+	"Helpers.h"
+	"Exports.h"
+	"version.h"
+
+1359174779 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
+	<map>
+	"version.h"
+	<windows.h>
+	<cstdio>
+	<malloc.h>
+	<richedit.h>
+	<commdlg.h>
+	<cmath>
+
+1359037625 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
+	<windows.h>
+
+1359112848 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+	"ListLoadNext.h"
+	"Helpers.h"
+	"Exports.h"
+
+1359089246 c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.h
+	<windows.h>
+

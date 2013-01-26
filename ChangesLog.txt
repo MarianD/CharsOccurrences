@@ -1,0 +1,19 @@
+26 January 2013
+   released version 1.0.2 of CharsOccurrences
+
+     Change log:
+        -Added: Released also 64-bit version
+
+25 January 2013
+   released version 1.0.1 of CharsOccurrences
+
+     Change log:
+        -Added: The row of total occurrences
+        -Fixed: Eliminated flickering when switching through files
+
+20 January 2013
+   released version 1.0.0 of CharsOccurrences
+
+     Change log:
+        -Added: Initial release
+
