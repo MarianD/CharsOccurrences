@@ -2,19 +2,31 @@
 //
 
 #include "ListLoadNext.h"
+#include "CreateRichEditWindow.h"
 #include "Helpers.h"
 #include "Exports.h"
 
 int CHAROCCURRENCESCALL
 ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 {
-    char vysledok[10000] = "";
-    spracovanieVstupnehoSuboru(vysledok, FileToLoad);
+	HWND                hwndTabCtrl  = ListWin;
+	HWND                hwndRichEdit = 0;
+	RECT                rect;
 
-    strcat(vysledok, "\n\n *** Volala sa funkcia ListLoadNext() ***");      // TODO: Len pre ladenie - vyhodiù potom
+    // ZÌskanie manipul·tora dcÈrskeho okna
+    hwndRichEdit = GetWindow(hwndTabCtrl, GW_CHILD);
 
-// TODO: Toto zmeniù - prispÙsobiù pre Tab Control
-    SetWindowText(ListWin, vysledok);
-    PostMessage(ParentWin, WM_COMMAND, MAKELONG(0, itm_percent), (LPARAM) ListWin);
-    return LISTPLUGIN_OK;
+	if (hwndRichEdit)
+    {
+        char vysledok[10000] = "";
+        spracovanieVstupnehoSuboru(vysledok, FileToLoad);
+
+        strcat(vysledok, "\n\n *** Volala sa funkcia ListLoadNext() ***");      // TODO: Len pre ladenie - vyhodiù potom
+
+        SetWindowText(hwndRichEdit, vysledok);
+        ShowWindow(hwndRichEdit, SW_SHOW);
+        return LISTPLUGIN_OK;
+    }
+    else
+        return LISTPLUGIN_ERROR;
 }

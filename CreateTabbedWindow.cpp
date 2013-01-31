@@ -15,8 +15,6 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
 	HWND            hwndTabCtrl;
     HINSTANCE       hinst;
 
-    GetClientRect(ParentWindow, pRect);
-
     hwndTabCtrl = CreateWindowEx(0, WC_TABCONTROL, "", WS_CHILD | WS_VISIBLE,
                                 pRect->left, pRect->top,
                                 pRect->right  - pRect->left,

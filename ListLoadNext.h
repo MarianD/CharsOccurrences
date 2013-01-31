@@ -6,8 +6,8 @@
     #define LISTPLUGIN_OK	    0
     #define LISTPLUGIN_ERROR    1
 
-    #define itm_percent	        0xFFFE
-
     #include <windows.h>
+    #include <commctrl.h>
+    #include <richedit.h>
 
 #endif // LISTLOADNEXT_H

@@ -6,7 +6,7 @@
     #include <windows.h>
     #include <commctrl.h>
 
-    HWND CreateTabbedWindow(HWND ParrentWindow, RECT * rect);
+    HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect);
 
 #endif // ndef
 
