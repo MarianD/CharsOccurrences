@@ -54,30 +54,34 @@
 1358263414 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1359384864 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1359620018 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
+	"CreateTabbedWindow.h"
 	"Helpers.h"
 	"Exports.h"
 	"version.h"
 
-1359174779 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
-	<map>
-	"version.h"
+1359620054 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
 	<windows.h>
-	<cstdio>
-	<malloc.h>
+	<commctrl.h>
+	"version.h"
 	<richedit.h>
-	<commdlg.h>
-	<cmath>
 
 1359037625 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1359112848 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1359554415 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"Helpers.h"
 	"Exports.h"
 
 1359089246 c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.h
 	<windows.h>
+
+1359619703 c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.h
+	<windows.h>
+	<commctrl.h>
+
+1359627028 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
+	"CreateTabbedWindow.h"
 

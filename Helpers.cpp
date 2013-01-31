@@ -67,7 +67,7 @@ void zobrazCiaru(char *spolu, char znak, int pocetMiest)
     {
         sprintf(spolu + strlen(spolu), "%c", znak);
     }
-    sprintf(spolu + strlen(spolu), "\r\n");
+    sprintf(spolu + strlen(spolu), "\n");
 }
 
 
@@ -81,7 +81,7 @@ void tlacHlavicky(char *spolu, int pocetMiest)
         sprintf(spolu + strlen(spolu), "%*s%c", pocetMiest - 1, "", 'A' + i);
     }
 
-    sprintf(spolu + strlen(spolu), "\r\n");
+    sprintf(spolu + strlen(spolu), "\n");
     zobrazCiaru(spolu + strlen(spolu), '-', pocetMiest);
 }
 
@@ -100,7 +100,7 @@ void tlacVyskytuPismen(char *spolu, int pole[], int pocetMiest)
             sprintf(spolu + strlen(spolu), "%*s", pocetMiest, "-");
     }
 
-    sprintf(spolu + strlen(spolu), "\r\n");
+    sprintf(spolu + strlen(spolu), "\n");
 }
 
 
@@ -118,7 +118,7 @@ void tlacVyskytuPismenZoradeny(char *spolu, zostupAsociativPole *parVyskytPismen
     {
         sprintf(spolu + strlen(spolu), "%*s%c", pocetMiest - 1, "", pos->second);
     }
-    sprintf(spolu + strlen(spolu), "\r\n");
+    sprintf(spolu + strlen(spolu), "\n");
 
     zobrazCiaru(spolu + strlen(spolu), '-', pocetMiest);
 
@@ -136,10 +136,10 @@ void tlacVyskytuPismenZoradeny(char *spolu, zostupAsociativPole *parVyskytPismen
         else
             sprintf(spolu + strlen(spolu), "%*s", pocetMiest, "-");
     }
-    sprintf(spolu + strlen(spolu), "\r\n");
+    sprintf(spolu + strlen(spolu), "\n");
 
     zobrazCiaru(spolu, '-', pocetMiest);
-    sprintf(spolu + strlen(spolu), "\r\n");
+    sprintf(spolu + strlen(spolu), "\n");
 }
 
 
@@ -159,7 +159,7 @@ void tlacVyskytuPismenPodSebou(char *spolu, int vyskytyPismen[], zostupAsociativ
 {
     int sucetVyskytov = spoluVyskytov(vyskytyPismen);
 
-    sprintf(spolu + strlen(spolu), "\r\n");
+    sprintf(spolu + strlen(spolu), "\n");
 
     multimap <int, char>::iterator pos = parVyskytPismeno->begin();
     for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
@@ -192,7 +192,7 @@ void tlacVyskytuPismenPodSebou(char *spolu, int vyskytyPismen[], zostupAsociativ
         else
             sprintf(spolu + strlen(spolu), "%*s", pocetMiest, "-");
 
-        sprintf(spolu + strlen(spolu), "  (%5.2f %% )\r\n", percent);
+        sprintf(spolu + strlen(spolu), "  (%5.2f %% )\n", percent);
 
         ++pos;
     }
@@ -209,9 +209,9 @@ void tlacSuctovehoRiadka(char * spolu, int sucetVyskytov, int pocetMiest)
 
     *(ciara + pocet) = '\0';
 
-    sprintf(spolu + strlen(spolu), "%s\r\n", ciara);
+    sprintf(spolu + strlen(spolu), "%s\n", ciara);
     sprintf(spolu + strlen(spolu),
-            "%*d (100.00 %% )%*d (100.00 %% )\r\n",
+            "%*d (100.00 %% )%*d (100.00 %% )\n",
             strlen("A: ") + pocetMiest, sucetVyskytov,
             STLP_MEDZERA + strlen("A: ") + pocetMiest, sucetVyskytov);
 }
@@ -227,13 +227,13 @@ void spracovanieVstupnehoSuboru(char * spolu, const char * FileToLoad)
     if ((vstup = fopen(FileToLoad, "rb")) == 0)
     {
         sprintf (spolu + strlen(spolu), "Opening of the file \"%s\" failed "
-                "(probably it doesn\'t exist), program exits.\r\n\r\n", FileToLoad);
+                "(probably it doesn\'t exist), program exits.\n\n", FileToLoad);
 
         return;
     }
 
-    sprintf(spolu, "\r\nOccurrences of individual ASCII letters, case insensitive, "
-       "version %ld.%ld.%ld %s\r\n\r\n",
+    sprintf(spolu, "\nOccurrences of individual ASCII letters, case insensitive, "
+       "version %ld.%ld.%ld %s\n\n",
        AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     nulujPole(vyskytyPismen, POCET_VELKYCH_PISMEN);

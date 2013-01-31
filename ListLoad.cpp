@@ -2,6 +2,7 @@
 //
 
 #include "ListLoad.h"
+#include "CreateTabbedWindow.h"
 #include "Helpers.h"
 #include "Exports.h"
 #include "version.h"
@@ -9,6 +10,7 @@
 HWND CHAROCCURRENCESCALL
 ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
 {
+	HWND                hwndTabCtrl;
 	HWND                hwnd;
 	RECT                rect;
     HINSTANCE           hinst;
@@ -25,19 +27,16 @@ ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
     pcharFormat->yHeight    = 240L;
     strcpy(pcharFormat->szFaceName, "Courier New");
 
-	// Create window invisbile, only show when data fully loaded!
-	// TODO: Urobiù, aby kurzor bol neviditeæn˝, ale aby sa dal oznaËen˝ text skopÌrovaù do schr·nky
-	GetClientRect(ParentWin, &rect);
 
-	hwnd = CreateWindow("RichEdit20A", "", WS_CHILD | ES_MULTILINE | ES_READONLY |
-                        WS_HSCROLL | WS_VSCROLL | ES_NOHIDESEL,
-                        rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top,
-                        ParentWin, NULL, hinst, NULL);
-	if (!hwnd)
-		hwnd = CreateWindow("RichEdit", "", WS_CHILD | ES_MULTILINE | ES_READONLY |
-                            WS_HSCROLL | WS_VSCROLL | ES_NOHIDESEL,
-                            rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top,
-                            ParentWin, NULL, hinst, NULL);
+    // Vytvorenie okna typu Tab Control a naplnenie rect hodnotami jeho Diasplay Area
+    hwndTabCtrl = CreateTabbedWindow(ParentWin, &rect);
+
+    // Vytvorenie RichEdit v zobrazovacej Ëast Tab Control
+    hwnd = CreateWindow("RichEdit20A", "", WS_CHILD | ES_MULTILINE | ES_READONLY |
+                    WS_HSCROLL | WS_VSCROLL | ES_NOHIDESEL,
+                    rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top,
+                    hwndTabCtrl, NULL, hinst, NULL);
+
 
 	if (hwnd)
     {
@@ -50,6 +49,8 @@ ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
         char vysledok[10000] = "";
         spracovanieVstupnehoSuboru(vysledok, FileToLoad);
 
+        strcat(vysledok, "\n\n *** Volala sa funkcia ListLoad() ***");      // TODO: Len pre ladenie - vyhodiù potom
+
         SetWindowText(hwnd, vysledok);
         PostMessage(ParentWin, WM_COMMAND, MAKELONG(0, itm_percent), (LPARAM) hwnd);
     }
@@ -57,6 +58,6 @@ ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
 	if (hwnd)
 		ShowWindow(hwnd,SW_SHOW);
 
-	return hwnd;
+	return hwnd;     // TODO: Vr·tiù manipul·tor spr·vneho okna, lebo ho pouûije ListLoadNext()
 }
 

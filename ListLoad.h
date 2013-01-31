@@ -15,19 +15,10 @@
     #define itm_fit		    0xFFFB
     #define itm_next	    0xFFFA
 
-    #include <map>
+    #include <windows.h>
+    #include <commctrl.h>
     #include "version.h"
 
-    using namespace std;
-
-    typedef multimap <int, char, greater<int> > zostupAsociativPole;
-
-
-    #include <windows.h>
-    #include <cstdio>
-    #include <malloc.h>
     #include <richedit.h>
-    #include <commdlg.h>
-    #include <cmath>
 
 #endif // ndef
