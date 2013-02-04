@@ -34,9 +34,9 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
         char vysledok[MAX_ZNAKOV] = "";      // TODO: Možno treba dlhšie pole
         spracovanieVstupnehoSuboru(vysledok, FileToLoad);
 
-        sprintf(vysledok + strlen(vysledok), "\n\n *** Volala sa funkcia ListLoad() ***");      // TODO: Len pre ladenie - vyhodi potom
-        sprintf(vysledok + strlen(vysledok), "\n\nhwndTabCtrl  = %d", hwndTabCtrl ->unused);
-        sprintf(vysledok + strlen(vysledok), "\n\nhwndRichEdit = %d", hwndRichEdit->unused);
+        wsprintf(vysledok + lstrlen(vysledok), "\n\n *** Volala sa funkcia ListLoad() ***");      // TODO: Len pre ladenie - vyhodi potom
+        wsprintf(vysledok + lstrlen(vysledok), "\n\nhwndTabCtrl  = %d", hwndTabCtrl ->unused);
+        wsprintf(vysledok + lstrlen(vysledok), "\n\nhwndRichEdit = %d", hwndRichEdit->unused);
 
         SetWindowText(hwndRichEdit, vysledok);
         SetProp(hwndTabCtrl, "Usko 0", vysledok);

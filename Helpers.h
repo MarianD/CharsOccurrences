@@ -20,28 +20,29 @@
     #define itm_percent	        0xFFFE
 
     #include <windows.h>
+    #include <tchar.h>
     #include <map>
     #include "version.h"
 
     using namespace std;
 
-    typedef multimap <int, char, greater<int> > zostupAsociativPole;
+    typedef multimap <int, TCHAR, greater<int> > zostupAsociativPole;
 
     /********************  Prototypy funkcií  ***********************/
 
     void  nulujPole(int pole[], int pocetPrvkov);
-    bool  jeVelkePismeno(char znak);
-    bool  jeMalePismeno(char znak);
-    char  zmenMaleNaVelke(char pismeno);
-    void  zobrazCiaru(char *spolu, char znak, int pocetMiest);
-    void  tlacHlavicky(char *spolu, int pocetMiest);
-    void  tlacVyskytuPismen(char *spolu, int vyskytyPismen[], int pocetMiest);
-    void  tlacVyskytuPismenZoradeny(char *spolu, zostupAsociativPole *parVyskytPismeno, int pocetMiest);
+    bool  jeVelkePismeno(TCHAR znak);
+    bool  jeMalePismeno(TCHAR znak);
+    TCHAR  zmenMaleNaVelke(TCHAR pismeno);
+    void  zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest);
+    void  tlacHlavicky(TCHAR *spolu, int pocetMiest);
+    void  tlacVyskytuPismen(TCHAR *spolu, int vyskytyPismen[], int pocetMiest);
+    void  tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPismeno, int pocetMiest);
     int   spoluVyskytov(int vyskytyPismen[]);
-    void  tlacVyskytuPismenPodSebou(char *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno, int pocetMiest);
+    void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno, int pocetMiest);
     int   naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int vyskytyPismen[]);
-    void tlacSuctovehoRiadka(char * spolu, int sucetVyskytov, int pocetMiest);
-    void  spracovanieVstupnehoSuboru(char * spolu, const char * FileToLoad);
+    void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
+    void  spracovanieVstupnehoSuboru(TCHAR * spolu, const TCHAR * FileToLoad);
 
     #include <windows.h>
     #include <cstdio>

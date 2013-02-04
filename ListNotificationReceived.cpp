@@ -14,8 +14,8 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
 	HWND    hwndTabCtrl           = ListWin;
 	HWND    hwndRichEdit          = 0;
 	RECT    rect, *pRect          = &rect;
-	char    propName      []      = "Usko X";
-	char    propValue[MAX_ZNAKOV] = "*** No value ***";
+	TCHAR   propName      []      = "Usko X";
+	TCHAR   propValue[MAX_ZNAKOV] = "*** No value ***";
 
     // Získanie manipulátora dcérskeho okna
     hwndRichEdit = GetWindow(hwndTabCtrl, GW_CHILD);
@@ -33,7 +33,7 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
         case TCN_SELCHANGE:
             usko = TabCtrl_GetCurSel(ListWin);
             propName[5] = '0' + usko;
-            strcpy(propValue, (char *) GetProp(hwndTabCtrl, propName));
+            strcpy(propValue, (TCHAR *) GetProp(hwndTabCtrl, propName));
             SetWindowText(hwndRichEdit, propValue);
             break;
         case EN_REQUESTRESIZE:
