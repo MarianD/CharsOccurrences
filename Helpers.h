@@ -33,7 +33,7 @@
     void  nulujPole(int pole[], int pocetPrvkov);
     bool  jeVelkePismeno(TCHAR znak);
     bool  jeMalePismeno(TCHAR znak);
-    TCHAR  zmenMaleNaVelke(TCHAR pismeno);
+    TCHAR zmenMaleNaVelke(TCHAR pismeno);
     void  zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest);
     void  tlacHlavicky(TCHAR *spolu, int pocetMiest);
     void  tlacVyskytuPismen(TCHAR *spolu, int vyskytyPismen[], int pocetMiest);
@@ -41,8 +41,8 @@
     int   spoluVyskytov(int vyskytyPismen[]);
     void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno, int pocetMiest);
     int   naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int vyskytyPismen[]);
-    void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
-    void  spracovanieVstupnehoSuboru(TCHAR * spolu, const TCHAR * FileToLoad);
+    void  tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
+    void  spracovanieVstupnehoSuboru(TCHAR * spolu, const char * FileToLoad);
 
     #include <windows.h>
     #include <cstdio>

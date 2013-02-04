@@ -32,11 +32,11 @@
 1359183216 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	<winver.h>
 
-1359994741 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1360006080 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 
-1359994330 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
+1360006080 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
 	<windows.h>
 	<tchar.h>
 	<map>
@@ -48,7 +48,7 @@
 	<commdlg.h>
 	<cmath>
 
-1359183160 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1360006708 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1358549177 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
@@ -56,7 +56,7 @@
 1358263414 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1359943542 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1360015109 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"Helpers.h"
@@ -69,10 +69,10 @@
 	"CreateTabbedWindow.h"
 	"CreateRichEditWindow.h"
 
-1359714629 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
+1360015082 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1359940956 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1360015161 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -89,18 +89,19 @@
 	<windows.h>
 	<commctrl.h>
 
-1359713927 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
+1359998566 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
 	"CreateTabbedWindow.h"
 
-1359743338 source:c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.cpp
+1359999723 source:c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.cpp
 	"CreateRichEditWindow.h"
 
-1359640957 c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.h
+1359998469 c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.h
 	<windows.h>
+	<tchar.h>
 	<commctrl.h>
 	<richedit.h>
 
-1359943342 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
+1360015161 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
 	"ListNotificationReceived.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -112,5 +113,5 @@
 	<commctrl.h>
 	<richedit.h>
 
-1359940811 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+1360006498 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
 

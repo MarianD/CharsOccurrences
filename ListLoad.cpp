@@ -8,15 +8,15 @@
 #include "version.h"
 #include "Constants.h"
 
-HWND CHAROCCURRENCESCALL
+HWND CHARSOCCURRENCESCALL
 ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 {
-	HWND            hwndTabCtrl  = 0;
-	HWND            hwndRichEdit = 0;
-	RECT            rect;
-	TCHAR           info[500];
+	HWND      hwndTabCtrl  = 0;
+	HWND      hwndRichEdit = 0;
+	RECT      rect;
+	TCHAR     info[500];
 
-    wsprintf(info, INFO,
+    _stprintf(info, INFO,
             AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // Vytvorenie okna typu Tab Control a naplnenie rect hodnotami jeho Diasplay Area
@@ -31,19 +31,21 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 
 	if (hwndRichEdit)
     {
-        char vysledok[MAX_ZNAKOV] = "";      // TODO: Moûno treba dlhöie pole
+//        ListLoadNext(ParentWindow, hwndTabCtrl, FileToLoad, ShowFlags);
+        TCHAR vysledok[MAX_ZNAKOV] = TEXT("");
         spracovanieVstupnehoSuboru(vysledok, FileToLoad);
 
-        wsprintf(vysledok + lstrlen(vysledok), "\n\n *** Volala sa funkcia ListLoad() ***");      // TODO: Len pre ladenie - vyhodiù potom
-        wsprintf(vysledok + lstrlen(vysledok), "\n\nhwndTabCtrl  = %d", hwndTabCtrl ->unused);
-        wsprintf(vysledok + lstrlen(vysledok), "\n\nhwndRichEdit = %d", hwndRichEdit->unused);
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %d"), hwndTabCtrl ->unused);
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndRichEdit = %d"), hwndRichEdit->unused);
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nsizeof(TCHAR) = %d"), sizeof(TCHAR));
 
         SetWindowText(hwndRichEdit, vysledok);
-        SetProp(hwndTabCtrl, "Usko 0", vysledok);
-        SetProp(hwndTabCtrl, "Usko 1", info);
+        SetProp(hwndTabCtrl, TEXT("Usko 0"), (HANDLE) vysledok);
+        SetProp(hwndTabCtrl, TEXT("Usko 1"), (HANDLE) info);
         ShowWindow(hwndRichEdit, SW_SHOW);
     }
 
-	return hwndTabCtrl;     // TODO: Vr·tiù manipul·tor spr·vneho okna, lebo ho pouûije ListLoadNext()
+	return hwndTabCtrl;             //Pouûije ho ListLoadNext()
 }
 

@@ -18,9 +18,9 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
     pcharFormat->dwMask     = CFM_BOLD | CFM_FACE | CFM_SIZE;
     pcharFormat->dwEffects  = CFE_BOLD;
     pcharFormat->yHeight    = 240L;
-    strcpy(pcharFormat->szFaceName, "Courier New");
+    _tcscpy(pcharFormat->szFaceName, TEXT("Courier New"));
 
-    hwndRichEdit = CreateWindowEx(0, RICHEDIT_CLASS, "",
+    hwndRichEdit = CreateWindowEx(0, RICHEDIT_CLASS, TEXT(""),
                                   WS_CHILD   | ES_MULTILINE | ES_READONLY  |
                                   WS_HSCROLL | WS_VSCROLL   | ES_NOHIDESEL | WS_VISIBLE,
                                     pRect->left, pRect->top,

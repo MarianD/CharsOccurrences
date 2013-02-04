@@ -1,23 +1,23 @@
 /* Contents of file CharsOccurrences.h */
 
-#ifndef CHAROCCURRENCES_H
-    #define CHAROCCURRENCES_H
+#ifndef CHARSOCCURRENCES_H
+    #define CHARSOCCURRENCES_H
 
     #include <windows.h>
 
     #ifdef _WIN32
-        /* You should define FOURCC_EXPORTS *only* when building the DLL */
-        #ifdef CHAROCCURRENCES_EXPORTS
-            #define CHAROCCURRENCESAPI __declspec(dllexport)
+        /* You should define CHARSOCCURRENCES_EXPORTS *only* when building the DLL */
+        #ifdef CHARSOCCURRENCES_EXPORTS
+            #define CHARSOCCURRENCESAPI __declspec(dllexport)
         #else
-            #define CHAROCCURRENCESAPI __declspec(dllimport)
+            #define CHARSOCCURRENCESAPI __declspec(dllimport)
         #endif
         /* Define calling convention in one place, for convenience */
-        #define CHAROCCURRENCESCALL __cdecl
+        #define CHARSOCCURRENCESCALL __cdecl
     #else /* _WIN32 not defined */
         /* Define with no value on non-Windows OSes. */
-        #define CHAROCCURRENCESAPI
-        #define CHAROCCURRENCESCALL
+        #define CHARSOCCURRENCESAPI
+        #define CHARSOCCURRENCESCALL
     #endif
 
     #ifdef __cplusplus
@@ -27,9 +27,9 @@
 
     /* Declare import/export functions using the above definitions here: */
 
-    CHAROCCURRENCESAPI HWND CHAROCCURRENCESAPI ListLoad    (HWND ParentWin,               char* FileToLoad, int ShowFlags);
-    CHAROCCURRENCESAPI  int CHAROCCURRENCESAPI ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags);
-    CHAROCCURRENCESAPI  int ListNotificationReceived       (HWND ListWin,   int  Message, WPARAM wParam,    LPARAM lParam);
+    CHARSOCCURRENCESAPI HWND CHARSOCCURRENCESAPI ListLoad    (HWND ParentWin,               char* FileToLoad, int ShowFlags);
+    CHARSOCCURRENCESAPI  int CHARSOCCURRENCESAPI ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags);
+    CHARSOCCURRENCESAPI  int ListNotificationReceived       (HWND ListWin,   int  Message, WPARAM wParam,    LPARAM lParam);
     #ifdef __cplusplus
         }
     #endif

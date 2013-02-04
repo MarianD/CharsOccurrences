@@ -16,6 +16,7 @@
     #define itm_next	    0xFFFA
 
     #include <windows.h>
+    #include <tchar.h>
     #include <commctrl.h>
     #include <richedit.h>
 

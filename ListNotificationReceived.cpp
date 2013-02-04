@@ -7,15 +7,15 @@
 #include "Exports.h"
 #include "Constants.h"
 
-int CHAROCCURRENCESCALL
+int CHARSOCCURRENCESCALL
 ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam)
 {
     int     usko;
 	HWND    hwndTabCtrl           = ListWin;
 	HWND    hwndRichEdit          = 0;
 	RECT    rect, *pRect          = &rect;
-	TCHAR   propName      []      = "Usko X";
-	TCHAR   propValue[MAX_ZNAKOV] = "*** No value ***";
+	TCHAR   propName      []      = TEXT("Usko X");
+	TCHAR   propValue[MAX_ZNAKOV] = TEXT("*** No value ***");
 
     // ZÌskanie manipul·tora dcÈrskeho okna
     hwndRichEdit = GetWindow(hwndTabCtrl, GW_CHILD);
@@ -25,15 +25,15 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
         switch ( ((NMHDR *) lParam) -> code)
         {
         case TCN_SELCHANGING:
-            usko = TabCtrl_GetCurSel(ListWin);
-            propName[5] = '0' + usko;
-            GetWindowText(hwndRichEdit, propValue, MAX_ZNAKOV - 1);
+//            usko = TabCtrl_GetCurSel(ListWin);
+//            propName[5] = (TCHAR) (TEXT('0') + usko);
+//            GetWindowText(hwndRichEdit, propValue, MAX_ZNAKOV - 1);
 //            SetProp(hwndTabCtrl, propName, (HANDLE) propValue);
             break;
         case TCN_SELCHANGE:
             usko = TabCtrl_GetCurSel(ListWin);
-            propName[5] = '0' + usko;
-            strcpy(propValue, (TCHAR *) GetProp(hwndTabCtrl, propName));
+            propName[5] = (TCHAR) (TEXT('0') + usko);
+            _tcscpy(propValue, (TCHAR *) GetProp(hwndTabCtrl, propName));
             SetWindowText(hwndRichEdit, propValue);
             break;
         case EN_REQUESTRESIZE:
@@ -48,5 +48,5 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
         }
     }
 
-    return 0;       // TODO: Daù vyûadovan˙ hodnotu
+    return 0;       // Pre spr·vu WM_NOTIFY je n·vratov· hodnota ignorovan·
 }

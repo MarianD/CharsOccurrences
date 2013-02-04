@@ -13,7 +13,7 @@ void nulujPole(int pole[], int pocetPrvkov)
 }
 
 
-bool jeVelkePismeno(TCHAR znak)
+bool jeVelkePismeno(int znak)
 {
     if (znak >= 'A' && znak <= 'Z')
         return true;
@@ -53,7 +53,7 @@ int naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int pole[])
     for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
     {
         int pocet = pole[i];
-        parVyskytPismeno->insert(make_pair(pocet, TEXT('A' + i)));
+        parVyskytPismeno->insert(make_pair(pocet, TEXT('A') + i));
         if (pocet > maximum)
             maximum = pocet;
     }
@@ -89,19 +89,19 @@ void tlacHlavicky(TCHAR *spolu, int pocetMiest)
 
 void tlacVyskytuPismen(TCHAR *spolu, int pole[], int pocetMiest)
 {
-    _stprintf(spolu + lstrlen(spolu), "%*s", PRAZD_MIEST, "");
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));
 
     for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
     {
         int pocet = pole[i];
 
         if (pocet != 0)
-            _stprintf(spolu + lstrlen(spolu), "%*d", pocetMiest, pocet);
+            _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
         else
-            _stprintf(spolu + lstrlen(spolu), "%*s", pocetMiest, "-");
+            _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), pocetMiest, TEXT("-"));
     }
 
-    _stprintf(spolu + lstrlen(spolu), "\n");
+    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 }
 
 
@@ -113,34 +113,34 @@ void tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPisme
      * Tlaè hlavièky s písmenami usporiadanými
      * d¾a ich výskytu zostupne
     */
-    _stprintf(spolu + lstrlen(spolu), "%*s", PRAZD_MIEST, ""); // Vo¾né miesto - v tomto ståpci boli kedysi èísla jednotlivých riadkov
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT("")); // Vo¾né miesto - v tomto ståpci boli kedysi èísla jednotlivých riadkov
 
     for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); pos++)
     {
-        _stprintf(spolu + lstrlen(spolu), "%*s%c", pocetMiest - 1, "", pos->second);
+        _stprintf(spolu + lstrlen(spolu), TEXT("%*s%c"), pocetMiest - 1, TEXT(""), pos->second);
     }
-    _stprintf(spolu + lstrlen(spolu), "\n");
+    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 
-    zobrazCiaru(spolu + lstrlen(spolu), '-', pocetMiest);
+    zobrazCiaru(spolu + lstrlen(spolu), TEXT('-'), pocetMiest);
 
     /*
      * Tlaè výskytu jednotlivých písmen
     */
-    _stprintf(spolu + lstrlen(spolu), "%*s", PRAZD_MIEST, "");     // Vo¾né miesto - v tomto ståpci sú vyššie èísla riadkov
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Vo¾né miesto - v tomto ståpci sú vyššie èísla riadkov
 
     for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); pos++)
     {
         int pocet  = pos->first ;
 
         if (pocet != 0)
-            _stprintf(spolu + lstrlen(spolu), "%*d", pocetMiest, pocet);
+            _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
         else
-            _stprintf(spolu + lstrlen(spolu), "%*s", pocetMiest, "-");
+            _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), pocetMiest, TEXT("-"));
     }
-    _stprintf(spolu + lstrlen(spolu), "\n");
+    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 
-    zobrazCiaru(spolu, '-', pocetMiest);
-    _stprintf(spolu + lstrlen(spolu), "\n");
+    zobrazCiaru(spolu, TEXT('-'), pocetMiest);
+    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 }
 
 
@@ -160,7 +160,7 @@ void tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociati
 {
     int sucetVyskytov = spoluVyskytov(vyskytyPismen);
 
-    _stprintf(spolu + lstrlen(spolu), "\n");
+    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 
     multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin();
     for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
@@ -171,29 +171,29 @@ void tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociati
         int    pocet   = vyskytyPismen[i];
         double percent = (sucetVyskytov != 0) ? pocet * 100. / sucetVyskytov : 0;
 
-        _stprintf(spolu + lstrlen(spolu), "%c: ", 'A' + i);
+        _stprintf(spolu + lstrlen(spolu), TEXT("%c: "), TEXT('A') + i);
 
         if (pocet != 0)
-            _stprintf(spolu + lstrlen(spolu), "%*d", pocetMiest, pocet);
+            _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
         else
-            _stprintf(spolu + lstrlen(spolu), "%*s", pocetMiest, "-");
+            _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), pocetMiest, TEXT("-"));
 
-        _stprintf(spolu + lstrlen(spolu), "  (%5.2f %% )", percent);
+        _stprintf(spolu + lstrlen(spolu), TEXT("  (%5.2f %% )"), percent);
 
         /*
          *  Teraz ich vytlaèíme pod¾a výskytov
          */
-        _stprintf(spolu + lstrlen(spolu), "%*c: ", STLP_MEDZERA + 1, pos->second);
+        _stprintf(spolu + lstrlen(spolu), TEXT("%*c: "), STLP_MEDZERA + 1, pos->second);
 
         pocet   = pos->first ;
         percent = (sucetVyskytov != 0) ? pocet * 100. / sucetVyskytov : 0;
 
         if (pocet != 0)
-            _stprintf(spolu + lstrlen(spolu), "%*d", pocetMiest, pocet);
+            _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
         else
-            _stprintf(spolu + lstrlen(spolu), "%*s", pocetMiest, "-");
+            _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), pocetMiest, TEXT("-"));
 
-        _stprintf(spolu + lstrlen(spolu), "  (%5.2f %% )\n", percent);
+        _stprintf(spolu + lstrlen(spolu), TEXT("  (%5.2f %% )\n"), percent);
 
         ++pos;
     }
@@ -202,24 +202,24 @@ void tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociati
 void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
 {
     const TCHAR znak          = '-';
-    TCHAR ciara[160]          = "";
-    int  sirkaStlpcaVyskytov = (int) (lstrlen("A: ") + pocetMiest);
-    int  dlzkaRiadka         = 2 * (sirkaStlpcaVyskytov + lstrlen("  (99.99 % )")) + STLP_MEDZERA;
+    TCHAR ciara[160]          = TEXT("");
+    int  sirkaStlpcaVyskytov = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
+    int  dlzkaRiadka         = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + STLP_MEDZERA;
 
     for (int i = 0; i < dlzkaRiadka; i++)
         *(ciara + i) = znak;
 
     *(ciara + dlzkaRiadka) = '\0';
 
-    _stprintf(spolu + lstrlen(spolu), "%s\n", ciara);
+    _stprintf(spolu + lstrlen(spolu), TEXT("%s\n"), ciara);
     _stprintf(spolu + lstrlen(spolu),
-            "%*d (100.00 %% )%*d (100.00 %% )\n",
+            TEXT("%*d (100.00 %% )%*d (100.00 %% )\n"),
             sirkaStlpcaVyskytov, sucetVyskytov,
             STLP_MEDZERA + sirkaStlpcaVyskytov, sucetVyskytov);
 }
 
 
-void spracovanieVstupnehoSuboru(TCHAR * spolu, const TCHAR * FileToLoad)
+void spracovanieVstupnehoSuboru(TCHAR * spolu, const char * FileToLoad)
 {
     FILE *              vstup = 0;
     int                 vyskytyPismen[POCET_VELKYCH_PISMEN];
@@ -228,8 +228,8 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, const TCHAR * FileToLoad)
 
     if ((vstup = fopen(FileToLoad, "rb")) == 0)
     {
-        _stprintf (spolu + lstrlen(spolu), "Opening of the file \"%s\" failed "
-                "(probably it doesn\'t exist), program exits.\n\n", FileToLoad);
+        _stprintf (spolu + lstrlen(spolu), TEXT("Opening of the file \"%S\" failed ")
+                TEXT("(probably it doesn\'t exist), program exits.\n\n"), FileToLoad);
         return;
     }
 
