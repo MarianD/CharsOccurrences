@@ -14,12 +14,13 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
 {
 	HWND            hwndTabCtrl;
     HINSTANCE       hinst;
+    HMENU           childID = (HMENU) 0;
 
     hwndTabCtrl = CreateWindowEx(0, WC_TABCONTROL, "", WS_CHILD | WS_VISIBLE,
                                 pRect->left, pRect->top,
                                 pRect->right  - pRect->left,
                                 pRect->bottom - pRect->top,
-                                ParentWindow, NULL, hinst, NULL);
+                                ParentWindow, childID, hinst, NULL);
 
     // Vytvorenie nových ušiek
     LPTCITEM usko0 = new TCITEM;

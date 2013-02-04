@@ -29,7 +29,7 @@
 
     CHAROCCURRENCESAPI HWND CHAROCCURRENCESAPI ListLoad    (HWND ParentWin,               char* FileToLoad, int ShowFlags);
     CHAROCCURRENCESAPI  int CHAROCCURRENCESAPI ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags);
-
+    CHAROCCURRENCESAPI  int ListNotificationReceived       (HWND ListWin,   int  Message, WPARAM wParam,    LPARAM lParam);
     #ifdef __cplusplus
         }
     #endif

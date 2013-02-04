@@ -6,29 +6,41 @@
 #include "Helpers.h"
 #include "Exports.h"
 #include "version.h"
+#include "Constants.h"
 
 HWND CHAROCCURRENCESCALL
 ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 {
-	HWND                hwndTabCtrl  = 0;
-	HWND                hwndRichEdit = 0;
-	RECT                rect;
+	HWND            hwndTabCtrl  = 0;
+	HWND            hwndRichEdit = 0;
+	RECT            rect;
+	TCHAR           info[500];
+
+    wsprintf(info, INFO,
+            AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // Vytvorenie okna typu Tab Control a naplnenie rect hodnotami jeho Diasplay Area
     GetClientRect(ParentWindow, &rect);
     hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
+
+    // Získanie obdåžnika pre zobrazovaciu èas Tab Control
+    TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Vytvorenie RichEdit v zobrazovacej èast Tab Control
     hwndRichEdit = CreateRichEditWindow(hwndTabCtrl, &rect);
 
 	if (hwndRichEdit)
     {
-        char vysledok[10000] = "";
+        char vysledok[MAX_ZNAKOV] = "";      // TODO: Možno treba dlhšie pole
         spracovanieVstupnehoSuboru(vysledok, FileToLoad);
 
-        strcat(vysledok, "\n\n *** Volala sa funkcia ListLoad() ***");      // TODO: Len pre ladenie - vyhodi potom
+        sprintf(vysledok + strlen(vysledok), "\n\n *** Volala sa funkcia ListLoad() ***");      // TODO: Len pre ladenie - vyhodi potom
+        sprintf(vysledok + strlen(vysledok), "\n\nhwndTabCtrl  = %d", hwndTabCtrl ->unused);
+        sprintf(vysledok + strlen(vysledok), "\n\nhwndRichEdit = %d", hwndRichEdit->unused);
 
         SetWindowText(hwndRichEdit, vysledok);
+        SetProp(hwndTabCtrl, "Usko 0", vysledok);
+        SetProp(hwndTabCtrl, "Usko 1", info);
         ShowWindow(hwndRichEdit, SW_SHOW);
     }
 

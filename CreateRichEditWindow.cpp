@@ -6,8 +6,9 @@
 
 HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
 {
-	HWND            hwnd;
+	HWND            hwndRichEdit;
     HINSTANCE       hinst;
+    HMENU           childID = (HMENU) 0;
     CHARFORMAT      charFormat, *pcharFormat = &charFormat;
 
     /*
@@ -19,22 +20,21 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
     pcharFormat->yHeight    = 240L;
     strcpy(pcharFormat->szFaceName, "Courier New");
 
-    hwnd = CreateWindowEx(0, RICHEDIT_CLASS, "", WS_CHILD | ES_MULTILINE | ES_READONLY |
-                    WS_HSCROLL | WS_VSCROLL | ES_NOHIDESEL,
-                                pRect->left, pRect->top,
-                                pRect->right  - pRect->left,
-                                pRect->bottom - pRect->top,
-                                ParentWindow, NULL, hinst, NULL);
+    hwndRichEdit = CreateWindowEx(0, RICHEDIT_CLASS, "",
+                                  WS_CHILD   | ES_MULTILINE | ES_READONLY  |
+                                  WS_HSCROLL | WS_VSCROLL   | ES_NOHIDESEL | WS_VISIBLE,
+                                    pRect->left, pRect->top,
+                                    pRect->right  - pRect->left,
+                                    pRect->bottom - pRect->top,
+                                    ParentWindow, childID, hinst, NULL);
 
-	if (hwnd)
+	if (hwndRichEdit)
     {
-        SendMessage(hwnd, EM_SETMARGINS,    EC_LEFTMARGIN, 8);
-        SendMessage(hwnd, EM_SETCHARFORMAT, SCF_ALL, (LPARAM) pcharFormat);
-        SendMessage(hwnd, EM_SETEVENTMASK,  0, ENM_UPDATE); //ENM_SCROLL doesn't work for thumb movements!
+        SendMessage(hwndRichEdit, EM_SETMARGINS,    EC_LEFTMARGIN, 8);
+        SendMessage(hwndRichEdit, EM_SETCHARFORMAT, SCF_ALL, (LPARAM) pcharFormat);
+        SendMessage(hwndRichEdit, EM_SETEVENTMASK,  0, ENM_UPDATE | ENM_REQUESTRESIZE);   //ENM_SCROLL doesn't work for thumb movements!
 
-        PostMessage(ParentWindow, WM_COMMAND, MAKELONG(lcp_ansi, itm_fontstyle), (LPARAM) hwnd);
-
-        return hwnd;
+        return hwndRichEdit;
     }
     else
         return 0;

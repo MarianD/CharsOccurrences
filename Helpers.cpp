@@ -2,6 +2,7 @@
 //
 
 #include "Helpers.h"
+#include "Constants.h"
 
 /********************** Pomocne funkcie *************************/
 
@@ -200,20 +201,21 @@ void tlacVyskytuPismenPodSebou(char *spolu, int vyskytyPismen[], zostupAsociativ
 
 void tlacSuctovehoRiadka(char * spolu, int sucetVyskytov, int pocetMiest)
 {
-    const char znak = '-';
-    char ciara[160] = "";
-    int  pocet      = 2 * (strlen("A: ") + pocetMiest + strlen("  (99.99 % )")) + STLP_MEDZERA;
+    const char znak          = '-';
+    char ciara[160]          = "";
+    int  sirkaStlpcaVyskytov = (int) (strlen("A: ") + pocetMiest);
+    int  dlzkaRiadka         = 2 * (sirkaStlpcaVyskytov + strlen("  (99.99 % )")) + STLP_MEDZERA;
 
-    for (int i = 0; i < pocet; i++)
+    for (int i = 0; i < dlzkaRiadka; i++)
         *(ciara + i) = znak;
 
-    *(ciara + pocet) = '\0';
+    *(ciara + dlzkaRiadka) = '\0';
 
     sprintf(spolu + strlen(spolu), "%s\n", ciara);
     sprintf(spolu + strlen(spolu),
             "%*d (100.00 %% )%*d (100.00 %% )\n",
-            strlen("A: ") + pocetMiest, sucetVyskytov,
-            STLP_MEDZERA + strlen("A: ") + pocetMiest, sucetVyskytov);
+            sirkaStlpcaVyskytov, sucetVyskytov,
+            STLP_MEDZERA + sirkaStlpcaVyskytov, sucetVyskytov);
 }
 
 
@@ -228,13 +230,11 @@ void spracovanieVstupnehoSuboru(char * spolu, const char * FileToLoad)
     {
         sprintf (spolu + strlen(spolu), "Opening of the file \"%s\" failed "
                 "(probably it doesn\'t exist), program exits.\n\n", FileToLoad);
-
         return;
     }
 
-    sprintf(spolu, "\nOccurrences of individual ASCII letters, case insensitive, "
-       "version %ld.%ld.%ld %s\n\n",
-       AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
+    // Filling the string from the beginning
+    sprintf (spolu, HEAD);
 
     nulujPole(vyskytyPismen, POCET_VELKYCH_PISMEN);
 
@@ -264,7 +264,5 @@ void spracovanieVstupnehoSuboru(char * spolu, const char * FileToLoad)
 
     int sucetVyskytov = spoluVyskytov(vyskytyPismen);
     tlacSuctovehoRiadka(spolu, sucetVyskytov, pocetMiest);
-
-
 }
 
