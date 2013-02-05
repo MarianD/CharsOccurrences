@@ -228,8 +228,8 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, const char * FileToLoad)
 
     if ((vstup = fopen(FileToLoad, "rb")) == 0)
     {
-        _stprintf (spolu + lstrlen(spolu), TEXT("Opening of the file \"%S\" failed ")
-                TEXT("(probably it doesn\'t exist), program exits.\n\n"), FileToLoad);
+        _stprintf (spolu + lstrlen(spolu), TEXT("Opening of the file\n\n   \"%S\"\n\nfailed ")
+                TEXT("(probably it is the folder or it doesn\'t exist), program exits.\n\n"), FileToLoad);
         return;
     }
 

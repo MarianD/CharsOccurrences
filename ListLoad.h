@@ -4,7 +4,5 @@
     #define LISTLOAD_H
 
     #include <windows.h>
-    #include "CreateTabbedWindow.h"
-    #include "CreateRichEditWindow.h"
 
 #endif // ndef

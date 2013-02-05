@@ -98,6 +98,8 @@
 		<Unit filename="Exports.h" />
 		<Unit filename="Helpers.cpp" />
 		<Unit filename="Helpers.h" />
+		<Unit filename="ListCloseWindow.cpp" />
+		<Unit filename="ListCloseWindow.h" />
 		<Unit filename="ListLoad.cpp" />
 		<Unit filename="ListLoad.h" />
 		<Unit filename="ListLoadNext.cpp" />

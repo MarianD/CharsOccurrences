@@ -32,7 +32,7 @@
 1359183216 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	<winver.h>
 
-1360006080 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1360047634 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 
@@ -56,23 +56,22 @@
 1358263414 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1360015109 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1360054128 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
+	"CreateRichEditWindow.h"
 	"Helpers.h"
 	"Exports.h"
 	"version.h"
 	"Constants.h"
 
-1359641622 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
-	<windows.h>
-	"CreateTabbedWindow.h"
-	"CreateRichEditWindow.h"
-
-1360015082 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
+1360052241 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
 	<windows.h>
 
-1360015161 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1360052032 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
+	<windows.h>
+
+1360054485 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -101,7 +100,7 @@
 	<commctrl.h>
 	<richedit.h>
 
-1360015161 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
+1360054485 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
 	"ListNotificationReceived.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -113,5 +112,12 @@
 	<commctrl.h>
 	<richedit.h>
 
-1360006498 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+1360048889 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+
+1360056281 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
+	"ListCloseWindow.h"
+	"Exports.h"
+
+1360054755 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
+	<windows.h>
 

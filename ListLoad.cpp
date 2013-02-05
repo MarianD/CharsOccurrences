@@ -3,6 +3,7 @@
 
 #include "ListLoad.h"
 #include "CreateTabbedWindow.h"
+#include "CreateRichEditWindow.h"
 #include "Helpers.h"
 #include "Exports.h"
 #include "version.h"
@@ -14,14 +15,22 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 	HWND      hwndTabCtrl  = 0;
 	HWND      hwndRichEdit = 0;
 	RECT      rect;
-	TCHAR     info[500];
 
-    _stprintf(info, INFO,
-            AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // Vytvorenie okna typu Tab Control a naplnenie rect hodnotami jeho Diasplay Area
     GetClientRect(ParentWindow, &rect);
     hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
+
+    TCHAR * vysledok = (TCHAR *) malloc(MAX_ZNAKOV      * sizeof(TCHAR));
+    TCHAR * info     = (TCHAR *) malloc(MAX_ZNAKOV_INFO * sizeof(TCHAR));
+
+    SetProp(hwndTabCtrl, TEXT("Usko 0"), (HANDLE) vysledok);
+    SetProp(hwndTabCtrl, TEXT("Usko 1"), (HANDLE) info);
+
+    vysledok[0]      = TEXT('\0');
+    _stprintf(info, INFO,
+        AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
+
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
@@ -31,18 +40,16 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 
 	if (hwndRichEdit)
     {
-//        ListLoadNext(ParentWindow, hwndTabCtrl, FileToLoad, ShowFlags);
-        TCHAR vysledok[MAX_ZNAKOV] = TEXT("");
         spracovanieVstupnehoSuboru(vysledok, FileToLoad);
 
         _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
         _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %d"), hwndTabCtrl ->unused);
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndRichEdit = %d"), hwndRichEdit->unused);
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nsizeof(TCHAR) = %d"), sizeof(TCHAR));
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\nhwndRichEdit = %d"), hwndRichEdit->unused);
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nsizeof(TCHAR)   = %d"), sizeof(TCHAR));
+        int znakov = lstrlen(vysledok);
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\Znakov vysledku = %d"), znakov);
 
         SetWindowText(hwndRichEdit, vysledok);
-        SetProp(hwndTabCtrl, TEXT("Usko 0"), (HANDLE) vysledok);
-        SetProp(hwndTabCtrl, TEXT("Usko 1"), (HANDLE) info);
         ShowWindow(hwndRichEdit, SW_SHOW);
     }
 
