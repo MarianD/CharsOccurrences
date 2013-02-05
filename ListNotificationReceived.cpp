@@ -14,8 +14,6 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
 	HWND    hwndTabCtrl           = ListWin;
 	HWND    hwndRichEdit          = 0;
 	RECT    rect, *pRect          = &rect;
-	TCHAR   propName []           = TEXT("Usko X");
-	TCHAR   propValue[MAX_ZNAKOV] = TEXT("*** No value ***");
     TCHAR  *retazec;
 
     // Získanie manipulátora dcérskeho okna
@@ -28,9 +26,17 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
         case TCN_SELCHANGING:
             break;
         case TCN_SELCHANGE:
-            usko = TabCtrl_GetCurSel(ListWin);
-            propName[5] = (TCHAR) (TEXT('0') + usko);
-            retazec = (TCHAR *) GetProp(hwndTabCtrl, propName);
+            switch (TabCtrl_GetCurSel(ListWin))
+            {
+            case USKO_VYSKYTOV:
+                retazec = (TCHAR *) GetProp(hwndTabCtrl, VYSKYTY_VLASTNOST);
+                break;
+            case USKO_INFORMACII:
+                retazec = (TCHAR *) GetProp(hwndTabCtrl, INFO_VLASTNOST);
+                break;
+            default:
+                break;
+            }
             SetWindowText(hwndRichEdit, retazec);
             break;
         case EN_REQUESTRESIZE:

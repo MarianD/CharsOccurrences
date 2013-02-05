@@ -24,13 +24,11 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     TCHAR * vysledok = (TCHAR *) malloc(MAX_ZNAKOV      * sizeof(TCHAR));
     TCHAR * info     = (TCHAR *) malloc(MAX_ZNAKOV_INFO * sizeof(TCHAR));
 
-    SetProp(hwndTabCtrl, TEXT("Usko 0"), (HANDLE) vysledok);
-    SetProp(hwndTabCtrl, TEXT("Usko 1"), (HANDLE) info);
+    SetProp(hwndTabCtrl, VYSKYTY_VLASTNOST, (HANDLE) vysledok);
+    SetProp(hwndTabCtrl, INFO_VLASTNOST,    (HANDLE) info);
 
-    vysledok[0]      = TEXT('\0');
     _stprintf(info, INFO,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
-
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
@@ -40,16 +38,28 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 
 	if (hwndRichEdit)
     {
+//        vysledok[0]      = TEXT('\0');
         spracovanieVstupnehoSuboru(vysledok, FileToLoad);
 
         _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %d"), hwndTabCtrl ->unused);
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\nhwndRichEdit = %d"), hwndRichEdit->unused);
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %p"), hwndTabCtrl);
+        _stprintf(vysledok + lstrlen(vysledok), TEXT("\nhwndRichEdit = %p"),   hwndRichEdit);
         _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nsizeof(TCHAR)   = %d"), sizeof(TCHAR));
         int znakov = lstrlen(vysledok);
         _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\Znakov vysledku = %d"), znakov);
 
-        SetWindowText(hwndRichEdit, vysledok);
+        switch (TabCtrl_GetCurSel(hwndTabCtrl))
+        {
+        case USKO_VYSKYTOV:
+            SetWindowText(hwndRichEdit, vysledok);
+            break;
+        case USKO_INFORMACII:
+            SetWindowText(hwndRichEdit, info);
+            break;
+        default:
+            break;
+        }
+
         ShowWindow(hwndRichEdit, SW_SHOW);
     }
 

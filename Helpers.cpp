@@ -126,7 +126,7 @@ void tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPisme
     /*
      * Tlaè výskytu jednotlivých písmen
     */
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Vo¾né miesto - v tomto ståpci sú vyššie èísla riadkov
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
     for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); pos++)
     {
@@ -201,10 +201,10 @@ void tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociati
 
 void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
 {
-    const TCHAR znak          = '-';
-    TCHAR ciara[160]          = TEXT("");
-    int  sirkaStlpcaVyskytov = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
-    int  dlzkaRiadka         = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + STLP_MEDZERA;
+    const TCHAR znak           = TEXT('-');
+    TCHAR ciara[MAX_DLZ_CIARY];
+    int  sirkaStlpcaVyskytov   = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
+    int  dlzkaRiadka           = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + STLP_MEDZERA;
 
     for (int i = 0; i < dlzkaRiadka; i++)
         *(ciara + i) = znak;

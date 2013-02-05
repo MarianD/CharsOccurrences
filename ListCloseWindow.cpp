@@ -19,12 +19,5 @@ ListCloseWindow(HWND ListWin)
     free(vysledok);
     free(info);
 
-    // Získanie manipulátora dcérskeho okna
-    hwndRichEdit = GetWindow(hwndTabCtrl, GW_CHILD);
-
-	if (hwndRichEdit)
-    {
-        DestroyWindow(hwndRichEdit);
-    }
-    DestroyWindow(hwndTabCtrl);
+    DestroyWindow(hwndTabCtrl);     // Zruší aj dcérske okno
 }

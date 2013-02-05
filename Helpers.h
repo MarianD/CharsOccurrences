@@ -10,7 +10,6 @@
     #define TRUE	                1
     #define FALSE	                0
     #define KONIEC_POLA           (-1)
-    #define POCET_VELKYCH_PISMEN  ('Z' - 'A' + 1)
     #define MAX_ZNAKOV_MENA       256
     #define MAX_DLZ_RIADKA       1000
     #define POCET_MIEST             5
