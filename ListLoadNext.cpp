@@ -14,18 +14,20 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 	HWND            hwndTabCtrl  = ListWin;
 	HWND            hwndRichEdit = 0;
     TCHAR          *vysledok;
-    TCHAR          *info;
+    TCHAR          *horizontal;
+    TCHAR          *about;
+    TCHAR          *vertical;
 
     // ZÌskanie manipul·tora dcÈrskeho okna
     hwndRichEdit = GetWindow(hwndTabCtrl, GW_CHILD);
 
 	if (hwndRichEdit)
     {
-        vysledok    = (TCHAR *) GetProp(hwndTabCtrl, VYSKYTY_VLASTNOST);
-        info        = (TCHAR *) GetProp(hwndTabCtrl, INFO_VLASTNOST);
+        vysledok     = (TCHAR *) GetProp(hwndTabCtrl, HORIZONTAL_PROP);   // Len ukazovateæ na skutoËne alokovan˝ reùazec
+        about        = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
+        horizontal   = vysledok;
 
-//        vysledok[0] = TEXT('\0');
-        spracovanieVstupnehoSuboru(vysledok, FileToLoad);
+        spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // M·me aj horizontal (=vysledok), aj vertical
 
         #ifdef _DEBUG
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoadNext() ***"));
@@ -38,11 +40,14 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 
         switch (TabCtrl_GetCurSel(hwndTabCtrl))
         {
-        case USKO_VYSKYTOV:
-            SetWindowText(hwndRichEdit, vysledok);
+        case TAB_VERTICAL:
+            SetWindowText(hwndRichEdit, vertical);
             break;
-        case USKO_INFORMACII:
-            SetWindowText(hwndRichEdit, info);
+        case TAB_HORIZONTAL:
+            SetWindowText(hwndRichEdit, horizontal);
+            break;
+        case TAB_ABOUT:
+            SetWindowText(hwndRichEdit, about);
             break;
         default:
             break;
@@ -53,7 +58,7 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
     else
     {
         free(vysledok);
-        free(info);
+        free(about);
         return LISTPLUGIN_ERROR;
     }
 }

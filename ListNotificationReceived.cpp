@@ -29,11 +29,14 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
         case TCN_SELCHANGE:
             switch (TabCtrl_GetCurSel(ListWin))
             {
-            case USKO_VYSKYTOV:
-                retazec = (TCHAR *) GetProp(hwndTabCtrl, VYSKYTY_VLASTNOST);
+            case TAB_VERTICAL:
+                retazec = (TCHAR *) GetProp(hwndTabCtrl, VERTICAL_PROP);
                 break;
-            case USKO_INFORMACII:
-                retazec = (TCHAR *) GetProp(hwndTabCtrl, INFO_VLASTNOST);
+            case TAB_HORIZONTAL:
+                retazec = (TCHAR *) GetProp(hwndTabCtrl, HORIZONTAL_PROP);
+                break;
+            case TAB_ABOUT:
+                retazec = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
                 break;
             default:
                 break;

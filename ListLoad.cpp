@@ -21,11 +21,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     LRESULT CALLBACK
     NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-    WNDPROC   OldChildProc;
-    extern
-    LRESULT CALLBACK
-    NewChildProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
     // Vytvorenie okna typu Tab Control, vypÂÚaj˙ceho rodiËovskÈ okno (okno Listera)
     GetClientRect(ParentWindow, &rect);
     hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
@@ -34,13 +29,13 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     SetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP, (HANDLE) OldTabCtrlProc);
 
-    TCHAR * vysledok = (TCHAR *) malloc(MAX_ZNAKOV      * sizeof(TCHAR));
-    TCHAR * info     = (TCHAR *) malloc(MAX_ZNAKOV_INFO * sizeof(TCHAR));
+    TCHAR * vysledok   = (TCHAR *) malloc(MAX_ZNAKOV      * sizeof(TCHAR));
+    TCHAR * about      = (TCHAR *) malloc(MAX_ZNAKOV_ABOUT * sizeof(TCHAR));
+    TCHAR * horizontal = vysledok;    // Tento reùazec je Ëasùou reùazca vysledok, toto je   ukazovateæ na jeho zaËiatok
+    TCHAR * vertical   = 0;           // Tento reùazec je Ëasùou reùazca vysledok, toto bude ukazovateæ na jeho zaËiatok
 
-    SetProp(hwndTabCtrl, VYSKYTY_VLASTNOST,    (HANDLE) vysledok);
-    SetProp(hwndTabCtrl, INFO_VLASTNOST,       (HANDLE) info);
 
-    _stprintf(info, INFO,
+    _stprintf(about, ABOUT,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // ZÌskanie obdÂûnika pre zobrazovaciu Ëasù Tab Control
@@ -53,7 +48,11 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 	if (hwndRichEdit)
     {
         // EnableWindow(hwndRichEdit, FALSE);
-        spracovanieVstupnehoSuboru(vysledok, FileToLoad);
+        spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
+
+        SetProp(hwndTabCtrl, VERTICAL_PROP,   (HANDLE) vertical);
+        SetProp(hwndTabCtrl, HORIZONTAL_PROP, (HANDLE) vysledok);
+        SetProp(hwndTabCtrl, ABOUT_PROP,      (HANDLE) about);
 
         #ifdef _DEBUG
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
@@ -66,11 +65,14 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 
         switch (TabCtrl_GetCurSel(hwndTabCtrl))
         {
-        case USKO_VYSKYTOV:
-            SetWindowText(hwndRichEdit, vysledok);
+        case TAB_VERTICAL:
+            SetWindowText(hwndRichEdit, vertical);
             break;
-        case USKO_INFORMACII:
-            SetWindowText(hwndRichEdit, info);
+        case TAB_HORIZONTAL:
+            SetWindowText(hwndRichEdit, horizontal);
+            break;
+        case TAB_ABOUT:
+            SetWindowText(hwndRichEdit, about);
             break;
         default:
             break;
@@ -78,7 +80,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 
         ShowWindow(hwndRichEdit, SW_SHOW);
     }
-
 	return hwndTabCtrl;             // Pouûije ho ListLoadNext()
 }
 

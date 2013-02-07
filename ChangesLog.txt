@@ -1,3 +1,16 @@
+07 February 2013
+   released version 1.1.0 of CharsOccurrences
+
+     Change log:
+        -Added: Horizontal / vertical views displayed in the different tabs of tabbed plugin's window
+
+07 February 2013
+   released version 1.0.3 of CharsOccurrences
+
+     Change log:
+        -Added: Tabbed window
+        -Added: Enabling copying the selected text to the clipboard
+
 26 January 2013
    released version 1.0.2 of CharsOccurrences
 

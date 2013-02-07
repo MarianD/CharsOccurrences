@@ -219,7 +219,7 @@ void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
 }
 
 
-void spracovanieVstupnehoSuboru(TCHAR * spolu, const char * FileToLoad)
+void spracovanieVstupnehoSuboru(TCHAR * spolu, TCHAR ** pVertical, const char * FileToLoad)
 {
     FILE *              vstup = 0;
     int                 vyskytyPismen[POCET_VELKYCH_PISMEN];
@@ -232,9 +232,6 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, const char * FileToLoad)
                 TEXT("(probably it is the folder).\n\n"), FileToLoad);
         return;
     }
-
-    // Filling the string from the beginning
-    _stprintf (spolu, HEAD);
 
     nulujPole(vyskytyPismen, POCET_VELKYCH_PISMEN);
 
@@ -257,9 +254,19 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, const char * FileToLoad)
     fclose(vstup);
     pocetMiest = naplnAsociativnePole(&parVyskytPismeno, vyskytyPismen);
 
+    // Filling the string from the beginning
+    _stprintf (spolu, HEAD);
+
     tlacHlavicky(spolu, pocetMiest);
     tlacVyskytuPismen(spolu, vyskytyPismen, pocetMiest);
     tlacVyskytuPismenZoradeny(spolu, &parVyskytPismeno, pocetMiest);
+
+    *pVertical  = spolu = spolu + lstrlen(spolu) + sizeof(TCHAR);     // Tu zaËÌna vertik·lny v˝pis; ideme za koncov˙ nulu
+    *spolu      = TEXT('\0');                                         // Aby mal ÔalöÌ reùazec nulov˙ dÂûku (len istota)
+
+    // Filling the secon part of the string from the beginning, again
+    _stprintf (spolu, HEAD);
+
     tlacVyskytuPismenPodSebou(spolu, vyskytyPismen, &parVyskytPismeno, pocetMiest);
 
     int sucetVyskytov = spoluVyskytov(vyskytyPismen);

@@ -11,14 +11,14 @@ ListCloseWindow(HWND ListWin)
 	HWND      hwndTabCtrl  = ListWin;
 	HWND      hwndRichEdit = 0;
     void     *vysledok;
-    void     *info;
+    void     *about;
 
     //Uvoænenie alokovanej pam‰te pre reùazce
-    vysledok = (void *) GetProp(hwndTabCtrl, VYSKYTY_VLASTNOST);
-    info     = (void *) GetProp(hwndTabCtrl, INFO_VLASTNOST);
+    vysledok = (void *) GetProp(hwndTabCtrl, HORIZONTAL_PROP);
+    about     = (void *) GetProp(hwndTabCtrl, ABOUT_PROP);
 
     free(vysledok);
-    free(info);
+    free(about);
 
     DestroyWindow(hwndTabCtrl);     // ZruöÌ aj dcÈrske okno
 }
