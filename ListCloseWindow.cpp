@@ -3,6 +3,7 @@
 
 #include "ListCloseWindow.h"
 #include "Exports.h"
+#include "Constants.h"
 
 void CHARSOCCURRENCESCALL
 ListCloseWindow(HWND ListWin)
@@ -13,8 +14,8 @@ ListCloseWindow(HWND ListWin)
     void     *info;
 
     //Uvoænenie alokovanej pam‰te pre reùazce
-    vysledok = (void *) GetProp(hwndTabCtrl, TEXT("Usko 0"));
-    info     = (void *) GetProp(hwndTabCtrl, TEXT("Usko 1"));
+    vysledok = (void *) GetProp(hwndTabCtrl, VYSKYTY_VLASTNOST);
+    info     = (void *) GetProp(hwndTabCtrl, INFO_VLASTNOST);
 
     free(vysledok);
     free(info);

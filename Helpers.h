@@ -30,16 +30,16 @@
     /********************  Prototypy funkcií  ***********************/
 
     void  nulujPole(int pole[], int pocetPrvkov);
-    bool  jeVelkePismeno(TCHAR znak);
-    bool  jeMalePismeno(TCHAR znak);
-    TCHAR zmenMaleNaVelke(TCHAR pismeno);
+    bool  jeVelkePismeno(int znak);
+    bool  jeMalePismeno(int znak);
+    int   zmenMaleNaVelke(int pismeno);
+    int   naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int vyskytyPismen[]);
     void  zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest);
     void  tlacHlavicky(TCHAR *spolu, int pocetMiest);
     void  tlacVyskytuPismen(TCHAR *spolu, int vyskytyPismen[], int pocetMiest);
     void  tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPismeno, int pocetMiest);
     int   spoluVyskytov(int vyskytyPismen[]);
     void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno, int pocetMiest);
-    int   naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int vyskytyPismen[]);
     void  tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
     void  spracovanieVstupnehoSuboru(TCHAR * spolu, const char * FileToLoad);
 

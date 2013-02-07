@@ -16,21 +16,35 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 	HWND      hwndRichEdit = 0;
 	RECT      rect;
 
+    WNDPROC   OldTabCtrlProc;
+    extern
+    LRESULT CALLBACK
+    NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-    // Vytvorenie okna typu Tab Control a naplnenie rect hodnotami jeho Diasplay Area
+    WNDPROC   OldChildProc;
+    extern
+    LRESULT CALLBACK
+    NewChildProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+    // Vytvorenie okna typu Tab Control, vypÂÚaj˙ceho rodiËovskÈ okno (okno Listera)
     GetClientRect(ParentWindow, &rect);
     hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
+
+    // Subclassing tohto okna a uloûenie starej WindowProc do jeho vlastnostÌ
+    OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
+    SetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP, (HANDLE) OldTabCtrlProc);
 
     TCHAR * vysledok = (TCHAR *) malloc(MAX_ZNAKOV      * sizeof(TCHAR));
     TCHAR * info     = (TCHAR *) malloc(MAX_ZNAKOV_INFO * sizeof(TCHAR));
 
-    SetProp(hwndTabCtrl, VYSKYTY_VLASTNOST, (HANDLE) vysledok);
-    SetProp(hwndTabCtrl, INFO_VLASTNOST,    (HANDLE) info);
+    SetProp(hwndTabCtrl, VYSKYTY_VLASTNOST,    (HANDLE) vysledok);
+    SetProp(hwndTabCtrl, INFO_VLASTNOST,       (HANDLE) info);
 
     _stprintf(info, INFO,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // ZÌskanie obdÂûnika pre zobrazovaciu Ëasù Tab Control
+    GetClientRect(hwndTabCtrl, &rect);
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Vytvorenie RichEdit v zobrazovacej Ëast Tab Control
@@ -38,15 +52,17 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 
 	if (hwndRichEdit)
     {
-//        vysledok[0]      = TEXT('\0');
+        // EnableWindow(hwndRichEdit, FALSE);
         spracovanieVstupnehoSuboru(vysledok, FileToLoad);
 
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %p"), hwndTabCtrl);
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\nhwndRichEdit = %p"),   hwndRichEdit);
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nsizeof(TCHAR)   = %d"), sizeof(TCHAR));
-        int znakov = lstrlen(vysledok);
-        _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\Znakov vysledku = %d"), znakov);
+        #ifdef _DEBUG
+            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
+            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %p"), hwndTabCtrl);
+            _stprintf(vysledok + lstrlen(vysledok), TEXT("\nhwndRichEdit = %p"),   hwndRichEdit);
+            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nsizeof(TCHAR)   = %d"), sizeof(TCHAR));
+            int znakov = lstrlen(vysledok);
+            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\Znakov vysledku = %d"), znakov);
+        #endif
 
         switch (TabCtrl_GetCurSel(hwndTabCtrl))
         {
@@ -63,6 +79,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
         ShowWindow(hwndRichEdit, SW_SHOW);
     }
 
-	return hwndTabCtrl;             //Pouûije ho ListLoadNext()
+	return hwndTabCtrl;             // Pouûije ho ListLoadNext()
 }
 

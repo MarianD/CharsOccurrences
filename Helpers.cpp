@@ -75,7 +75,7 @@ void zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest)
 void tlacHlavicky(TCHAR *spolu, int pocetMiest)
 {
     zobrazCiaru(spolu + lstrlen(spolu), TEXT('-'), pocetMiest);
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Predtým vo¾né miesto pre èísla riadkov */
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
     for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
     {
@@ -107,13 +107,13 @@ void tlacVyskytuPismen(TCHAR *spolu, int pole[], int pocetMiest)
 
 void tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPismeno, int pocetMiest)
 {
-    zobrazCiaru(spolu + lstrlen(spolu), '*', pocetMiest);
+    zobrazCiaru(spolu + lstrlen(spolu), TEXT('*'), pocetMiest);
 
     /*
      * Tlaè hlavièky s písmenami usporiadanými
      * d¾a ich výskytu zostupne
     */
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT("")); // Vo¾né miesto - v tomto ståpci boli kedysi èísla jednotlivých riadkov
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
     for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); pos++)
     {
@@ -228,8 +228,8 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, const char * FileToLoad)
 
     if ((vstup = fopen(FileToLoad, "rb")) == 0)
     {
-        _stprintf (spolu + lstrlen(spolu), TEXT("Opening of the file\n\n   \"%S\"\n\nfailed ")
-                TEXT("(probably it is the folder or it doesn\'t exist), program exits.\n\n"), FileToLoad);
+        _stprintf (spolu, TEXT("\nOpening of the file\n\n  \"%S\"\n\nfailed ")
+                TEXT("(probably it is the folder).\n\n"), FileToLoad);
         return;
     }
 

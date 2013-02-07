@@ -1,8 +1,6 @@
 // CreateRichEditWindow.cpp :
-//
 
 #include "CreateRichEditWindow.h"
-
 
 HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
 {

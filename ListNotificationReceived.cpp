@@ -24,6 +24,7 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
         switch ( ((NMHDR *) lParam) -> code)
         {
         case TCN_SELCHANGING:
+            return FALSE;       // Povo¾uje sa zmena uška
             break;
         case TCN_SELCHANGE:
             switch (TabCtrl_GetCurSel(ListWin))
@@ -38,18 +39,17 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
                 break;
             }
             SetWindowText(hwndRichEdit, retazec);
+            return 0;       // Pre správu TCN_SELCHANGE je návratová hodnota ignorovaná
             break;
         case EN_REQUESTRESIZE:
-            // Získanie obdåžnika pre zobrazovaciu èas Tab Control
-            TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
-
-            MoveWindow(hwndRichEdit, pRect->left, pRect->top,
-                                pRect->right  - pRect->left,
-                                pRect->bottom - pRect->top,
-                                TRUE);
+//            // Získanie obdåžnika pre zobrazovaciu èas Tab Control
+//            TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
+//
+//            MoveWindow(hwndRichEdit, pRect->left, pRect->top,
+//                                pRect->right  - pRect->left,
+//                                pRect->bottom - pRect->top,
+//                                TRUE);
             break;
         }
     }
-
-    return 0;       // Pre správu WM_NOTIFY je návratová hodnota ignorovaná
 }
