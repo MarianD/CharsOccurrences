@@ -17,3 +17,4 @@
 #define ABOUT_PROP              TEXT("2")
 #define OLD_TAB_WNDPROC_PROP    TEXT("OldTabCtrlProc")
 #define OLD_CHILD_WNDPROC_PROP  TEXT("OldChildProc")
+#define DETECT_STRING           "ext=\"TXT\" | force"

@@ -29,7 +29,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     SetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP, (HANDLE) OldTabCtrlProc);
 
-    TCHAR * vysledok   = (TCHAR *) malloc(MAX_ZNAKOV      * sizeof(TCHAR));
+    TCHAR * vysledok   = (TCHAR *) malloc(MAX_ZNAKOV       * sizeof(TCHAR));
     TCHAR * about      = (TCHAR *) malloc(MAX_ZNAKOV_ABOUT * sizeof(TCHAR));
     TCHAR * horizontal = vysledok;    // Tento reùazec je Ëasùou reùazca vysledok, toto je   ukazovateæ na jeho zaËiatok
     TCHAR * vertical   = 0;           // Tento reùazec je Ëasùou reùazca vysledok, toto bude ukazovateæ na jeho zaËiatok

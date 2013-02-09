@@ -10,11 +10,9 @@
 int CHARSOCCURRENCESCALL
 ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam)
 {
-    int     usko;
 	HWND    hwndTabCtrl           = ListWin;
 	HWND    hwndRichEdit          = 0;
-	RECT    rect, *pRect          = &rect;
-    TCHAR  *retazec;
+    TCHAR  *retazec               = 0;
 
     // Získanie manipulátora dcérskeho okna
     hwndRichEdit = GetWindow(hwndTabCtrl, GW_CHILD);
@@ -39,20 +37,14 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
                 retazec = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
                 break;
             default:
-                break;
+                _tcscpy(retazec, TEXT("Error while switching to this tab!"));
             }
             SetWindowText(hwndRichEdit, retazec);
             return 0;       // Pre správu TCN_SELCHANGE je návratová hodnota ignorovaná
             break;
         case EN_REQUESTRESIZE:
-//            // Získanie obdåžnika pre zobrazovaciu èas Tab Control
-//            TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
-//
-//            MoveWindow(hwndRichEdit, pRect->left, pRect->top,
-//                                pRect->right  - pRect->left,
-//                                pRect->bottom - pRect->top,
-//                                TRUE);
             break;
         }
     }
+    return 0;       // To be some return value
 }
