@@ -91,6 +91,8 @@
 			<Add library="comdlg32" />
 		</Linker>
 		<Unit filename="Constants.h" />
+		<Unit filename="CreateListViewtWindow.cpp" />
+		<Unit filename="CreateListViewtWindow.h" />
 		<Unit filename="CreateRichEditWindow.cpp" />
 		<Unit filename="CreateRichEditWindow.h" />
 		<Unit filename="CreateTabbedWindow.cpp" />

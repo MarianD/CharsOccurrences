@@ -1,12 +1,13 @@
 // CreateRichEditWindow.cpp :
 
 #include "CreateRichEditWindow.h"
+#include "Constants.h"
 
 HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
 {
 	HWND            hwndRichEdit;
     HINSTANCE       hinst;
-    HMENU           childID = (HMENU) 0;
+    HMENU           childID = (HMENU) RICHEDIT_ID;
     CHARFORMAT      charFormat, *pcharFormat = &charFormat;
 
     /*
@@ -20,7 +21,7 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
 
     hwndRichEdit = CreateWindowEx(0, RICHEDIT_CLASS, TEXT(""),
                                   WS_CHILD   | ES_MULTILINE | ES_READONLY  |
-                                  WS_HSCROLL | WS_VSCROLL   | ES_NOHIDESEL | WS_VISIBLE,
+                                  WS_HSCROLL | WS_VSCROLL   | ES_NOHIDESEL | WS_CLIPSIBLINGS,
                                     pRect->left, pRect->top,
                                     pRect->right  - pRect->left,
                                     pRect->bottom - pRect->top,

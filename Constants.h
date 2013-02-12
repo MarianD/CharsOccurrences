@@ -9,12 +9,16 @@
 #define MAX_ZNAKOV_ABOUT              900
 #define POCET_VELKYCH_PISMEN        ('Z' - 'A' + 1)
 #define MAX_DLZ_CIARY               (15 * POCET_VELKYCH_PISMEN)
-#define TAB_VERTICAL                0
-#define TAB_HORIZONTAL              1
-#define TAB_ABOUT                   2
-#define VERTICAL_PROP           TEXT("0")
-#define HORIZONTAL_PROP         TEXT("1")
-#define ABOUT_PROP              TEXT("2")
+#define RICHEDIT_ID                 0
+#define LISTVIEW_ID                 1
+#define TAB_LISTVIEW                0
+#define TAB_VERTICAL                1
+#define TAB_HORIZONTAL              2
+#define TAB_ABOUT                   3
+#define LISTVIEW_PROP           TEXT("0")
+#define VERTICAL_PROP           TEXT("1")
+#define HORIZONTAL_PROP         TEXT("2")
+#define ABOUT_PROP              TEXT("3")
 #define OLD_TAB_WNDPROC_PROP    TEXT("OldTabCtrlProc")
 #define OLD_CHILD_WNDPROC_PROP  TEXT("OldChildProc")
 #define DETECT_STRING           "ext=\"TXT\" | force"

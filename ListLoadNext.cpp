@@ -11,22 +11,36 @@
 int CHARSOCCURRENCESCALL
 ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 {
-	HWND            hwndTabCtrl  = ListWin;
-	HWND            hwndRichEdit = 0;
-    TCHAR          *vysledok;
-    TCHAR          *horizontal;
-    TCHAR          *about;
-    TCHAR          *vertical;
+	HWND    hwndTabCtrl  = ListWin;
+	HWND    hwndChildWin = 0;
+	HWND    hwndRichEdit = 0;
+	HWND    hwndListView = 0;
+    TCHAR  *vysledok;
+    TCHAR  *horizontal;
+    TCHAR  *about;
+    TCHAR  *vertical;
 
-    // ZÌskanie manipul·tora dcÈrskeho okna
-    hwndRichEdit = GetWindow(hwndTabCtrl, GW_CHILD);
+    vysledok     = (TCHAR *) GetProp(hwndTabCtrl, HORIZONTAL_PROP);   // Len ukazovateæ na skutoËne alokovan˝ reùazec
+    about        = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
+    horizontal   = vysledok;
+
+    // ZÌskanie manipul·torov dcÈrskych okien
+    hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
+
+    if ((GetWindowLong(hwndChildWin, GWL_ID)) == RICHEDIT_ID)
+    {
+        hwndRichEdit = hwndChildWin;
+        hwndListView = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
+    }
+    else
+    {
+        hwndListView = hwndChildWin;
+        hwndRichEdit = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
+    }
+    hwndListView = GetWindow(hwndTabCtrl, GW_CHILD);
 
 	if (hwndRichEdit)
     {
-        vysledok     = (TCHAR *) GetProp(hwndTabCtrl, HORIZONTAL_PROP);   // Len ukazovateæ na skutoËne alokovan˝ reùazec
-        about        = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
-        horizontal   = vysledok;
-
         spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // M·me aj horizontal (=vysledok), aj vertical
 
         #ifdef _DEBUG
@@ -40,19 +54,22 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 
         switch (TabCtrl_GetCurSel(hwndTabCtrl))
         {
+        case TAB_LISTVIEW:
+            BringWindowToTop(hwndListView);
+            break;
         case TAB_VERTICAL:
             SetWindowText(hwndRichEdit, vertical);
+            BringWindowToTop(hwndRichEdit);
             break;
         case TAB_HORIZONTAL:
             SetWindowText(hwndRichEdit, horizontal);
-            break;
+            BringWindowToTop(hwndRichEdit);            break;
         case TAB_ABOUT:
             SetWindowText(hwndRichEdit, about);
-            break;
+            BringWindowToTop(hwndRichEdit);            break;
         default:
             break;
         }
-        ShowWindow(hwndRichEdit, SW_SHOW);
         return LISTPLUGIN_OK;
     }
     else

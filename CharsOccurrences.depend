@@ -56,10 +56,11 @@
 1358263414 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1360268560 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1360685972 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateRichEditWindow.h"
+	"CreateListViewtWindow.h"
 	"Helpers.h"
 	"Exports.h"
 	"version.h"
@@ -71,7 +72,7 @@
 1360425220 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1360260532 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1360685972 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -88,11 +89,12 @@
 	<windows.h>
 	<commctrl.h>
 
-1360258441 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
+1360686096 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
 	"CreateTabbedWindow.h"
 
-1360231309 source:c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.cpp
+1360682117 source:c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.cpp
 	"CreateRichEditWindow.h"
+	"Constants.h"
 
 1359998469 c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.h
 	<windows.h>
@@ -100,9 +102,10 @@
 	<commctrl.h>
 	<richedit.h>
 
-1360427033 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
+1360685972 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
 	"ListNotificationReceived.h"
 	"CreateRichEditWindow.h"
+	"CreateListViewtWindow.h"
 	"Helpers.h"
 	"Exports.h"
 	"Constants.h"
@@ -112,7 +115,7 @@
 	<commctrl.h>
 	<richedit.h>
 
-1360424478 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+1360639374 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
 
 1360360269 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
 	"ListCloseWindow.h"
@@ -131,7 +134,15 @@
 	<windows.h>
 	<windowsx.h>
 
-1360425975 source:c:\users\marian\documents\codeblocks\charsoccurrences\listgetdetectstring.cpp
+1360427349 source:c:\users\marian\documents\codeblocks\charsoccurrences\listgetdetectstring.cpp
 	"Exports.h"
 	"Constants.h"
+
+1360682117 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
+	"CreateListViewtWindow.h"
+	"Constants.h"
+
+1360528698 c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.h
+	<windows.h>
+	<commctrl.h>
 
