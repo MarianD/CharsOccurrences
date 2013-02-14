@@ -31,10 +31,11 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     SetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP, (HANDLE) OldTabCtrlProc);
 
-    TCHAR * vysledok   = (TCHAR *) malloc(MAX_ZNAKOV       * sizeof(TCHAR));
-    TCHAR * about      = (TCHAR *) malloc(MAX_ZNAKOV_ABOUT * sizeof(TCHAR));
-    TCHAR * horizontal = vysledok;    // Tento reùazec je Ëasùou reùazca vysledok, toto je   ukazovateæ na jeho zaËiatok
-    TCHAR * vertical   = 0;           // Tento reùazec je Ëasùou reùazca vysledok, toto bude ukazovateæ na jeho zaËiatok
+    int   * vyskytyPismen = (int   *) malloc(POCET_VELKYCH_PISMEN * sizeof(int));
+    TCHAR * vysledok      = (TCHAR *) malloc(MAX_ZNAKOV           * sizeof(TCHAR));
+    TCHAR * about         = (TCHAR *) malloc(MAX_ZNAKOV_ABOUT     * sizeof(TCHAR));
+    TCHAR * horizontal    = vysledok;    // Tento reùazec je Ëasùou reùazca vysledok, toto je   ukazovateæ na jeho zaËiatok
+    TCHAR * vertical      = 0;           // Tento reùazec je Ëasùou reùazca vysledok, toto bude ukazovateæ na jeho zaËiatok
 
 
     _stprintf(about, ABOUT,
@@ -46,13 +47,14 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 
     // Vytvorenie RichEdit v zobrazovacej Ëast Tab Control
     hwndRichEdit = CreateRichEditWindow(hwndTabCtrl, &rect);
-    hwndListView = CreateRichEditWindow(hwndTabCtrl, &rect);
+    hwndListView = CreateListViewWindow(hwndTabCtrl, &rect);
 
 	if (hwndRichEdit && hwndListView)
     {
         // EnableWindow(hwndRichEdit, FALSE);
-        spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
+        spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
 
+        SetProp(hwndTabCtrl, LISTVIEW_PROP,   (HANDLE) vyskytyPismen);
         SetProp(hwndTabCtrl, VERTICAL_PROP,   (HANDLE) vertical);
         SetProp(hwndTabCtrl, HORIZONTAL_PROP, (HANDLE) vysledok);
         SetProp(hwndTabCtrl, ABOUT_PROP,      (HANDLE) about);
@@ -69,7 +71,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
         switch (TabCtrl_GetCurSel(hwndTabCtrl))
         {
         case TAB_LISTVIEW:
-            BringWindowToTop(hwndTabCtrl);            break;
+            BringWindowToTop(hwndListView);            break;
         case TAB_VERTICAL:
             SetWindowText(hwndRichEdit, vertical);
             BringWindowToTop(hwndRichEdit);            break;

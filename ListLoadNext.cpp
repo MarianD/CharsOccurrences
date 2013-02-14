@@ -15,14 +15,16 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 	HWND    hwndChildWin = 0;
 	HWND    hwndRichEdit = 0;
 	HWND    hwndListView = 0;
+    int    *vyskytyPismen;
     TCHAR  *vysledok;
     TCHAR  *horizontal;
     TCHAR  *about;
     TCHAR  *vertical;
 
-    vysledok     = (TCHAR *) GetProp(hwndTabCtrl, HORIZONTAL_PROP);   // Len ukazovateæ na skutoËne alokovan˝ reùazec
-    about        = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
-    horizontal   = vysledok;
+    vyskytyPismen = (int   *) GetProp(hwndTabCtrl, LISTVIEW_PROP);   // Len ukazovateæ na skutoËne alokovan˝ reùazec
+    vysledok      = (TCHAR *) GetProp(hwndTabCtrl, HORIZONTAL_PROP); // Len ukazovateæ na skutoËne alokovan˝ reùazec
+    about         = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
+    horizontal    = vysledok;
 
     // ZÌskanie manipul·torov dcÈrskych okien
     hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
@@ -41,7 +43,7 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 
 	if (hwndRichEdit)
     {
-        spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // M·me aj horizontal (=vysledok), aj vertical
+        spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // M·me aj horizontal (=vysledok), aj vertical
 
         #ifdef _DEBUG
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoadNext() ***"));

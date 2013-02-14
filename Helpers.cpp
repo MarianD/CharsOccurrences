@@ -219,10 +219,9 @@ void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
 }
 
 
-void spracovanieVstupnehoSuboru(TCHAR * spolu, TCHAR ** pVertical, const char * FileToLoad)
+void spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVertical, const char * FileToLoad)
 {
     FILE *              vstup = 0;
-    int                 vyskytyPismen[POCET_VELKYCH_PISMEN];
     zostupAsociativPole parVyskytPismeno;
     int                 pocetMiest = 0;
 

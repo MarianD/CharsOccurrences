@@ -11,13 +11,13 @@
 int CHARSOCCURRENCESCALL
 ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam)
 {
-	HWND    hwndTabCtrl  = ListWin;
-	HWND    hwndChildWin = 0;
-	HWND    hwndRichEdit = 0;
-	HWND    hwndListView = 0;
+    HWND    hwndTabCtrl  = ListWin;
+    HWND    hwndChildWin = 0;
+    HWND    hwndRichEdit = 0;
+    HWND    hwndListView = 0;
     TCHAR  *retazec      = 0;
 
-    // ZÌskanie manipul·torov dcÈrskych okien
+    // ZÌskanie manipul·torov dcÈrskych okien                   // TODO: Urobiù to lepöie, zÌskanÌm predt˝m uloûen˝ch manipul·torov vo vlastnostiach rodiËovskÈho okna
     hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
 
     if ((GetWindowLong(hwndChildWin, GWL_ID)) == RICHEDIT_ID)
@@ -25,13 +25,18 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
         hwndRichEdit = hwndChildWin;
         hwndListView = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
     }
-    else
+    else if ((GetWindowLong(hwndChildWin, GWL_ID)) == LISTVIEW_ID)
     {
         hwndListView = hwndChildWin;
         hwndRichEdit = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
     }
-    hwndListView = GetWindow(hwndTabCtrl, GW_CHILD);
-
+    else
+    {
+        _tcscpy(retazec, TEXT("Error while switching to this tab!"));
+        BringWindowToTop(hwndRichEdit);
+        SetWindowText(hwndRichEdit, retazec);
+        return 0;       // Pre spr·vu TCN_SELCHANGE je n·vratov· hodnota ignorovan·
+    }
 
     if (Message == WM_NOTIFY)
     {
@@ -41,7 +46,7 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
             return FALSE;       // Povoæuje sa zmena uöka
             break;
         case TCN_SELCHANGE:
-            switch (TabCtrl_GetCurSel(ListWin))
+            switch (TabCtrl_GetCurSel(hwndTabCtrl))
             {
             case TAB_LISTVIEW:
                 BringWindowToTop(hwndListView);
@@ -65,9 +70,7 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
             SetWindowText(hwndRichEdit, retazec);
             return 0;       // Pre spr·vu TCN_SELCHANGE je n·vratov· hodnota ignorovan·
             break;
-        case EN_REQUESTRESIZE:
-            break;
         }
     }
-    return 0;       // To be some return value
+    return 0;       // To return some value
 }

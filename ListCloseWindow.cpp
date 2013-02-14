@@ -8,16 +8,24 @@
 void CHARSOCCURRENCESCALL
 ListCloseWindow(HWND ListWin)
 {
-	HWND      hwndTabCtrl  = ListWin;
-    void     *vysledok;
-    void     *about;
+	HWND   hwndTabCtrl   = ListWin;
+    void  *vyskytyPismen = 0;
+    void  *vysledok      = 0;
+    void  *about         = 0;
 
     //Uvoænenie alokovanej pam‰te pre reùazce
-    vysledok = (void *) GetProp(hwndTabCtrl, HORIZONTAL_PROP);
-    about    = (void *) GetProp(hwndTabCtrl, ABOUT_PROP);
+    vyskytyPismen = (void *) GetProp(hwndTabCtrl, LISTVIEW_PROP);
+    vysledok      = (void *) GetProp(hwndTabCtrl, HORIZONTAL_PROP);
+    about         = (void *) GetProp(hwndTabCtrl, ABOUT_PROP);
 
-    free(vysledok);
-    free(about);
+    DestroyWindow(hwndTabCtrl);     // ZruöÌ aj dcÈrske okn·
 
-    DestroyWindow(hwndTabCtrl);     // ZruöÌ aj dcÈrske okno
+    if (vyskytyPismen)
+        free(vyskytyPismen);
+
+    if (vysledok)
+        free(vysledok);
+
+    if (about)
+        free(about);
 }

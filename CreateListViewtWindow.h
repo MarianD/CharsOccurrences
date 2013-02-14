@@ -6,6 +6,7 @@
 
     #include <windows.h>
     #include <commctrl.h>
+    #include <tchar.h>
 
     HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect);
 
