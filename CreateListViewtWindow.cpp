@@ -23,9 +23,10 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
 
         // InitListViewColumns - adds columns to a list-view control.
 
-        TCHAR * szText[3] = {TEXT("Letter"), TEXT("Count"), TEXT("Percent")};
-        LVCOLUMN lvc;
-        int iCol;
+        const TCHAR * szText  [3] = {TEXT("Letter"), TEXT("Count"), TEXT("Percent")};
+        const int     colWidth[3] = {42, 50, 60};
+        LVCOLUMN      lvc;
+        int           iCol;
 
         // Initialize the LVCOLUMN structure.
         // The mask specifies that the format, width, text, and subitem members
@@ -36,13 +37,9 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
         for (iCol = 0; iCol < 3; iCol++)
         {
             lvc.iSubItem = iCol;
-            lvc.pszText  = szText[iCol];
-            lvc.cx       = 60;              // Width of column in pixels
-
-            if ( iCol < 0 )                 // To nikdy nenastane
-                lvc.fmt = LVCFMT_LEFT;      // left-aligned column
-            else
-                lvc.fmt = LVCFMT_RIGHT;     // right-aligned column
+            lvc.pszText  = (TCHAR *) szText[iCol];
+            lvc.cx       = colWidth[iCol];
+            lvc.fmt      = LVCFMT_RIGHT;    // The alignment of the leftmost column is always left-justified and cannot be changed
 
             ListView_InsertColumn(hwndListView, iCol, &lvc);
         }

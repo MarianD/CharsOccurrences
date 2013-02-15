@@ -32,7 +32,7 @@
 1360426110 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	<winver.h>
 
-1360938847 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1360942988 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 
@@ -139,7 +139,7 @@
 	"Exports.h"
 	"Constants.h"
 
-1360937896 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
+1360944101 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
 	"CreateListViewtWindow.h"
 	"Constants.h"
 

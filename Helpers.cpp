@@ -30,6 +30,7 @@ bool jeMalePismeno(int znak)
         return false;
 }
 
+
 int zmenMaleNaVelke(int pismeno)
 {
     if (jeMalePismeno(pismeno))
@@ -156,6 +157,7 @@ int spoluVyskytov(int vyskytyPismen[])
     return sucetVyskytov;
 }
 
+
 void tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno, int pocetMiest)
 {
     int sucetVyskytov = spoluVyskytov(vyskytyPismen);
@@ -199,6 +201,7 @@ void tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociati
     }
 }
 
+
 void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
 {
     const TCHAR znak           = TEXT('-');
@@ -218,6 +221,7 @@ void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
             STLP_MEDZERA + sirkaStlpcaVyskytov, sucetVyskytov);
 }
 
+
 void naplnListView(HWND hwndListView, int * vyskytyPismen)
 {
     int sucetVyskytov = spoluVyskytov(vyskytyPismen);
@@ -229,6 +233,8 @@ void naplnListView(HWND hwndListView, int * vyskytyPismen)
     lvI.state     = 0;
     lvI.stateMask = 0;
 
+    ListView_DeleteAllItems(hwndListView);
+
     // Initialize LVITEM members that are different for each item.
     for (int riadok = 0; riadok < POCET_VELKYCH_PISMEN; riadok++)
     {
@@ -238,15 +244,19 @@ void naplnListView(HWND hwndListView, int * vyskytyPismen)
         float percent   = (float) occur / sucetVyskytov * 100.;
         TCHAR chOccur  [20];
         TCHAR chPercent[20];
+
         _stprintf(chOccur,   TEXT("%d"),       occur);
         _stprintf(chPercent, TEXT("%6.2f %%"), percent);
+
         lvI.iItem    = riadok;
         lvI.iSubItem = 0;
         lvI.pszText  = pismeno;
         ListView_InsertItem(hwndListView, &lvI);
+
         lvI.iSubItem = 1;
         lvI.pszText  = chOccur;
         ListView_SetItem(hwndListView, &lvI);
+
         lvI.iSubItem = 2;
         lvI.pszText  = chPercent;
         ListView_SetItem(hwndListView, &lvI);
