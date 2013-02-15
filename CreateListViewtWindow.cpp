@@ -46,36 +46,6 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
 
             ListView_InsertColumn(hwndListView, iCol, &lvc);
         }
-
-
-        // Initialize LVITEM members that are common to all items.
-        LVITEM lvI;
-
-        lvI.mask = LVIF_TEXT | LVIF_STATE;
-        lvI.state = 0;
-        lvI.stateMask = 0;
-
-        // TODO: Cel˝ nasleduj˙ci cyklus daù ako samostatn˙ funkciu a volaù ju z ListLoad() a z ListLoadNext()
-        // Initialize LVITEM members that are different for each item.
-        for (int index = 0; index < POCET_VELKYCH_PISMEN; index++)
-        {
-            TCHAR pismeno[] = TEXT("X");
-            pismeno[0]   = TEXT('A') + index;
-            TCHAR chOccur  [20];
-            TCHAR chPercent[20];
-            _stprintf(chOccur,   TEXT("%d"),        index + 800);               // TODO: Zmeniù toto odsk˙öanie na skutoËn˙ hodnotu
-            _stprintf(chPercent, TEXT("%5.2f %%"), (index + 800) / 211.25);     // TODO: Zmeniù toto odsk˙öanie na skutoËn˙ hodnotu
-            lvI.iItem    = index;
-            lvI.iSubItem = 0;
-            lvI.pszText  = pismeno;
-            ListView_InsertItem(hwndListView, &lvI);
-            lvI.iSubItem = 1;
-            lvI.pszText  = chOccur;
-            ListView_SetItem(hwndListView, &lvI);
-            lvI.iSubItem = 2;
-            lvI.pszText  = chPercent;
-            ListView_SetItem(hwndListView, &lvI);
-        }
         return hwndListView;
     }
     else

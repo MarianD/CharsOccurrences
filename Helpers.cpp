@@ -218,6 +218,41 @@ void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
             STLP_MEDZERA + sirkaStlpcaVyskytov, sucetVyskytov);
 }
 
+void naplnListView(HWND hwndListView, int * vyskytyPismen)
+{
+    int sucetVyskytov = spoluVyskytov(vyskytyPismen);
+
+    // Initialize LVITEM members that are common to all items.
+    LVITEM lvI;
+
+    lvI.mask      = LVIF_TEXT | LVIF_STATE;
+    lvI.state     = 0;
+    lvI.stateMask = 0;
+
+    // Initialize LVITEM members that are different for each item.
+    for (int riadok = 0; riadok < POCET_VELKYCH_PISMEN; riadok++)
+    {
+        TCHAR pismeno[] = TEXT("X");
+        pismeno[0]      = TEXT('A') + riadok;
+        int occur       = vyskytyPismen[riadok];
+        float percent   = (float) occur / sucetVyskytov * 100.;
+        TCHAR chOccur  [20];
+        TCHAR chPercent[20];
+        _stprintf(chOccur,   TEXT("%d"),       occur);
+        _stprintf(chPercent, TEXT("%6.2f %%"), percent);
+        lvI.iItem    = riadok;
+        lvI.iSubItem = 0;
+        lvI.pszText  = pismeno;
+        ListView_InsertItem(hwndListView, &lvI);
+        lvI.iSubItem = 1;
+        lvI.pszText  = chOccur;
+        ListView_SetItem(hwndListView, &lvI);
+        lvI.iSubItem = 2;
+        lvI.pszText  = chPercent;
+        ListView_SetItem(hwndListView, &lvI);
+    }
+}
+
 
 void spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVertical, const char * FileToLoad)
 {

@@ -53,6 +53,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     {
         // EnableWindow(hwndRichEdit, FALSE);
         spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
+        naplnListView(hwndListView, vyskytyPismen);
 
         SetProp(hwndTabCtrl, LISTVIEW_PROP,   (HANDLE) vyskytyPismen);
         SetProp(hwndTabCtrl, VERTICAL_PROP,   (HANDLE) vertical);

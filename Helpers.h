@@ -41,12 +41,15 @@
     int   spoluVyskytov(int vyskytyPismen[]);
     void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno, int pocetMiest);
     void  tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
-    void spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVertical, const char * FileToLoad);
+    void  naplnListView(HWND hwndListView, int * vyskytyPismen);
+    void  spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVertical, const char * FileToLoad);
+
     #include <windows.h>
     #include <cstdio>
     #include <malloc.h>
     #include <richedit.h>
     #include <commdlg.h>
     #include <cmath>
+    #include <commctrl.h>
 
 #endif // ndef
