@@ -23,8 +23,8 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
 
         // InitListViewColumns - adds columns to a list-view control.
 
-        const TCHAR * szText  [3] = {TEXT("Letter"), TEXT("Count"), TEXT("Percent")};
-        const int     colWidth[3] = {42, 50, 60};
+        const TCHAR * szText  [4] = {TEXT(""), TEXT("Letter"), TEXT("Count"), TEXT("Percent")};
+        const int     colWidth[4] = {0, 42, 50, 60};
         LVCOLUMN      lvc;
         int           iCol;
 
@@ -34,15 +34,18 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
         lvc.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
 
         // Add the columns
-        for (iCol = 0; iCol < 3; iCol++)
+        for (iCol = 0; iCol < 4; iCol++)
         {
             lvc.iSubItem = iCol;
             lvc.pszText  = (TCHAR *) szText[iCol];
             lvc.cx       = colWidth[iCol];
-            lvc.fmt      = LVCFMT_RIGHT;    // The alignment of the leftmost column is always left-justified and cannot be changed
+            lvc.fmt = (iCol == 1) ? LVCFMT_CENTER : LVCFMT_RIGHT;
+            lvc.fmt      = LVCFMT_RIGHT;
 
             ListView_InsertColumn(hwndListView, iCol, &lvc);
         }
+        // This column existed only to enable the first column alignment, because thealignment of the leftmost column is always left-justified and cannot be changed
+        ListView_DeleteColumn(hwndListView, 0);
         return hwndListView;
     }
     else

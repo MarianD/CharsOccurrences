@@ -6,6 +6,14 @@
 
 /********************** Pomocne funkcie *************************/
 
+int CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec)
+{
+    if (stlpec == 0)
+        return (int) hodnota1 % POCET_VELKYCH_PISMEN - (int) hodnota2 % POCET_VELKYCH_PISMEN;
+    else
+        return (int) hodnota1 - (int) hodnota2;
+}
+
 void nulujPole(int pole[], int pocetPrvkov)
 {
     for(int i = 0; i < pocetPrvkov; i++)
@@ -224,18 +232,11 @@ void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
 
 void naplnListView(HWND hwndListView, int * vyskytyPismen)
 {
-    int sucetVyskytov = spoluVyskytov(vyskytyPismen);
-
-    // Initialize LVITEM members that are common to all items.
+    int    sucetVyskytov = spoluVyskytov(vyskytyPismen);
     LVITEM lvI;
-
-    lvI.mask      = LVIF_TEXT | LVIF_STATE;
-    lvI.state     = 0;
-    lvI.stateMask = 0;
 
     ListView_DeleteAllItems(hwndListView);
 
-    // Initialize LVITEM members that are different for each item.
     for (int riadok = 0; riadok < POCET_VELKYCH_PISMEN; riadok++)
     {
         TCHAR pismeno[] = TEXT("X");
@@ -248,11 +249,14 @@ void naplnListView(HWND hwndListView, int * vyskytyPismen)
         _stprintf(chOccur,   TEXT("%d"),       occur);
         _stprintf(chPercent, TEXT("%6.2f %%"), percent);
 
+        lvI.mask     = LVIF_TEXT | LVIF_PARAM;
         lvI.iItem    = riadok;
         lvI.iSubItem = 0;
         lvI.pszText  = pismeno;
+        lvI.lParam   = (LPARAM) (POCET_VELKYCH_PISMEN * occur + riadok);       // For sorting by columns
         ListView_InsertItem(hwndListView, &lvI);
 
+        lvI.mask     = LVIF_TEXT;
         lvI.iSubItem = 1;
         lvI.pszText  = chOccur;
         ListView_SetItem(hwndListView, &lvI);

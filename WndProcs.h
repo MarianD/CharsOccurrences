@@ -5,5 +5,6 @@
 
     #include <windows.h>
     #include <windowsx.h>
+    #include <tchar.h>
 
 #endif // WNDPROCS_H

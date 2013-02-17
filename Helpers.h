@@ -29,6 +29,7 @@
 
     /********************  Prototypy funkcií  ***********************/
 
+    int   CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec);
     void  nulujPole(int pole[], int pocetPrvkov);
     bool  jeVelkePismeno(int znak);
     bool  jeMalePismeno(int znak);
