@@ -20,5 +20,5 @@
 #define HORIZONTAL_PROP         TEXT("2")
 #define ABOUT_PROP              TEXT("3")
 #define OLD_TAB_WNDPROC_PROP    TEXT("OldTabCtrlProc")
-#define OLD_CHILD_WNDPROC_PROP  TEXT("OldChildProc")
 #define DETECT_STRING           "ext=\"TXT\" | force"
+#define LAST_CLICKED_COLUMN     TEXT("Last clicked column")

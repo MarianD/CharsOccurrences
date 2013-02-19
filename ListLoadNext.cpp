@@ -26,7 +26,7 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
     about         = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
     horizontal    = vysledok;
 
-    // ZÌskanie manipul·torov dcÈrskych okien
+    // ZÌskanie manipul·torov dcÈrskych okien                   // TODO: Urobiù to lepöie, zÌskanÌm predt˝m uloûen˝ch manipul·torov vo vlastnostiach rodiËovskÈho okna
     hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
 
     if ((GetWindowLong(hwndChildWin, GWL_ID)) == RICHEDIT_ID)
@@ -39,12 +39,16 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
         hwndListView = hwndChildWin;
         hwndRichEdit = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
     }
-    hwndListView = GetWindow(hwndTabCtrl, GW_CHILD);
 
 	if (hwndRichEdit)
     {
         spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // M·me aj horizontal (=vysledok), aj vertical
         naplnListView(hwndListView, vyskytyPismen);
+
+        // Let another file shows item in the last used order
+        LPARAM lastClickedColumn = (LPARAM) GetProp(hwndListView, LAST_CLICKED_COLUMN);
+        ListView_SortItems(hwndListView, cmpFunction, lastClickedColumn);
+
         #ifdef _DEBUG
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoadNext() ***"));
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %p"), hwndTabCtrl);

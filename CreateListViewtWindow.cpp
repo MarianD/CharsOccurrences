@@ -40,11 +40,14 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
             lvc.pszText  = (TCHAR *) szText[iCol];
             lvc.cx       = colWidth[iCol];
             lvc.fmt = (iCol == 1) ? LVCFMT_CENTER : LVCFMT_RIGHT;
-            lvc.fmt      = LVCFMT_RIGHT;
 
             ListView_InsertColumn(hwndListView, iCol, &lvc);
         }
-        // This column existed only to enable the first column alignment, because thealignment of the leftmost column is always left-justified and cannot be changed
+        /*
+         *  This column existed only to enable the first column alignment,
+         *  because thealignment of the leftmost column is always
+         *  left-justified and cannot be changed
+         */
         ListView_DeleteColumn(hwndListView, 0);
         return hwndListView;
     }

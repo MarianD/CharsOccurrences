@@ -6,13 +6,71 @@
 
 /********************** Pomocne funkcie *************************/
 
-int CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec)
+/** \brief CallBack funkcia volan· pri poûiadavke na zoradenie ListView podæa niektorÈho stÂpca
+ *
+ * \param hodnota1 LPARAM - 1. porovn·van· hodnota ako kombin·cia poËtu v˝skytov a por. ËÌsla pÌsmena (0-25)
+ * \param hodnota2 LPARAM - 2. porovn·van· hodnota ako kombin·cia poËtu v˝skytov a por. ËÌsla pÌsmena (0-25)
+ * \param stlpec LPARAM   - ËÌslo stÂpca, podæa ktorÈho sa m· zoznam usporiadaù; z·pornÈ ËÌslo stÂpca znamen· poûiadavku na zmenu smeru usporiadania
+ * \return int CALLBACK   - z·porn· <, nula pre =, kladn· pre >
+ *
+ */
+int CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM plusMinusStlpec)
 {
-    if (stlpec == 0)
-        return (int) hodnota1 % POCET_VELKYCH_PISMEN - (int) hodnota2 % POCET_VELKYCH_PISMEN;
+    int stlpec  = abs(plusMinusStlpec);                 // Numbered from 1
+    int signum  = (plusMinusStlpec < 0) ? -1 : 1;       // Changing the direction of order by the second click
+    int result;
+
+    #ifdef _DEBUG
+    TCHAR oznam[100];
+        _stprintf(oznam, TEXT("Stlpec: %d\nSignum: %d"), stlpec, signum);
+        MessageBox(0, oznam, TEXT("Bla"), 0) ;
+    #endif
+
+    if (stlpec == 1)
+        result = (int) hodnota1 % POCET_VELKYCH_PISMEN - (int) hodnota2 % POCET_VELKYCH_PISMEN;
     else
-        return (int) hodnota1 - (int) hodnota2;
+        result = (int) hodnota2 - (int) hodnota1;
+    return signum * result;
 }
+
+
+void naplnListView(HWND hwndListView, int * vyskytyPismen)
+{
+    int    sucetVyskytov = spoluVyskytov(vyskytyPismen);
+    LVITEM lvI;
+
+    ListView_DeleteAllItems(hwndListView);
+
+    for (int riadok = 0; riadok < POCET_VELKYCH_PISMEN; riadok++)
+    {
+        TCHAR pismeno[] = TEXT("X");
+        pismeno[0]      = TEXT('A') + riadok;
+        int occur       = vyskytyPismen[riadok];
+        float percent   = (float) occur / sucetVyskytov * 100.;
+        TCHAR chOccur  [20];
+        TCHAR chPercent[20];
+
+        _stprintf(chOccur,   TEXT("%d"),       occur);
+        _stprintf(chPercent, TEXT("%6.2f %%"), percent);
+
+        lvI.mask     = LVIF_TEXT | LVIF_PARAM;
+        lvI.iItem    = riadok;
+        lvI.iSubItem = 0;
+        lvI.pszText  = pismeno;
+        lvI.lParam   = (LPARAM) (POCET_VELKYCH_PISMEN * occur + riadok);       // For sorting by columns
+        ListView_InsertItem(hwndListView, &lvI);
+
+        lvI.mask     = LVIF_TEXT;
+        lvI.iSubItem = 1;
+        lvI.pszText  = chOccur;
+        ListView_SetItem(hwndListView, &lvI);
+
+        lvI.iSubItem = 2;
+        lvI.pszText  = chPercent;
+        ListView_SetItem(hwndListView, &lvI);
+    }
+}
+
 
 void nulujPole(int pole[], int pocetPrvkov)
 {
@@ -227,44 +285,6 @@ void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
             TEXT("%*d (100.00 %% )%*d (100.00 %% )\n"),
             sirkaStlpcaVyskytov, sucetVyskytov,
             STLP_MEDZERA + sirkaStlpcaVyskytov, sucetVyskytov);
-}
-
-
-void naplnListView(HWND hwndListView, int * vyskytyPismen)
-{
-    int    sucetVyskytov = spoluVyskytov(vyskytyPismen);
-    LVITEM lvI;
-
-    ListView_DeleteAllItems(hwndListView);
-
-    for (int riadok = 0; riadok < POCET_VELKYCH_PISMEN; riadok++)
-    {
-        TCHAR pismeno[] = TEXT("X");
-        pismeno[0]      = TEXT('A') + riadok;
-        int occur       = vyskytyPismen[riadok];
-        float percent   = (float) occur / sucetVyskytov * 100.;
-        TCHAR chOccur  [20];
-        TCHAR chPercent[20];
-
-        _stprintf(chOccur,   TEXT("%d"),       occur);
-        _stprintf(chPercent, TEXT("%6.2f %%"), percent);
-
-        lvI.mask     = LVIF_TEXT | LVIF_PARAM;
-        lvI.iItem    = riadok;
-        lvI.iSubItem = 0;
-        lvI.pszText  = pismeno;
-        lvI.lParam   = (LPARAM) (POCET_VELKYCH_PISMEN * occur + riadok);       // For sorting by columns
-        ListView_InsertItem(hwndListView, &lvI);
-
-        lvI.mask     = LVIF_TEXT;
-        lvI.iSubItem = 1;
-        lvI.pszText  = chOccur;
-        ListView_SetItem(hwndListView, &lvI);
-
-        lvI.iSubItem = 2;
-        lvI.pszText  = chPercent;
-        ListView_SetItem(hwndListView, &lvI);
-    }
 }
 
 

@@ -29,7 +29,9 @@
 
     /********************  Prototypy funkcií  ***********************/
 
-    int   CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec);
+    int   CALLBACK
+          cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec);
+    void  naplnListView(HWND hwndListView, int * vyskytyPismen);
     void  nulujPole(int pole[], int pocetPrvkov);
     bool  jeVelkePismeno(int znak);
     bool  jeMalePismeno(int znak);
@@ -42,7 +44,6 @@
     int   spoluVyskytov(int vyskytyPismen[]);
     void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno, int pocetMiest);
     void  tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
-    void  naplnListView(HWND hwndListView, int * vyskytyPismen);
     void  spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVertical, const char * FileToLoad);
 
     #include <windows.h>

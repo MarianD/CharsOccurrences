@@ -1,3 +1,10 @@
+18 February 2013
+   released version 1.2.0 of CharsOccurrences
+
+     Change log:
+        -Added: Plugin is used directly only for .txt files - for other types only by chosing  'Image|  Multimedia' from the lister menu
+        -Added: New tab with flexible list allowing different sortings by clicking on the column's head
+
 07 February 2013
    released version 1.1.0 of CharsOccurrences
 

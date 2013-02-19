@@ -64,12 +64,52 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         switch ( ((NMHDR *) lParam) -> code)
         {
         case LVN_COLUMNCLICK:
-            LPNMLISTVIEW pnmv   = (LPNMLISTVIEW) lParam;
-            int          stlpec = pnmv->iSubItem;       // Èísluje sa od 0, aj keï som pôvodný 0.-tý ståpec vymazal
-            ListView_SortItems(hwndListView, cmpFunction, (LPARAM) stlpec);
+            LPNMLISTVIEW pnmv;
+            int          column;
+            int          lastClickedColumn;     // It is increased by 1 to have oportunity to save it with + or -
+            int          signum;                // +1 means order in the preferred direction,
+                                                //-1 in the opposite direction
+            pnmv   = (LPNMLISTVIEW) lParam;
+            column = pnmv->iSubItem;            // Numbered from 0, in spite of deletening the original column zero
+            column++;                           // Now numbered from 1
+
+            /*
+             *  Let sorting by the column 3 ("Percent") is the same as sorting by
+             *  the column 2 ("Count") to don't confuse the user by no reaction after
+             *  clicking alternately to the headers of the column 2 and column 3 -
+             *  now both of them will behave as one unit (change the sorting direction)
+             */
+            if (column == 3)
+                column = 2;
+
+            lastClickedColumn = (int) GetProp(hwndListView, LAST_CLICKED_COLUMN);
+
+            /*
+             *  Changing the direction of order by the second click
+             *  on the same column's header
+             */
+            signum = (column == lastClickedColumn) ? -1 : 1;
+
+            #ifdef _DEBUG
+                TCHAR oznam[100];
+                _stprintf(oznam, TEXT("Column: %d\nlastClickedColumn: %d"),
+                          column, lastClickedColumn);
+                MessageBox(0, oznam, TEXT("Bla"), 0) ;
+            #endif
+
+            ListView_SortItems(hwndListView, cmpFunction, (LPARAM) signum * column);
+
+            /*
+             *  If it was the immediate second click on the same
+             *  column's header, let's save it with the minus sign
+             */
+            if (column == lastClickedColumn)
+                column = -column;
+
+            SetProp(hwndListView, LAST_CLICKED_COLUMN, (HANDLE) column);
             break;
-//        default:
-//            break;
+        default:
+            break;
         }
     default:
         break;
