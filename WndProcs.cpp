@@ -82,7 +82,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == 3)
                 column = 2;
 
-            lastClickedColumn = (int) GetProp(hwndListView, LAST_CLICKED_COLUMN);
+            lastClickedColumn = (INT64) GetProp(hwndListView, LAST_CLICKED_COLUMN);
 
             /*
              *  Changing the direction of order by the second click
