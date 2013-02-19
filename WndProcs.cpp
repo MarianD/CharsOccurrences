@@ -74,10 +74,10 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             column++;                           // Now numbered from 1
 
             /*
-             *  Let sorting by the column 3 ("Percent") is the same as sorting by
+             *  Let the sorting by the column 3 ("Percent") is the same as the sorting by
              *  the column 2 ("Count") to don't confuse the user by no reaction after
              *  clicking alternately to the headers of the column 2 and column 3 -
-             *  now both of them will behave as one unit (change the sorting direction)
+             *  now both of them will behave as one unit (changing the sorting direction)
              */
             if (column == 3)
                 column = 2;

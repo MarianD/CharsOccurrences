@@ -109,7 +109,7 @@ int zmenMaleNaVelke(int pismeno)
 /** \brief Naplnenie asociatívneho po¾a a zistenie poètu miest nutnıch pre oddelenie poètu jednotlivıch vıskytov
  *
  * \param  parVyskytPismeno - zostupné asociatívne pole, ktoré sa má naplni
- * \param  pole - pole celıch èísel, vıskytov príslušnıch písmen (0. prvok - A)
+ * \param  pole - pole celıch èísel, vıskytov príslušnıch písmen (0. prvok pre A, 1. prvok pre B atï.)
  * \return poèet miest potrebnıch pre oddelenie èísel v riadku = poèet miest najväèšieho èísla + 1
  *
  */
@@ -332,7 +332,7 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVe
     *pVertical  = spolu = spolu + lstrlen(spolu) + sizeof(TCHAR);     // Tu zaèína vertikálny vıpis; ideme za koncovú nulu
     *spolu      = TEXT('\0');                                         // Aby mal ïalší reazec nulovú dåku (len istota)
 
-    // Filling the secon part of the string from the beginning, again
+    // Filling the second part of the string from the beginning, again
     _stprintf (spolu, HEAD);
 
     tlacVyskytuPismenPodSebou(spolu, vyskytyPismen, &parVyskytPismeno, pocetMiest);
