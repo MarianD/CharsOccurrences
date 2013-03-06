@@ -1,4 +1,4 @@
-/* Contents of file CharsOccurrences.h */
+/* Contents of file Exports.h */
 
 #ifndef CHARSOCCURRENCES_H
     #define CHARSOCCURRENCES_H
@@ -27,11 +27,11 @@
 
     /* Declare import/export functions using the above definitions here: */
 
-    CHARSOCCURRENCESAPI HWND  CHARSOCCURRENCESAPI ListLoad                 (HWND ParentWin,               char* FileToLoad, int ShowFlags);
-    CHARSOCCURRENCESAPI int   CHARSOCCURRENCESAPI ListLoadNext             (HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags);
-    CHARSOCCURRENCESAPI int   CHARSOCCURRENCESAPI ListNotificationReceived (HWND ListWin,   int  Message, WPARAM wParam,    LPARAM lParam);
-//    CHARSOCCURRENCESAPI void  CHARSOCCURRENCESAPI ListCloseWindow          (HWND ListWin);
-    CHARSOCCURRENCESAPI void  CHARSOCCURRENCESAPI ListGetDetectString      (char* DetectString, int maxlen);
+    CHARSOCCURRENCESAPI HWND  CHARSOCCURRENCESCALL ListLoad                 (HWND ParentWin,               char* FileToLoad, int ShowFlags);
+    CHARSOCCURRENCESAPI int   CHARSOCCURRENCESCALL ListLoadNext             (HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags);
+    CHARSOCCURRENCESAPI int   CHARSOCCURRENCESCALL ListNotificationReceived (HWND ListWin,   int  Message, WPARAM wParam,    LPARAM lParam);
+    CHARSOCCURRENCESAPI void  CHARSOCCURRENCESCALL ListCloseWindow          (HWND ListWin);
+    CHARSOCCURRENCESAPI void  CHARSOCCURRENCESCALL ListGetDetectString      (char* DetectString, int maxlen);
 
     #ifdef __cplusplus
         }

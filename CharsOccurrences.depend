@@ -49,7 +49,7 @@
 	<cmath>
 	<commctrl.h>
 
-1361282716 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1362607781 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1358549177 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
@@ -70,7 +70,7 @@
 1360180042 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
 	<windows.h>
 
-1361282716 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
+1362607602 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
 1361282716 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
@@ -126,7 +126,7 @@
 1360054755 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1361315265 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1361559414 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
