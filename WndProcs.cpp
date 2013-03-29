@@ -9,38 +9,42 @@
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND            hwndTabCtrl  = hWnd;
-    HWND            hwndChildWin = 0;
-    HWND            hwndListView = 0;
-    HWND            hwndRichEdit = 0;
+    HWND            hwndTabCtrl    =  hWnd;
+    HWND            hwndChildWin   =  0;
+    HWND            hwndHistogram  =  0;
+    HWND            hwndListView   =  0;
+    HWND            hwndRichEdit   =  0;
+    int             childID        = -1;
+    RECT            rect, * pRect  = &rect;
     WNDPROC         OldTabCtrlProc;
-    RECT            rect, * pRect = &rect;
 
     OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP);
 
-    // Získanie manipulátorov dcérskych okien                   // TODO: Urobi to lepšie, získaním predtým uložených manipulátorov vo vlastnostiach rodièovského okna
+    // Získanie manipulátorov dcérskych okien                   // TODO: Asi (inde) netreba uklada manipulátory okien vo vlastnostiach rodièovského okna
     hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
 
-    if ((GetWindowLong(hwndChildWin, GWL_ID)) == RICHEDIT_ID)
+    while (hwndChildWin)
     {
-        hwndRichEdit = hwndChildWin;
-        hwndListView = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
-    }
-    else if ((GetWindowLong(hwndChildWin, GWL_ID)) == LISTVIEW_ID)
-    {
-        hwndListView = hwndChildWin;
-        hwndRichEdit = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
-    }
-    else
-    {
-        BringWindowToTop(hwndRichEdit);
-        SetWindowText(hwndRichEdit, TEXT("Error while switching to this tab!"));
+        switch(childID = GetWindowLong(hwndChildWin, GWL_ID))
+        {
+        case LISTVIEW_ID:
+            hwndListView  = hwndChildWin;
+            break;
+        case HISTOGRAM_ID:
+            hwndHistogram = hwndChildWin;
+            break;
+        case RICHEDIT_ID:
+            hwndRichEdit  = hwndChildWin;
+            break;
+        default:
+            break;
+        }
+        hwndChildWin = GetWindow(hwndChildWin, GW_HWNDNEXT);
     }
 
     switch (uMsg)
     {
     case WM_SIZE:
-
         if (hwndRichEdit)
         {
             // Výpoèet nového obdåžnika pre dcérske okno
@@ -49,12 +53,17 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             SetRect(pRect, 0, 0, cx, cy);
             TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
-            MoveWindow(hwndListView, pRect->left, pRect->top,
+            MoveWindow(hwndListView,   pRect->left, pRect->top,
                        pRect->right  - pRect->left,
                        pRect->bottom - pRect->top,
                        TRUE);
 
-            MoveWindow(hwndRichEdit, pRect->left, pRect->top,
+            MoveWindow(hwndHistogram,  pRect->left, pRect->top,
+                       pRect->right  - pRect->left,
+                       pRect->bottom - pRect->top,
+                       TRUE);
+
+            MoveWindow(hwndRichEdit,   pRect->left, pRect->top,
                        pRect->right  - pRect->left,
                        pRect->bottom - pRect->top,
                        TRUE);
@@ -68,7 +77,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             int          column;
             int          lastClickedColumn;     // It is increased by 1 to have oportunity to save it with + or -
             int          signum;                // +1 means order in the preferred direction,
-                                                //-1 in the opposite direction
+                                                // -1 in the opposite direction
             pnmv   = (LPNMLISTVIEW) lParam;
             column = pnmv->iSubItem;            // Numbered from 0, in spite of deletening the original column zero
             column++;                           // Now numbered from 1
@@ -115,4 +124,24 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         break;
     }
     return CallWindowProc(OldTabCtrlProc, hWnd, uMsg, wParam, lParam);
+}
+
+
+LRESULT CALLBACK
+HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    HWND            hwndHistogram = hWnd;
+    HWND            hwndTabCtrl   = GetParent(hwndHistogram);
+    RECT            rect, * pRect = &rect;
+    int             cx, cy;
+
+    switch (uMsg)
+    {
+    case WM_SIZE:
+        break;
+    default:
+        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+        break;
+    }
+    return EXIT_SUCCESS;
 }

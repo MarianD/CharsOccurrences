@@ -28,6 +28,7 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
     LPTCITEM usko1 = new TCITEM;
     LPTCITEM usko2 = new TCITEM;
     LPTCITEM usko3 = new TCITEM;
+    LPTCITEM usko4 = new TCITEM;
 
     // Naplnenie ušiek hodnotami
     usko0->mask       = TCIF_TEXT;
@@ -35,22 +36,27 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
     usko0->cchTextMax = 60;
 
     usko1->mask       = TCIF_TEXT;
-    usko1->pszText    = TEXT ("Vertical");
+    usko1->pszText    = TEXT ("Histogram");
     usko1->cchTextMax = 60;
 
     usko2->mask       = TCIF_TEXT;
-    usko2->pszText    = TEXT ("Horizontal");
+    usko2->pszText    = TEXT ("Vertical");
     usko2->cchTextMax = 60;
 
     usko3->mask       = TCIF_TEXT;
-    usko3->pszText    = TEXT ("About");
+    usko3->pszText    = TEXT ("Horizontal");
     usko3->cchTextMax = 60;
+
+    usko4->mask       = TCIF_TEXT;
+    usko4->pszText    = TEXT ("About");
+    usko4->cchTextMax = 60;
 
     // Pridanie pripravenıch ušiek
     TabCtrl_InsertItem(hwndTabCtrl, 0, usko0);
     TabCtrl_InsertItem(hwndTabCtrl, 1, usko1);
     TabCtrl_InsertItem(hwndTabCtrl, 2, usko2);
     TabCtrl_InsertItem(hwndTabCtrl, 3, usko3);
+    TabCtrl_InsertItem(hwndTabCtrl, 4, usko4);
 
     // Získanie obdånika pre zobrazovaciu èas Tab Control
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);

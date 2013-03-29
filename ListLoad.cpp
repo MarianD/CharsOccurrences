@@ -3,6 +3,7 @@
 
 #include "ListLoad.h"
 #include "CreateTabbedWindow.h"
+#include "CreateHistogramWindow.h"
 #include "CreateRichEditWindow.h"
 #include "CreateListViewtWindow.h"
 #include "Helpers.h"
@@ -13,9 +14,10 @@
 HWND CHARSOCCURRENCESCALL
 ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 {
-	HWND      hwndTabCtrl  = 0;
-	HWND      hwndRichEdit = 0;
-	HWND      hwndListView = 0;
+	HWND      hwndTabCtrl   = 0;
+	HWND      hwndHistogram = 0;
+	HWND      hwndRichEdit  = 0;
+	HWND      hwndListView  = 0;
 	RECT      rect;
 
     WNDPROC   OldTabCtrlProc;
@@ -46,8 +48,9 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Vytvorenie RichEdit v zobrazovacej èast Tab Control
-    hwndRichEdit = CreateRichEditWindow(hwndTabCtrl, &rect);
-    hwndListView = CreateListViewWindow(hwndTabCtrl, &rect);
+    hwndHistogram = CreateHistogramWindow(hwndTabCtrl, &rect) ;
+    hwndRichEdit  = CreateRichEditWindow (hwndTabCtrl, &rect);
+    hwndListView  = CreateListViewWindow (hwndTabCtrl, &rect);
 
 	if (hwndRichEdit && hwndListView)
     {
@@ -74,6 +77,8 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
         {
         case TAB_LISTVIEW:
             BringWindowToTop(hwndListView);            break;
+        case TAB_HISTOGRAM:
+            BringWindowToTop(hwndHistogram);            break;
         case TAB_VERTICAL:
             SetWindowText(hwndRichEdit, vertical);
             BringWindowToTop(hwndRichEdit);            break;
@@ -86,10 +91,11 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
         default:
             break;
         }
-        ShowWindow(hwndRichEdit, SW_SHOW);
-        ShowWindow(hwndListView, SW_SHOW);
+        ShowWindow(hwndHistogram, SW_SHOW);
+        ShowWindow(hwndRichEdit,  SW_SHOW);
+        ShowWindow(hwndListView,  SW_SHOW);
     }
 
-	return hwndTabCtrl;             // Použije ho ListLoadNext()
+	return hwndTabCtrl;             // ListLoadNext() will use it
 }
 

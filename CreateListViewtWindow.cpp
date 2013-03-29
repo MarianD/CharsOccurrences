@@ -6,21 +6,19 @@
 HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
 {
     HWND            hwndListView;
-    HINSTANCE       hinst;
+    HINSTANCE       hinst   = 0;
     HMENU           childID = (HMENU) LISTVIEW_ID;
 
     hwndListView = CreateWindowEx(0, WC_LISTVIEW, TEXT(""),
                                   WS_CHILD   | LVS_REPORT | LVS_EDITLABELS |
                                   WS_HSCROLL | WS_VSCROLL | WS_CLIPSIBLINGS,
-                                  pRect->left, pRect->top,
+                                  pRect->left,    pRect->top,
                                   pRect->right  - pRect->left,
                                   pRect->bottom - pRect->top,
                                   ParentWindow, childID, hinst, NULL);
 
     if (hwndListView)
     {
-        // TODO: Uloûiù manipul·tor hwndListView vo vlastnostiach rodiËovskÈho okna
-
         // InitListViewColumns - adds columns to a list-view control.
 
         const TCHAR * szText  [4] = {TEXT(""), TEXT("Letter"), TEXT("Count"), TEXT("Percent")};
@@ -52,5 +50,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
         return hwndListView;
     }
     else
+    {
         return 0;
+    }
 }

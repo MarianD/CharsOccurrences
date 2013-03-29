@@ -5,27 +5,27 @@
 
 HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
 {
-	HWND            hwndRichEdit;
-    HINSTANCE       hinst;
-    HMENU           childID = (HMENU) RICHEDIT_ID;
-    CHARFORMAT      charFormat, *pcharFormat = &charFormat;
+	HWND       hwndRichEdit;
+    HINSTANCE  hinst   = 0;
+    HMENU      childID = (HMENU) RICHEDIT_ID;
+    CHARFORMAT charFormat, *pcharFormat = &charFormat;
 
     /*
-     *  Nastavenie písma
+     *  Font settings
      */
-    pcharFormat->cbSize     = sizeof(charFormat);
-    pcharFormat->dwMask     = CFM_BOLD | CFM_FACE | CFM_SIZE;
-    pcharFormat->dwEffects  = CFE_BOLD;
-    pcharFormat->yHeight    = 240L;
+    pcharFormat->cbSize    = sizeof(charFormat);
+    pcharFormat->dwMask    = CFM_BOLD | CFM_FACE | CFM_SIZE;
+    pcharFormat->dwEffects = CFE_BOLD;
+    pcharFormat->yHeight   = 240L;
     _tcscpy(pcharFormat->szFaceName, TEXT("Courier New"));
 
     hwndRichEdit = CreateWindowEx(0, RICHEDIT_CLASS, TEXT(""),
                                   WS_CHILD   | ES_MULTILINE | ES_READONLY  |
                                   WS_HSCROLL | WS_VSCROLL   | ES_NOHIDESEL | WS_CLIPSIBLINGS,
-                                    pRect->left, pRect->top,
-                                    pRect->right  - pRect->left,
-                                    pRect->bottom - pRect->top,
-                                    ParentWindow, childID, hinst, NULL);
+                                  pRect->left,    pRect->top,
+                                  pRect->right  - pRect->left,
+                                  pRect->bottom - pRect->top,
+                                  ParentWindow, childID, hinst, NULL);
 
 	if (hwndRichEdit)
     {
@@ -37,6 +37,8 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
         return hwndRichEdit;
     }
     else
+    {
         return 0;
+    }
 }
 

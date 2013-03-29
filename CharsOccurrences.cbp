@@ -19,12 +19,7 @@
 					<Add option="-W" />
 					<Add option="-fexceptions" />
 					<Add option="-m32" />
-					<Add option="-DWIN32" />
 					<Add option="-D_DEBUG" />
-					<Add option="-D_WINDOWS" />
-					<Add option="-D_MBCS" />
-					<Add option="-D_USRDLL" />
-					<Add option="-DCHARSOCCURRENCES_EXPORTS" />
 				</Compiler>
 				<Linker>
 					<Add option="-m32" />
@@ -43,12 +38,7 @@
 					<Add option="-W" />
 					<Add option="-fexceptions" />
 					<Add option="-m32" />
-					<Add option="-DWIN32" />
 					<Add option="-DNDEBUG" />
-					<Add option="-D_WINDOWS" />
-					<Add option="-D_MBCS" />
-					<Add option="-D_USRDLL" />
-					<Add option="-DCHARSOCCURRENCES_EXPORTS" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -68,12 +58,7 @@
 					<Add option="-W" />
 					<Add option="-fexceptions" />
 					<Add option="-m64" />
-					<Add option="-DWIN32" />
 					<Add option="-DNDEBUG" />
-					<Add option="-D_WINDOWS" />
-					<Add option="-D_MBCS" />
-					<Add option="-D_USRDLL" />
-					<Add option="-DCHARSOCCURRENCES_EXPORTS" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -82,15 +67,25 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-DWIN32" />
+			<Add option="-D_WINDOWS" />
+			<Add option="-D_MBCS" />
+			<Add option="-D_USRDLL" />
 			<Add option="-DUNICODE" />
 			<Add option="-D_UNICODE" />
+			<Add option="-D_WIN32_IE=0x0800" />
+			<Add option="-D_WIN32_WINNT=0x701" />
+			<Add option="-DCHARSOCCURRENCES_EXPORTS" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--kill-at" />
 			<Add library="gdi32" />
 			<Add library="comdlg32" />
+			<Add library="comctl32" />
 		</Linker>
 		<Unit filename="Constants.h" />
+		<Unit filename="CreateHistogramWindow.cpp" />
+		<Unit filename="CreateHistogramWindow.h" />
 		<Unit filename="CreateListViewtWindow.cpp" />
 		<Unit filename="CreateListViewtWindow.h" />
 		<Unit filename="CreateRichEditWindow.cpp" />
@@ -112,6 +107,8 @@
 		<Unit filename="ListNotificationReceived.h" />
 		<Unit filename="Main.cpp" />
 		<Unit filename="Main.h" />
+		<Unit filename="NaplnStrukturuWndClassEx.cpp" />
+		<Unit filename="NaplnStrukturuWndClassEx.h" />
 		<Unit filename="WndProcs.cpp" />
 		<Unit filename="WndProcs.h" />
 		<Unit filename="resource.rc">
