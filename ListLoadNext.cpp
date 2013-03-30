@@ -11,10 +11,11 @@
 int CHARSOCCURRENCESCALL
 ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 {
-	HWND    hwndTabCtrl  = ListWin;
-	HWND    hwndChildWin = 0;
-	HWND    hwndRichEdit = 0;
-	HWND    hwndListView = 0;
+	HWND    hwndTabCtrl   = ListWin;
+	HWND    hwndListView  = 0;	HWND    hwndHistogram = 0;
+	HWND    hwndRichEdit  = 0;
+	HWND    hwndChildWin  = 0;
+    int     childID;
     int    *vyskytyPismen;
     TCHAR  *vysledok;
     TCHAR  *horizontal;
@@ -26,21 +27,29 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
     about         = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
     horizontal    = vysledok;
 
-    // ZÌskanie manipul·torov dcÈrskych okien                   // TODO: Urobiù to lepöie, zÌskanÌm predt˝m uloûen˝ch manipul·torov vo vlastnostiach rodiËovskÈho okna
+    // ZÌskanie manipul·torov dcÈrskych okien
     hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
 
-    if ((GetWindowLong(hwndChildWin, GWL_ID)) == RICHEDIT_ID)
+    while (hwndChildWin)
     {
-        hwndRichEdit = hwndChildWin;
-        hwndListView = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
-    }
-    else
-    {
-        hwndListView = hwndChildWin;
-        hwndRichEdit = GetWindow(hwndChildWin, GW_HWNDNEXT);    // Sibling window bellow the hwndChild window
+        switch(childID = GetWindowLong(hwndChildWin, GWL_ID))
+        {
+        case LISTVIEW_ID:
+            hwndListView  = hwndChildWin;
+            break;
+        case HISTOGRAM_ID:
+            hwndHistogram = hwndChildWin;
+            break;
+        case RICHEDIT_ID:
+            hwndRichEdit  = hwndChildWin;
+            break;
+        default:
+            break;
+        }
+        hwndChildWin = GetWindow(hwndChildWin, GW_HWNDNEXT);
     }
 
-	if (hwndRichEdit)
+	if (hwndListView && hwndHistogram && hwndRichEdit)
     {
         spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // M·me aj horizontal (=vysledok), aj vertical
         naplnListView(hwndListView, vyskytyPismen);
@@ -58,10 +67,20 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\Znakov vysledku = %d"), znakov);
         #endif
 
+        // Redrawing histogram by new values of the next file
+        RECT          rect, *pRect = &rect;
+        GetClientRect (hwndHistogram, pRect);
+        InvalidateRect(hwndHistogram, pRect, TRUE);
+        UpdateWindow  (hwndHistogram);
+
         switch (TabCtrl_GetCurSel(hwndTabCtrl))
         {
         case TAB_LISTVIEW:
             BringWindowToTop(hwndListView);
+            break;
+        case TAB_HISTOGRAM:
+            BringWindowToTop(hwndHistogram);
+            UpdateWindow(hwndHistogram);
             break;
         case TAB_VERTICAL:
             SetWindowText(hwndRichEdit, vertical);

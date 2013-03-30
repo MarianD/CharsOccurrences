@@ -26,9 +26,11 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
         LVCOLUMN      lvc;
         int           iCol;
 
-        // Initialize the LVCOLUMN structure.
-        // The mask specifies that the format, width, text, and subitem members
-        // of the structure are valid.
+        /*
+         * Initialize the LVCOLUMN structure.
+         * The mask specifies that the format, width, text, and subitem members
+         * of the structure are valid.
+         */
         lvc.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
 
         // Add the columns

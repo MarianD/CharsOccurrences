@@ -29,7 +29,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     GetClientRect(ParentWindow, &rect);
     hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
 
-    // Subclassing tohto okna a uloûenie starej WindowProc do jeho vlastnostÌ
+    // Subclassing of this window and saving the pointer of the old WindowProc as his property
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     SetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP, (HANDLE) OldTabCtrlProc);
 
@@ -47,22 +47,23 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     GetClientRect(hwndTabCtrl, &rect);
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
-    // Vytvorenie RichEdit v zobrazovacej Ëast Tab Control
-    hwndHistogram = CreateHistogramWindow(hwndTabCtrl, &rect) ;
-    hwndRichEdit  = CreateRichEditWindow (hwndTabCtrl, &rect);
+    // Creating child windows in the display area of the Tab Control
     hwndListView  = CreateListViewWindow (hwndTabCtrl, &rect);
+    hwndHistogram = CreateHistogramWindow(hwndTabCtrl, &rect);
+    hwndRichEdit  = CreateRichEditWindow (hwndTabCtrl, &rect);
 
-	if (hwndRichEdit && hwndListView)
+	if (hwndListView && hwndHistogram && hwndRichEdit)
     {
         // EnableWindow(hwndRichEdit, FALSE);
         spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
         naplnListView(hwndListView, vyskytyPismen);
-        SetProp(hwndListView, LAST_CLICKED_COLUMN, (HANDLE) 1);         // As column 0 (renumbered as 1) was yet clicked
 
-        SetProp(hwndTabCtrl, LISTVIEW_PROP,   (HANDLE) vyskytyPismen);
-        SetProp(hwndTabCtrl, VERTICAL_PROP,   (HANDLE) vertical);
-        SetProp(hwndTabCtrl, HORIZONTAL_PROP, (HANDLE) vysledok);
-        SetProp(hwndTabCtrl, ABOUT_PROP,      (HANDLE) about);
+        SetProp(hwndTabCtrl,   LISTVIEW_PROP,       (HANDLE) vyskytyPismen);
+        SetProp(hwndListView,  LAST_CLICKED_COLUMN, (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
+        SetProp(hwndHistogram, ARRAY_OF_OCCURENCES, (HANDLE) vyskytyPismen);
+        SetProp(hwndTabCtrl,   VERTICAL_PROP,       (HANDLE) vertical);
+        SetProp(hwndTabCtrl,   HORIZONTAL_PROP,     (HANDLE) vysledok);
+        SetProp(hwndTabCtrl,   ABOUT_PROP,          (HANDLE) about);
 
         #ifdef _DEBUG
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
@@ -78,7 +79,8 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
         case TAB_LISTVIEW:
             BringWindowToTop(hwndListView);            break;
         case TAB_HISTOGRAM:
-            BringWindowToTop(hwndHistogram);            break;
+            BringWindowToTop(hwndHistogram);
+            break;
         case TAB_VERTICAL:
             SetWindowText(hwndRichEdit, vertical);
             BringWindowToTop(hwndRichEdit);            break;
@@ -91,11 +93,11 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
         default:
             break;
         }
+        ShowWindow(hwndListView,  SW_SHOW);
         ShowWindow(hwndHistogram, SW_SHOW);
         ShowWindow(hwndRichEdit,  SW_SHOW);
-        ShowWindow(hwndListView,  SW_SHOW);
     }
 
-	return hwndTabCtrl;             // ListLoadNext() will use it
+	return hwndTabCtrl;             // The function ListLoadNext() will use it
 }
 

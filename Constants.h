@@ -25,6 +25,7 @@
     #define VERTICAL_PROP           TEXT("2")
     #define HORIZONTAL_PROP         TEXT("3")
     #define ABOUT_PROP              TEXT("4")
+    #define ARRAY_OF_OCCURENCES     TEXT("ArrayOfOccurences")
     #define OLD_TAB_WNDPROC_PROP    TEXT("OldTabCtrlProc")
     #define DETECT_STRING           "ext=\"TXT\" | force"
     #define LAST_CLICKED_COLUMN     TEXT("Last clicked column")

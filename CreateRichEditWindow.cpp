@@ -29,7 +29,6 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
 
 	if (hwndRichEdit)
     {
-        // TODO: Uloûiù manipul·tor hwndRichEdit vo vlastnostiach rodiËovskÈho okna
         SendMessage(hwndRichEdit, EM_SETMARGINS,    EC_LEFTMARGIN, 8);
         SendMessage(hwndRichEdit, EM_SETCHARFORMAT, SCF_ALL, (LPARAM) pcharFormat);
         SendMessage(hwndRichEdit, EM_SETEVENTMASK,  0, ENM_UPDATE | ENM_REQUESTRESIZE);   //ENM_SCROLL doesn't work for thumb movements!

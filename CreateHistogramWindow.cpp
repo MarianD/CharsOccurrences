@@ -10,13 +10,11 @@ HWND CreateHistogramWindow(HWND ParentWindow, RECT * pRect)
     HMENU           childID       = (HMENU) HISTOGRAM_ID;
     TCHAR           szClassName[] = TEXT("Histogram");
     WNDCLASSEX      wndClassEx;                         /* Data structure for the Window Class */
-    HINSTANCE       hInstance     = NULL;                  /* Optional parameter for CreateWindowEx */
+    HINSTANCE       hInstance     = NULL;               /* Optional parameter for CreateWindowEx */
 
+    /* Register the window class */
     NaplnStrukturuWndClassEx(&wndClassEx, hInstance, szClassName);
-
-    /* Register the window class, and if it fails quit the program */
-    if (!RegisterClassEx(&wndClassEx))
-        return (HWND) EXIT_FAILURE;
+    RegisterClassEx(&wndClassEx);
 
     hwndHistogram = CreateWindowEx(0, szClassName, szClassName,
                                    WS_CHILD | WS_CLIPSIBLINGS,
@@ -25,13 +23,5 @@ HWND CreateHistogramWindow(HWND ParentWindow, RECT * pRect)
                                    pRect->bottom - pRect->top,
                                    ParentWindow, childID, hInstance, NULL);
 
-    if (hwndHistogram)
-    {
-        // TODO: Asi netreba - Uloûiù manipul·tor hwndHistogram vo vlastnostiach rodiËovskÈho okna
-        return hwndHistogram;
-    }
-    else
-    {
-        return 0;
-    }
+    return hwndHistogram;
 }

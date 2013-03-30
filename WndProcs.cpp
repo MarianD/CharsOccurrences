@@ -5,6 +5,8 @@
 #include "CreateTabbedWindow.h"
 #include "Constants.h"
 #include "Helpers.h"
+#include <wingdi.h>
+
 
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -15,13 +17,14 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     HWND            hwndListView   =  0;
     HWND            hwndRichEdit   =  0;
     int             childID        = -1;
+    int             cx, cy;
     RECT            rect, * pRect  = &rect;
     WNDPROC         OldTabCtrlProc;
 
     OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP);
 
-    // Získanie manipulátorov dcérskych okien                   // TODO: Asi (inde) netreba uklada manipulátory okien vo vlastnostiach rodièovského okna
-    hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
+    // Getting handles of the child windows
+    hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // The topmost child Window
 
     while (hwndChildWin)
     {
@@ -45,30 +48,27 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg)
     {
     case WM_SIZE:
-        if (hwndRichEdit)
-        {
-            // Výpoèet nového obdåžnika pre dcérske okno
-            int cx = GET_X_LPARAM(lParam);
-            int cy = GET_Y_LPARAM(lParam);
-            SetRect(pRect, 0, 0, cx, cy);
-            TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
+        // Computing of the new rectangle for the child windows
+        cx = GET_X_LPARAM(lParam);
+        cy = GET_Y_LPARAM(lParam);
+        SetRect(pRect, 0, 0, cx, cy);
+        TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
-            MoveWindow(hwndListView,   pRect->left, pRect->top,
-                       pRect->right  - pRect->left,
-                       pRect->bottom - pRect->top,
-                       TRUE);
+        MoveWindow(hwndListView,   pRect->left, pRect->top,
+                   pRect->right  - pRect->left,
+                   pRect->bottom - pRect->top,
+                   TRUE);
 
-            MoveWindow(hwndHistogram,  pRect->left, pRect->top,
-                       pRect->right  - pRect->left,
-                       pRect->bottom - pRect->top,
-                       TRUE);
+        MoveWindow(hwndHistogram,  pRect->left, pRect->top,
+                   pRect->right  - pRect->left,
+                   pRect->bottom - pRect->top,
+                   TRUE);
 
-            MoveWindow(hwndRichEdit,   pRect->left, pRect->top,
-                       pRect->right  - pRect->left,
-                       pRect->bottom - pRect->top,
-                       TRUE);
-        }
-        break;
+        MoveWindow(hwndRichEdit,   pRect->left, pRect->top,
+                   pRect->right  - pRect->left,
+                   pRect->bottom - pRect->top,
+                   TRUE);
+        return 0;
     case WM_NOTIFY:
         switch ( ((NMHDR *) lParam) -> code)
         {
@@ -79,7 +79,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             int          signum;                // +1 means order in the preferred direction,
                                                 // -1 in the opposite direction
             pnmv   = (LPNMLISTVIEW) lParam;
-            column = pnmv->iSubItem;            // Numbered from 0, in spite of deletening the original column zero
+            column = pnmv->iSubItem;            // Numbered from 0, in spite of deleting the original column zero
             column++;                           // Now numbered from 1
 
             /*
@@ -130,18 +130,101 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK
 HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND            hwndHistogram = hWnd;
-    HWND            hwndTabCtrl   = GetParent(hwndHistogram);
-    RECT            rect, * pRect = &rect;
-    int             cx, cy;
+//    HWND       hwndHistogram = hWnd;
+//    HWND       hwndTabCtrl   = GetParent(hwndHistogram);
+    HDC          hdc;
+    PAINTSTRUCT  ps;
+    RECT         rect, * pRect  = &rect;
+    static int   cxClient, cyClient;
+    int *        vyskytyPismen;             // Array of occurences of individual letters
+    int          vyskyt;                    // Occurence of actual letter
+    int          xLeft;                     // Positions of 4 verteces of rectangle
+    int          xRight;
+    int          xTop;
+    int          xBottom;
+    int          zakladna  = cxClient / (POCET_VELKYCH_PISMEN + 2);
+    int          desVysky  = cyClient / 12;
+    int          maxVyska  = 10 * desVysky;
+    int          maxVyskyt = 0;
 
     switch (uMsg)
     {
     case WM_SIZE:
-        break;
+        cxClient = GET_X_LPARAM (lParam);
+        cyClient = GET_Y_LPARAM (lParam);
+        return 0;
+//    case WM_ACTIVATE:
+//        if (LOWORD(wParam) == WA_CLICKACTIVE ||
+//            LOWORD(wParam) == WA_ACTIVE)
+//        {
+//            GetClientRect(hWnd, pRect);
+//            cxClient = pRect->right  - pRect->left;
+//            cyClient = pRect->bottom - pRect->top;
+//            MoveWindow(hWnd, pRect->left,    pRect->top,
+//                             pRect->right  - pRect->left,
+//                             pRect->bottom - pRect->top, TRUE);
+//
+//        }
+//        return 0;
+    case WM_PAINT:
+        hdc = BeginPaint (hWnd, &ps);
+
+        vyskytyPismen = (int *) GetProp(hWnd, ARRAY_OF_OCCURENCES);
+
+        for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+        {
+            vyskyt    = vyskytyPismen[i];
+            maxVyskyt = (vyskyt > maxVyskyt) ? vyskyt : maxVyskyt;
+        }
+
+        // Znovunaèítanie rozmerov okna, ak ich iný exemplár Listera zmenil
+        GetClientRect(hWnd, pRect);
+        cxClient = pRect->right  - pRect->left;
+        cyClient = pRect->bottom - pRect->top;
+
+        // Vykreslenie histogramu
+        for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+        {
+            vyskyt  = vyskytyPismen[i];
+            xLeft   = zakladna + i * zakladna;
+            xRight  = xLeft + zakladna;
+            xTop    = desVysky + (int) ((float) vyskyt / maxVyskyt * maxVyska);
+            xBottom = desVysky;
+            xTop    = cyClient - xTop;
+            xBottom = cyClient - xBottom;
+
+            Rectangle(hdc, xLeft, xTop, xRight, xBottom);
+        }
+
+        // Vykreslenie obdåžnika pre menovky ståpcov histogramu
+        xLeft   = zakladna;
+        xRight  = zakladna + POCET_VELKYCH_PISMEN * zakladna;
+        xTop    = 3 * desVysky / 4;
+        xBottom = desVysky / 4;
+        xTop    = cyClient - xTop;
+        xBottom = cyClient - xBottom;
+
+        Rectangle(hdc, xLeft, xTop, xRight, xBottom);
+
+        // Vykreslenie menoviek ståpcov histogramu
+        for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+        {
+            TCHAR pismeno = TEXT('A') + i;
+            pRect->left   = zakladna + i * zakladna;
+            pRect->right  = pRect->left  + zakladna;
+            pRect->top    = 3 * desVysky / 4;
+            pRect->bottom = desVysky / 4;
+            pRect->top    = cyClient - pRect->top;
+            pRect->bottom = cyClient - pRect->bottom;
+
+//            SetBkColor(hdc, PALETTEINDEX(COLOR_BACKGROUND));
+//            SetBkColor(hdc, RGB(200, 200, 200));
+//            SetBkColor(hdc, (COLORREF) GetSysColor(COLOR_BACKGROUND));
+            DrawText(hdc, &pismeno, 1, pRect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+        }
+        return 0 ;
     default:
         return DefWindowProc (hWnd, uMsg, wParam, lParam);
-        break;
     }
     return EXIT_SUCCESS;
 }
