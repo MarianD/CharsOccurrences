@@ -29,5 +29,6 @@
     #define OLD_TAB_WNDPROC_PROP    TEXT("OldTabCtrlProc")
     #define DETECT_STRING           "ext=\"TXT\" | force"
     #define LAST_CLICKED_COLUMN     TEXT("Last clicked column")
+    #define CLIENT_WIDTH_AND_HIGHT  TEXT("Client width and hight")
 
 #endif // ndef

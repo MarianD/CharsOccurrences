@@ -130,42 +130,28 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK
 HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-//    HWND       hwndHistogram = hWnd;
-//    HWND       hwndTabCtrl   = GetParent(hwndHistogram);
-    HDC          hdc;
-    PAINTSTRUCT  ps;
-    RECT         rect, * pRect  = &rect;
-    static int   cxClient, cyClient;
-    int *        vyskytyPismen;             // Array of occurences of individual letters
-    int          vyskyt;                    // Occurence of actual letter
-    int          xLeft;                     // Positions of 4 verteces of rectangle
-    int          xRight;
-    int          xTop;
-    int          xBottom;
-    int          zakladna  = cxClient / (POCET_VELKYCH_PISMEN + 2);
-    int          desVysky  = cyClient / 12;
-    int          maxVyska  = 10 * desVysky;
-    int          maxVyskyt = 0;
+    HDC         hdc;
+    PAINTSTRUCT ps;
+    RECT        rect, * pRect = &rect;
+    int         cxClient;
+    int         cyClient;
+    int *       vyskytyPismen;             // Array of occurences of individual letters
+    int         vyskyt;                    // Occurence of actual letter
+    int         xLeft;                     // Positions of 4 verteces of rectangle
+    int         xRight;
+    int         xTop;
+    int         xBottom;
+    int         zakladna;                  //  = cxClient / (POCET_VELKYCH_PISMEN + 2);
+    int         desVysky;                  //  = cyClient / 12;
+    int         maxVyska;                  //  = 10 * desVysky;
+    int         maxVyskyt = 0;
 
     switch (uMsg)
     {
     case WM_SIZE:
-        cxClient = GET_X_LPARAM (lParam);
-        cyClient = GET_Y_LPARAM (lParam);
+        // Saving dimension of the client area of THIS window
+        SetProp(hWnd, CLIENT_WIDTH_AND_HIGHT, (HANDLE) lParam);
         return 0;
-//    case WM_ACTIVATE:
-//        if (LOWORD(wParam) == WA_CLICKACTIVE ||
-//            LOWORD(wParam) == WA_ACTIVE)
-//        {
-//            GetClientRect(hWnd, pRect);
-//            cxClient = pRect->right  - pRect->left;
-//            cyClient = pRect->bottom - pRect->top;
-//            MoveWindow(hWnd, pRect->left,    pRect->top,
-//                             pRect->right  - pRect->left,
-//                             pRect->bottom - pRect->top, TRUE);
-//
-//        }
-//        return 0;
     case WM_PAINT:
         hdc = BeginPaint (hWnd, &ps);
 
@@ -177,12 +163,17 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             maxVyskyt = (vyskyt > maxVyskyt) ? vyskyt : maxVyskyt;
         }
 
-        // Znovunaèítanie rozmerov okna, ak ich iný exemplár Listera zmenil
-        GetClientRect(hWnd, pRect);
-        cxClient = pRect->right  - pRect->left;
-        cyClient = pRect->bottom - pRect->top;
+        // Getting dimensions of the client area of THIS window
+        lParam   = (LPARAM) GetProp(hWnd, CLIENT_WIDTH_AND_HIGHT);
+        cxClient = GET_X_LPARAM (lParam);
+        cyClient = GET_Y_LPARAM (lParam);
 
-        // Vykreslenie histogramu
+        // Recalculation of variables used for painting
+        zakladna = cxClient / (POCET_VELKYCH_PISMEN + 2);
+        desVysky = cyClient / 12;
+        maxVyska = 10 * desVysky;
+
+        // Painting of the histogram
         for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
         {
             vyskyt  = vyskytyPismen[i];
