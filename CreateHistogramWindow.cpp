@@ -6,11 +6,11 @@
 
 HWND CreateHistogramWindow(HWND ParentWindow, RECT * pRect)
 {
-    HWND            hwndHistogram;
-    HMENU           childID       = (HMENU) HISTOGRAM_ID;
-    TCHAR           szClassName[] = TEXT("Histogram");
-    WNDCLASSEX      wndClassEx;                         /* Data structure for the Window Class */
-    HINSTANCE       hInstance     = NULL;               /* Optional parameter for CreateWindowEx */
+    HWND       hwndHistogram;
+    HMENU      childID       = (HMENU) HISTOGRAM_ID;
+    TCHAR      szClassName[] = TEXT("Histogram");
+    WNDCLASSEX wndClassEx;                         /* Data structure for the Window Class */
+    HINSTANCE  hInstance     = NULL;               /* Optional parameter for CreateWindowEx */
 
     /* Register the window class */
     NaplnStrukturuWndClassEx(&wndClassEx, hInstance, szClassName);

@@ -4,7 +4,95 @@
 #include "Helpers.h"
 #include "Constants.h"
 
+EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+
+
 /********************** Pomocne funkcie *************************/
+
+void switchTab(HWND hwndTabCtrl, HWND hwndListView, HWND hwndHistogram, HWND hwndRichEdit,
+               TCHAR * horizontal, TCHAR * vertical, TCHAR * about)
+{
+    switch (TabCtrl_GetCurSel(hwndTabCtrl))
+    {
+    case TAB_LISTVIEW:
+        BringWindowToTop(hwndListView);
+            break;
+    case TAB_HISTOGRAM:
+        BringWindowToTop(hwndHistogram);
+        UpdateWindow(hwndHistogram);
+        break;
+    case TAB_VERTICAL:
+        SetWindowText(hwndRichEdit, vertical);
+        BringWindowToTop(hwndRichEdit);
+        break;
+    case TAB_HORIZONTAL:
+        SetWindowText(hwndRichEdit, horizontal);
+        BringWindowToTop(hwndRichEdit);
+        break;
+    case TAB_ABOUT:
+        SetWindowText(hwndRichEdit, about);
+        BringWindowToTop(hwndRichEdit);
+        break;
+    default:
+        break;
+    }
+}
+
+
+void getHandlesOfChildrensWindows(HWND hwndTabCtrl, HWND &hwndListView, HWND &hwndHistogram, HWND &hwndRichEdit)
+{
+    HWND    hwndChildWin  =  0;
+    long    childID       = -1;
+
+    // Získanie manipulátorov dcérskych okien
+    hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
+
+    while (hwndChildWin)
+    {
+        switch(childID = GetWindowLong(hwndChildWin, GWL_ID))
+        {
+        case LISTVIEW_ID:
+            hwndListView  = hwndChildWin;
+            break;
+        case HISTOGRAM_ID:
+            hwndHistogram = hwndChildWin;
+            break;
+        case RICHEDIT_ID:
+            hwndRichEdit  = hwndChildWin;
+            break;
+        default:
+            break;
+        }
+        hwndChildWin = GetWindow(hwndChildWin, GW_HWNDNEXT);
+    }
+}
+
+
+void getFullIniFilePath(TCHAR * result)
+{
+    // Near the top is the declaration  EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+
+    TCHAR   strDLLPath[_MAX_PATH];
+    tstring fullIniFilePath;
+    int     lastBackSlash;
+
+    /*
+     *  At first we get the full path to this DLL, then we erase all
+     *  characters after the last backslash and append the name of our
+     *  ini file.
+     *
+     *  The declaration of __ImageBase is near the top (as global)
+     */
+    GetModuleFileName((HINSTANCE)&__ImageBase, strDLLPath, _MAX_PATH);
+
+    fullIniFilePath = strDLLPath;
+    lastBackSlash   = fullIniFilePath.rfind(TEXT('\\'));
+
+    fullIniFilePath.erase(++lastBackSlash).append(INI_FILE);
+
+    lstrcpy(result, fullIniFilePath.c_str());
+}
+
 
 /** \brief CallBack funkcia volaná pri požiadavke na zoradenie ListView pod¾a niektorého ståpca
  *
@@ -43,10 +131,10 @@ void naplnListView(HWND hwndListView, int * vyskytyPismen)
 
     for (int riadok = 0; riadok < POCET_VELKYCH_PISMEN; riadok++)
     {
-        TCHAR pismeno[] = TEXT("X");
-        pismeno[0]      = TEXT('A') + riadok;
-        int occur       = vyskytyPismen[riadok];
-        float percent   = (float) occur / sucetVyskytov * 100.;
+        TCHAR pismeno[]     = TEXT("X");
+        pismeno[0]          = TEXT('A') + riadok;
+        int   occur         = vyskytyPismen[riadok];
+        float percent       = (float) occur / sucetVyskytov * 100.;
         TCHAR chOccur  [20];
         TCHAR chPercent[20];
 

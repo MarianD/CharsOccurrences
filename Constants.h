@@ -30,5 +30,9 @@
     #define DETECT_STRING           "ext=\"TXT\" | force"
     #define LAST_CLICKED_COLUMN     TEXT("Last clicked column")
     #define CLIENT_WIDTH_AND_HIGHT  TEXT("Client width and hight")
+    #define INI_FILE                TEXT("CharsOccurrences.ini")
+    #define LAST_CHOSEN_TAB         TEXT("Last chosen tab")
+    #define INI_SECTION_TAB         TEXT("Tabs")
+    #define INI_KEY_LAST_CHOSEN_TAB TEXT("LastChosenTab")
 
 #endif // ndef

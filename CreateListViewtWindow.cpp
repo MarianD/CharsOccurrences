@@ -5,9 +5,9 @@
 
 HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
 {
-    HWND            hwndListView;
-    HINSTANCE       hinst   = 0;
-    HMENU           childID = (HMENU) LISTVIEW_ID;
+    HWND      hwndListView;
+    HINSTANCE hinst   = 0;
+    HMENU     childID = (HMENU) LISTVIEW_ID;
 
     hwndListView = CreateWindowEx(0, WC_LISTVIEW, TEXT(""),
                                   WS_CHILD   | LVS_REPORT | LVS_EDITLABELS |
@@ -27,9 +27,9 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
         int           iCol;
 
         /*
-         * Initialize the LVCOLUMN structure.
-         * The mask specifies that the format, width, text, and subitem members
-         * of the structure are valid.
+         *  Initialize the LVCOLUMN structure.
+         *  The mask specifies that the format, width, text, and subitem members
+         *  of the structure are valid.
          */
         lvc.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
 
@@ -43,9 +43,10 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
 
             ListView_InsertColumn(hwndListView, iCol, &lvc);
         }
+
         /*
          *  This column existed only to enable the first column alignment,
-         *  because thealignment of the leftmost column is always
+         *  because the alignment of the leftmost column is always
          *  left-justified and cannot be changed
          */
         ListView_DeleteColumn(hwndListView, 0);

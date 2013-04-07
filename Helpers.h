@@ -21,7 +21,13 @@
     #include <windows.h>
     #include <tchar.h>
     #include <map>
+    #include <string>
     #include "version.h"
+
+    namespace std
+    {
+        typedef basic_string<TCHAR> tstring;
+    }
 
     using namespace std;
 
@@ -29,6 +35,10 @@
 
     /********************  Prototypy funkcií  ***********************/
 
+    void switchTab(HWND hwndTabCtrl, HWND hwndListView, HWND hwndHistogram, HWND hwndRichEdit,
+               TCHAR * horizontal, TCHAR * vertical, TCHAR * about);
+    void getHandlesOfChildrensWindows(HWND hwndTabCtrl, HWND &hwndListView, HWND &hwndHistogram, HWND &hwndRichEdit);
+    void getFullIniFilePath(TCHAR * result);
     int   CALLBACK
           cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec);
     void  naplnListView(HWND hwndListView, int * vyskytyPismen);

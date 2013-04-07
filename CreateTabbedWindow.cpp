@@ -6,15 +6,15 @@
 /** \brief  Vytvorenie okna typu Tab Control
  *
  * \param ParentWindow HWND - okno, v ktorom sa m· vytvoriù
- * \param pRect RECT*   - ukazovateæ na obdÂûnik okna Tab Control
+ * \param pRect RECT*  - ukazovateæ na obdÂûnik okna Tab Control
  * \return HWND - handle vytvorenÈho okna typu Tab Control
  *
  */
 HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
 {
-	HWND            hwndTabCtrl;
-    HINSTANCE       hinst;
-    HMENU           childID = (HMENU) 0;
+	HWND      hwndTabCtrl;
+    HINSTANCE hinst   =  0;
+    HMENU     childID = (HMENU) 0;
 
     hwndTabCtrl = CreateWindowEx(0, WC_TABCONTROL, TEXT(""),
                                 WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN,
@@ -24,39 +24,39 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
                                 ParentWindow, childID, hinst, NULL);
 
     // Vytvorenie nov˝ch uöiek
-    LPTCITEM usko0 = new TCITEM;
-    LPTCITEM usko1 = new TCITEM;
-    LPTCITEM usko2 = new TCITEM;
-    LPTCITEM usko3 = new TCITEM;
-    LPTCITEM usko4 = new TCITEM;
+    LPTCITEM tab0 = new TCITEM;
+    LPTCITEM tab1 = new TCITEM;
+    LPTCITEM tab2 = new TCITEM;
+    LPTCITEM tab3 = new TCITEM;
+    LPTCITEM tab4 = new TCITEM;
 
     // Naplnenie uöiek hodnotami
-    usko0->mask       = TCIF_TEXT;
-    usko0->pszText    = TEXT ("Flexible");
-    usko0->cchTextMax = 60;
+    tab0->mask       = TCIF_TEXT;
+    tab0->pszText    = (TCHAR *) TEXT ("Flexible");
+    tab0->cchTextMax = 60;
 
-    usko1->mask       = TCIF_TEXT;
-    usko1->pszText    = TEXT ("Histogram");
-    usko1->cchTextMax = 60;
+    tab1->mask       = TCIF_TEXT;
+    tab1->pszText    = (TCHAR *) TEXT ("Histogram");
+    tab1->cchTextMax = 60;
 
-    usko2->mask       = TCIF_TEXT;
-    usko2->pszText    = TEXT ("Vertical");
-    usko2->cchTextMax = 60;
+    tab2->mask       = TCIF_TEXT;
+    tab2->pszText    = (TCHAR *) TEXT ("Vertical");
+    tab2->cchTextMax = 60;
 
-    usko3->mask       = TCIF_TEXT;
-    usko3->pszText    = TEXT ("Horizontal");
-    usko3->cchTextMax = 60;
+    tab3->mask       = TCIF_TEXT;
+    tab3->pszText    = (TCHAR *) TEXT ("Horizontal");
+    tab3->cchTextMax = 60;
 
-    usko4->mask       = TCIF_TEXT;
-    usko4->pszText    = TEXT ("About");
-    usko4->cchTextMax = 60;
+    tab4->mask       = TCIF_TEXT;
+    tab4->pszText    = (TCHAR *) TEXT ("About");
+    tab4->cchTextMax = 60;
 
     // Pridanie pripraven˝ch uöiek
-    TabCtrl_InsertItem(hwndTabCtrl, 0, usko0);
-    TabCtrl_InsertItem(hwndTabCtrl, 1, usko1);
-    TabCtrl_InsertItem(hwndTabCtrl, 2, usko2);
-    TabCtrl_InsertItem(hwndTabCtrl, 3, usko3);
-    TabCtrl_InsertItem(hwndTabCtrl, 4, usko4);
+    TabCtrl_InsertItem(hwndTabCtrl, 0, tab0);
+    TabCtrl_InsertItem(hwndTabCtrl, 1, tab1);
+    TabCtrl_InsertItem(hwndTabCtrl, 2, tab2);
+    TabCtrl_InsertItem(hwndTabCtrl, 3, tab3);
+    TabCtrl_InsertItem(hwndTabCtrl, 4, tab4);
 
     // ZÌskanie obdÂûnika pre zobrazovaciu Ëasù Tab Control
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);

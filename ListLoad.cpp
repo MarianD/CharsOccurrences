@@ -11,16 +11,19 @@
 #include "version.h"
 #include "Constants.h"
 
+
 HWND CHARSOCCURRENCESCALL
 ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 {
-	HWND      hwndTabCtrl   = 0;
-	HWND      hwndHistogram = 0;
-	HWND      hwndRichEdit  = 0;
-	HWND      hwndListView  = 0;
-	RECT      rect;
+	HWND    hwndTabCtrl   = 0;
+	HWND    hwndHistogram = 0;
+	HWND    hwndRichEdit  = 0;
+	HWND    hwndListView  = 0;
+	int     lastChosenTab = 0;
+	RECT    rect;
+	TCHAR   iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
-    WNDPROC   OldTabCtrlProc;
+    WNDPROC OldTabCtrlProc;
     extern
     LRESULT CALLBACK
     NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -74,30 +77,22 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\Znakov vysledku = %d"), znakov);
         #endif
 
-        switch (TabCtrl_GetCurSel(hwndTabCtrl))
-        {
-        case TAB_LISTVIEW:
-            BringWindowToTop(hwndListView);            break;
-        case TAB_HISTOGRAM:
-            BringWindowToTop(hwndHistogram);
-            break;
-        case TAB_VERTICAL:
-            SetWindowText(hwndRichEdit, vertical);
-            BringWindowToTop(hwndRichEdit);            break;
-        case TAB_HORIZONTAL:
-            SetWindowText(hwndRichEdit, horizontal);
-            BringWindowToTop(hwndRichEdit);            break;
-        case TAB_ABOUT:
-            SetWindowText(hwndRichEdit, about);
-            BringWindowToTop(hwndRichEdit);            break;
-        default:
-            break;
-        }
+        /*
+         *  Restore the last chosen tab from the INI file and store it
+         *  in the properties
+         *  of the Tab Control window
+         */
+        getFullIniFilePath(iniFile);
+        lastChosenTab = GetPrivateProfileInt(INI_SECTION_TAB, INI_KEY_LAST_CHOSEN_TAB, 0, iniFile);
+        SetProp(hwndTabCtrl, LAST_CHOSEN_TAB, (HANDLE) lastChosenTab);       // For the case when default and user didn't choose other
+
+        TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
+        switchTab(hwndTabCtrl, hwndListView, hwndHistogram, hwndRichEdit, horizontal, vertical, about);
         ShowWindow(hwndListView,  SW_SHOW);
         ShowWindow(hwndHistogram, SW_SHOW);
         ShowWindow(hwndRichEdit,  SW_SHOW);
     }
 
-	return hwndTabCtrl;             // The function ListLoadNext() will use it
+    return hwndTabCtrl;             // The function ListLoadNext() will use it
 }
 

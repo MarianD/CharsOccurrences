@@ -30,7 +30,7 @@
     CHARSOCCURRENCESAPI HWND  CHARSOCCURRENCESCALL ListLoad                 (HWND ParentWin,               char* FileToLoad, int ShowFlags);
     CHARSOCCURRENCESAPI int   CHARSOCCURRENCESCALL ListLoadNext             (HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags);
     CHARSOCCURRENCESAPI int   CHARSOCCURRENCESCALL ListNotificationReceived (HWND ListWin,   int  Message, WPARAM wParam,    LPARAM lParam);
-//    CHARSOCCURRENCESAPI void  CHARSOCCURRENCESCALL ListCloseWindow          (HWND ListWin);
+    CHARSOCCURRENCESAPI void  CHARSOCCURRENCESCALL ListCloseWindow          (HWND ListWin);
     CHARSOCCURRENCESAPI void  CHARSOCCURRENCESCALL ListGetDetectString      (char* DetectString, int maxlen);
 
     #ifdef __cplusplus

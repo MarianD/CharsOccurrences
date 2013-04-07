@@ -11,39 +11,18 @@
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND            hwndTabCtrl    =  hWnd;
-    HWND            hwndChildWin   =  0;
-    HWND            hwndHistogram  =  0;
-    HWND            hwndListView   =  0;
-    HWND            hwndRichEdit   =  0;
-    int             childID        = -1;
-    int             cx, cy;
-    RECT            rect, * pRect  = &rect;
-    WNDPROC         OldTabCtrlProc;
+    HWND    hwndTabCtrl    =  hWnd;
+    HWND    hwndHistogram  =  0;
+    HWND    hwndListView   =  0;
+    HWND    hwndRichEdit   =  0;
+    int     cx, cy;
+    RECT    rect, * pRect  = &rect;
+    WNDPROC OldTabCtrlProc;
 
     OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP);
 
     // Getting handles of the child windows
-    hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // The topmost child Window
-
-    while (hwndChildWin)
-    {
-        switch(childID = GetWindowLong(hwndChildWin, GWL_ID))
-        {
-        case LISTVIEW_ID:
-            hwndListView  = hwndChildWin;
-            break;
-        case HISTOGRAM_ID:
-            hwndHistogram = hwndChildWin;
-            break;
-        case RICHEDIT_ID:
-            hwndRichEdit  = hwndChildWin;
-            break;
-        default:
-            break;
-        }
-        hwndChildWin = GetWindow(hwndChildWin, GW_HWNDNEXT);
-    }
+    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndHistogram, hwndRichEdit);
 
     switch (uMsg)
     {
