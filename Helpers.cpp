@@ -9,20 +9,25 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 /********************** Pomocne funkcie *************************/
 
-void switchTab(HWND hwndTabCtrl, HWND hwndListView, HWND hwndListView1, HWND hwndHistogram, HWND hwndRichEdit,
-               TCHAR * horizontal, TCHAR * vertical, TCHAR * about)
+void switchTab(HWND    hwndTabCtrl,   HWND    hwndListView,   HWND    hwndListView1,
+               HWND    hwndHistogram, HWND    hwndHistogram1, HWND    hwndRichEdit,
+               TCHAR * horizontal,    TCHAR * vertical,       TCHAR * about)
 {
     switch (TabCtrl_GetCurSel(hwndTabCtrl))
     {
     case TAB_LISTVIEW:
         BringWindowToTop(hwndListView);
             break;
-    case TAB_LISTVIEW1:
-        BringWindowToTop(hwndListView1);
-            break;
     case TAB_HISTOGRAM:
         BringWindowToTop(hwndHistogram);
         UpdateWindow(hwndHistogram);
+        break;
+    case TAB_LISTVIEW1:
+        BringWindowToTop(hwndListView1);
+            break;
+    case TAB_HISTOGRAM1:
+        BringWindowToTop(hwndHistogram1);
+        UpdateWindow(hwndHistogram1);
         break;
     case TAB_VERTICAL:
         SetWindowText(hwndRichEdit, vertical);
@@ -42,8 +47,8 @@ void switchTab(HWND hwndTabCtrl, HWND hwndListView, HWND hwndListView1, HWND hwn
 }
 
 
-void getHandlesOfChildrensWindows(HWND hwndTabCtrl,
-                                  HWND &hwndListView, HWND &hwndListView1, HWND &hwndHistogram, HWND &hwndRichEdit)
+void getHandlesOfChildrensWindows(HWND hwndTabCtrl,    HWND &hwndListView,   HWND &hwndListView1,
+                                  HWND &hwndHistogram, HWND &hwndHistogram1, HWND &hwndRichEdit)
 {
     HWND    hwndChildWin  =  0;
     long    childID       = -1;
@@ -56,16 +61,19 @@ void getHandlesOfChildrensWindows(HWND hwndTabCtrl,
         switch(childID = GetWindowLong(hwndChildWin, GWL_ID))
         {
         case LISTVIEW_ID:
-            hwndListView  = hwndChildWin;
+            hwndListView   = hwndChildWin;
             break;
         case LISTVIEW1_ID:
-            hwndListView1 = hwndChildWin;
+            hwndListView1  = hwndChildWin;
             break;
         case HISTOGRAM_ID:
-            hwndHistogram = hwndChildWin;
+            hwndHistogram  = hwndChildWin;
+            break;
+        case HISTOGRAM1_ID:
+            hwndHistogram1 = hwndChildWin;
             break;
         case RICHEDIT_ID:
-            hwndRichEdit  = hwndChildWin;
+            hwndRichEdit   = hwndChildWin;
             break;
         default:
             break;
@@ -447,7 +455,7 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, TCHAR ** 
                 int index = znak - 'A';         // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
                 charsOccurrences[index]++;
             }
-            else if (/*znak >= '0' && znak <= '9'*/ isdigit(znak))
+            else if (isdigit(znak))
             {
                 int index = znak - '0';
                 index += POCET_VELKYCH_PISMEN;  // Occurrences of digits are just after occurences of letters

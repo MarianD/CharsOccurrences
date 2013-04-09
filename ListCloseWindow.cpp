@@ -15,6 +15,7 @@ ListCloseWindow(HWND ListWin)
 	HWND   hwndListView1      = 0;
 	HWND   hwndRichEdit       = 0;
 	HWND   hwndHistogram      = 0;
+	HWND   hwndHistogram1     = 0;
     void  *vyskytyPismen      = 0;
     void  *vysledok           = 0;
     void  *about              = 0;
@@ -30,7 +31,8 @@ ListCloseWindow(HWND ListWin)
     WritePrivateProfileString(INI_SECTION_TAB, INI_KEY_LAST_CHOSEN_TAB, strLastChosenTab, iniFile);
 
     // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit);
+    getHandlesOfChildrensWindows(hwndTabCtrl,   hwndListView,   hwndListView1,
+                                 hwndHistogram, hwndHistogram1, hwndRichEdit);
 
 
     /*
@@ -42,11 +44,13 @@ ListCloseWindow(HWND ListWin)
     vysledok      = (void *) RemoveProp(hwndTabCtrl,   HORIZONTAL_PROP);
     vysledok      = (void *) RemoveProp(hwndTabCtrl,   ABOUT_PROP);
 
-    RemoveProp(hwndTabCtrl,   VERTICAL_PROP);
-    RemoveProp(hwndTabCtrl,   OLD_TAB_WNDPROC_PROP);
-    RemoveProp(hwndTabCtrl,   LAST_CHOSEN_TAB);
-    RemoveProp(hwndListView,  LAST_CLICKED_COLUMN);    RemoveProp(hwndHistogram, ARRAY_OF_OCCURENCES);
-    RemoveProp(hwndHistogram, CLIENT_WIDTH_AND_HIGHT);
+    RemoveProp(hwndTabCtrl,    VERTICAL_PROP);
+    RemoveProp(hwndTabCtrl,    OLD_TAB_WNDPROC_PROP);
+    RemoveProp(hwndTabCtrl,    LAST_CHOSEN_TAB);
+    RemoveProp(hwndListView,   LAST_CLICKED_COLUMN);
+    RemoveProp(hwndListView1,  LAST_CLICKED_COLUMN);    RemoveProp(hwndHistogram,  ARRAY_OF_OCCURENCES);
+    RemoveProp(hwndHistogram1, ARRAY_OF_OCCURENCES);
+    RemoveProp(hwndHistogram,  CLIENT_WIDTH_AND_HIGHT);
 
     // Uvoænenie alokovanej pam‰te pre reùazce
     if (vyskytyPismen)

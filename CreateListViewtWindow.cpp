@@ -21,10 +21,15 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
     {
         // InitListViewColumns - adds columns to a list-view control.
 
-        const TCHAR * szText  [4] = {TEXT(""), TEXT("Char"), TEXT("Count"), TEXT("Percent")};
-        const int     colWidth[4] = {0, 40, 50, 60};
-        LVCOLUMN      lvc;
-        int           iCol;
+        TCHAR     szText[4][10];
+        const int colWidth[4] = {0, 50, 50, 60};
+        LVCOLUMN  lvc;
+        int       iCol;
+
+        lstrcpy(szText[0], TEXT(""));
+        lstrcpy(szText[1], (id == LISTVIEW_ID) ? TEXT("Letter") : TEXT("Digit"));
+        lstrcpy(szText[2], TEXT("Count"));
+        lstrcpy(szText[3], TEXT("Percent"));
 
         /*
          *  Initialize the LVCOLUMN structure.

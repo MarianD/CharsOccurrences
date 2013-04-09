@@ -35,10 +35,12 @@
 
     /********************  Prototypy funkcií  ***********************/
 
-    void switchTab(HWND hwndTabCtrl, HWND hwndListView, HWND hwndListView1, HWND hwndHistogram, HWND hwndRichEdit,
-               TCHAR * horizontal, TCHAR * vertical, TCHAR * about);
-void getHandlesOfChildrensWindows(HWND hwndTabCtrl,
-                                  HWND &hwndListView, HWND &hwndListView1, HWND &hwndHistogram, HWND &hwndRichEdit);    void getFullIniFilePath(TCHAR * result);
+    void switchTab(HWND    hwndTabCtrl,   HWND    hwndListView,   HWND    hwndListView1,
+                   HWND    hwndHistogram, HWND    hwndHistogram1, HWND    hwndRichEdit,
+                   TCHAR * horizontal,    TCHAR * vertical,       TCHAR * about);
+    void getHandlesOfChildrensWindows(HWND hwndTabCtrl,    HWND &hwndListView,   HWND &hwndListView1,
+                                      HWND &hwndHistogram, HWND &hwndHistogram1, HWND &hwndRichEdit);
+    void getFullIniFilePath(TCHAR * result);
     int   CALLBACK
           cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec);
     void  naplnListView(HWND hwndListView, int * vyskytyPismen, int charsType);

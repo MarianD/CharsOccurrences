@@ -3,6 +3,6 @@
 
     #include <windows.h>
 
-    HWND CreateHistogramWindow(HWND ParentWindow, RECT * pRect);
+    HWND CreateHistogramWindow(HWND ParentWindow, RECT * pRect, int id);
 
 #endif // CREATEHISTOGRAMWINDOW_H

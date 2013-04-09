@@ -13,6 +13,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     HWND    hwndTabCtrl    =  hWnd;
     HWND    hwndHistogram  =  0;
+    HWND    hwndHistogram1 =  0;
     HWND    hwndListView   =  0;
     HWND    hwndListView1  =  0;
     HWND    hwndRichEdit   =  0;
@@ -25,7 +26,8 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP);
 
     // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit);
+    getHandlesOfChildrensWindows(hwndTabCtrl,   hwndListView,   hwndListView1,
+                                 hwndHistogram, hwndHistogram1, hwndRichEdit);
 
     switch (uMsg)
     {
@@ -47,6 +49,11 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                    TRUE);
 
         MoveWindow(hwndHistogram,  pRect->left, pRect->top,
+                   pRect->right  - pRect->left,
+                   pRect->bottom - pRect->top,
+                   TRUE);
+
+        MoveWindow(hwndHistogram1, pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
@@ -134,7 +141,10 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     int         zakladna;                  //  = cxClient / (POCET_VELKYCH_PISMEN + 2);
     int         desVysky;                  //  = cyClient / 12;
     int         maxVyska;                  //  = 10 * desVysky;
-    int         maxVyskyt = 0;
+    int         maxVyskyt =  0;
+    int         base      = -1;
+    int         numChars  = -1;
+    TCHAR       baseChar = TEXT('?');
 
     switch (uMsg)
     {
@@ -143,13 +153,31 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         SetProp(hWnd, CLIENT_WIDTH_AND_HIGHT, (HANDLE) lParam);
         return 0;
     case WM_PAINT:
+        // TODO: RozlÌöiù histogramy, napr. switch(GetWindowLong(hWnd, GWL_ID)
+        switch (GetWindowLong(hWnd, GWL_ID))
+        {
+        case HISTOGRAM_ID:
+            base     = 0;
+            baseChar = TEXT('A');
+            numChars = POCET_VELKYCH_PISMEN;
+            break;
+        case HISTOGRAM1_ID:
+            base     = 0 + POCET_VELKYCH_PISMEN;
+            baseChar = TEXT('0');
+            numChars = POCET_CISLIC;
+            break;
+
+        default:
+            break;
+        }
+
         hdc = BeginPaint (hWnd, &ps);
 
         vyskytyPismen = (int *) GetProp(hWnd, ARRAY_OF_OCCURENCES);
 
-        for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+        for (int i = 0; i < numChars; i++)
         {
-            vyskyt    = vyskytyPismen[i];
+            vyskyt    = vyskytyPismen[base + i];
             maxVyskyt = (vyskyt > maxVyskyt) ? vyskyt : maxVyskyt;
         }
         if (maxVyskyt == 0)
@@ -161,14 +189,14 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         cyClient = GET_Y_LPARAM (lParam);
 
         // Recalculation of variables used for painting
-        zakladna = cxClient / (POCET_VELKYCH_PISMEN + 2);
+        zakladna = cxClient / (numChars + 2);
         desVysky = cyClient / 12;
         maxVyska = 10 * desVysky;
 
         // Painting of the histogram
-        for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+        for (int i = 0; i < numChars; i++)
         {
-            vyskyt  = vyskytyPismen[i];
+            vyskyt  = vyskytyPismen[base + i];
             xLeft   = zakladna + i * zakladna;
             xRight  = xLeft + zakladna;
             xTop    = desVysky + (int) ((float) vyskyt / maxVyskyt * maxVyska);
@@ -181,7 +209,7 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         // Vykreslenie obdÂûnika pre menovky stÂpcov histogramu
         xLeft   = zakladna;
-        xRight  = zakladna + POCET_VELKYCH_PISMEN * zakladna;
+        xRight  = zakladna + numChars * zakladna;
         xTop    = 3 * desVysky / 4;
         xBottom = desVysky / 4;
         xTop    = cyClient - xTop;
@@ -190,9 +218,9 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         Rectangle(hdc, xLeft, xTop, xRight, xBottom);
 
         // Vykreslenie menoviek stÂpcov histogramu
-        for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+        for (int i = 0; i < numChars; i++)
         {
-            TCHAR pismeno = TEXT('A') + i;
+            TCHAR pismeno = baseChar + i;
             pRect->left   = zakladna + i * zakladna;
             pRect->right  = pRect->left  + zakladna;
             pRect->top    = 3 * desVysky / 4;

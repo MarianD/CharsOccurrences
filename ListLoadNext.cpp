@@ -11,10 +11,11 @@
 int CHARSOCCURRENCESCALL
 ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 {
-	HWND    hwndTabCtrl   = ListWin;
-	HWND    hwndListView  = 0;
-	HWND    hwndListView1 = 0;	HWND    hwndHistogram = 0;
-	HWND    hwndRichEdit  = 0;
+	HWND    hwndTabCtrl    = ListWin;
+	HWND    hwndListView   = 0;
+	HWND    hwndListView1  = 0;	HWND    hwndHistogram  = 0;
+	HWND    hwndHistogram1 = 0;
+	HWND    hwndRichEdit   = 0;
     int    *vyskytyPismen;
     TCHAR  *vysledok;
     TCHAR  *horizontal;
@@ -27,7 +28,8 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
     horizontal    = vysledok;
 
     // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit);
+    getHandlesOfChildrensWindows(hwndTabCtrl,   hwndListView,   hwndListView1,
+                                 hwndHistogram, hwndHistogram1, hwndRichEdit);
 
 	if (hwndListView && hwndHistogram && hwndRichEdit)
     {
@@ -50,11 +52,15 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 
         // Redrawing histogram by new values of the next file
         RECT          rect, *pRect = &rect;
-        GetClientRect (hwndHistogram, pRect);
-        InvalidateRect(hwndHistogram, pRect, TRUE);
+        GetClientRect (hwndHistogram,  pRect);
+        InvalidateRect(hwndHistogram,  pRect, TRUE);
+        InvalidateRect(hwndHistogram1, pRect, TRUE);
         UpdateWindow  (hwndHistogram);
+        UpdateWindow  (hwndHistogram1);
 
-        switchTab(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit, horizontal, vertical, about);
+        switchTab(hwndTabCtrl,   hwndListView,   hwndListView1,
+                  hwndHistogram, hwndHistogram1, hwndRichEdit,  horizontal, vertical, about);
+
         return LISTPLUGIN_OK;
     }
     else

@@ -4,10 +4,10 @@
 #include "NaplnStrukturuWndClassEx.h"
 #include "Constants.h"
 
-HWND CreateHistogramWindow(HWND ParentWindow, RECT * pRect)
+HWND CreateHistogramWindow(HWND ParentWindow, RECT * pRect, int id)
 {
     HWND       hwndHistogram;
-    HMENU      childID       = (HMENU) HISTOGRAM_ID;
+    HMENU      childID       = (HMENU) id;
     TCHAR      szClassName[] = TEXT("Histogram");
     WNDCLASSEX wndClassEx;                         /* Data structure for the Window Class */
     HINSTANCE  hInstance     = NULL;               /* Optional parameter for CreateWindowEx */

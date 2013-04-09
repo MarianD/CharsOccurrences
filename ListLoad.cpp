@@ -15,12 +15,13 @@
 HWND CHARSOCCURRENCESCALL
 ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
 {
-	HWND    hwndTabCtrl   = 0;
-	HWND    hwndHistogram = 0;
-	HWND    hwndRichEdit  = 0;
-	HWND    hwndListView  = 0;
+	HWND    hwndTabCtrl    = 0;
+	HWND    hwndHistogram  = 0;
+	HWND    hwndHistogram1 = 0;
+	HWND    hwndRichEdit   = 0;
+	HWND    hwndListView   = 0;
 	HWND    hwndListView1  = 0;
-	int     lastChosenTab = 0;
+	int     lastChosenTab  = 0;
 	RECT    rect;
 	TCHAR   iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
@@ -52,25 +53,27 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Creating child windows in the display area of the Tab Control
-    hwndListView  = CreateListViewWindow (hwndTabCtrl, &rect, LISTVIEW_ID);
-    hwndListView1 = CreateListViewWindow (hwndTabCtrl, &rect, LISTVIEW1_ID);
-    hwndHistogram = CreateHistogramWindow(hwndTabCtrl, &rect);
-    hwndRichEdit  = CreateRichEditWindow (hwndTabCtrl, &rect);
+    hwndListView   = CreateListViewWindow (hwndTabCtrl, &rect, LISTVIEW_ID);
+    hwndListView1  = CreateListViewWindow (hwndTabCtrl, &rect, LISTVIEW1_ID);
+    hwndHistogram  = CreateHistogramWindow(hwndTabCtrl, &rect, HISTOGRAM_ID);
+    hwndHistogram1 = CreateHistogramWindow(hwndTabCtrl, &rect, HISTOGRAM1_ID);
+    hwndRichEdit   = CreateRichEditWindow (hwndTabCtrl, &rect);
 
-	if (hwndListView && hwndListView1 && hwndHistogram && hwndRichEdit)
+	if (hwndListView && hwndListView1 && hwndHistogram && hwndHistogram1 && hwndRichEdit)
     {
         // EnableWindow(hwndRichEdit, FALSE);
         spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
         naplnListView(hwndListView,  vyskytyPismen, CHARS_TYPE_ALPHA);
         naplnListView(hwndListView1, vyskytyPismen, CHARS_TYPE_DIGIT);
 
-        SetProp(hwndTabCtrl,   LISTVIEW_PROP,       (HANDLE) vyskytyPismen);
-        SetProp(hwndListView,  LAST_CLICKED_COLUMN, (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
-        SetProp(hwndListView1, LAST_CLICKED_COLUMN, (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
-        SetProp(hwndHistogram, ARRAY_OF_OCCURENCES, (HANDLE) vyskytyPismen);
-        SetProp(hwndTabCtrl,   VERTICAL_PROP,       (HANDLE) vertical);
-        SetProp(hwndTabCtrl,   HORIZONTAL_PROP,     (HANDLE) vysledok);
-        SetProp(hwndTabCtrl,   ABOUT_PROP,          (HANDLE) about);
+        SetProp(hwndTabCtrl,    LISTVIEW_PROP,       (HANDLE) vyskytyPismen);
+        SetProp(hwndListView,   LAST_CLICKED_COLUMN, (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
+        SetProp(hwndListView1,  LAST_CLICKED_COLUMN, (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
+        SetProp(hwndHistogram,  ARRAY_OF_OCCURENCES, (HANDLE) vyskytyPismen);
+        SetProp(hwndHistogram1, ARRAY_OF_OCCURENCES, (HANDLE) vyskytyPismen);
+        SetProp(hwndTabCtrl,    VERTICAL_PROP,       (HANDLE) vertical);
+        SetProp(hwndTabCtrl,    HORIZONTAL_PROP,     (HANDLE) vysledok);
+        SetProp(hwndTabCtrl,    ABOUT_PROP,          (HANDLE) about);
 
         #ifdef _DEBUG
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
@@ -91,12 +94,14 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
         SetProp(hwndTabCtrl, LAST_CHOSEN_TAB, (HANDLE) lastChosenTab);       // For the case when default and user didn't choose other
 
         TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
-        switchTab(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit, horizontal, vertical, about);
+        switchTab(hwndTabCtrl,   hwndListView,   hwndListView1,
+                  hwndHistogram, hwndHistogram1, hwndRichEdit,  horizontal, vertical, about);
 
-        ShowWindow(hwndListView,  SW_SHOW);
-        ShowWindow(hwndListView1, SW_SHOW);
-        ShowWindow(hwndHistogram, SW_SHOW);
-        ShowWindow(hwndRichEdit,  SW_SHOW);
+        ShowWindow(hwndListView,   SW_SHOW);
+        ShowWindow(hwndListView1,  SW_SHOW);
+        ShowWindow(hwndHistogram,  SW_SHOW);
+        ShowWindow(hwndHistogram1, SW_SHOW);
+        ShowWindow(hwndRichEdit,   SW_SHOW);
     }
 
     return hwndTabCtrl;             // The function ListLoadNext() will use it

@@ -17,12 +17,14 @@
     #define LISTVIEW_ID                 1
     #define LISTVIEW1_ID                2
     #define HISTOGRAM_ID                3
+    #define HISTOGRAM1_ID               4
     #define TAB_LISTVIEW                0
-    #define TAB_LISTVIEW1               1
-    #define TAB_HISTOGRAM               2
-    #define TAB_VERTICAL                3
-    #define TAB_HORIZONTAL              4
-    #define TAB_ABOUT                   5
+    #define TAB_HISTOGRAM               1
+    #define TAB_LISTVIEW1               2
+    #define TAB_HISTOGRAM1              3
+    #define TAB_VERTICAL                4
+    #define TAB_HORIZONTAL              5
+    #define TAB_ABOUT                   6
     #define LISTVIEW_PROP           TEXT("0")
     #define HISTOGRAM_PROP          TEXT("1")
     #define VERTICAL_PROP           TEXT("2")
