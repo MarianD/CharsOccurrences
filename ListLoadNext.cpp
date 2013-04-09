@@ -12,7 +12,8 @@ int CHARSOCCURRENCESCALL
 ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 {
 	HWND    hwndTabCtrl   = ListWin;
-	HWND    hwndListView  = 0;	HWND    hwndHistogram = 0;
+	HWND    hwndListView  = 0;
+	HWND    hwndListView1 = 0;	HWND    hwndHistogram = 0;
 	HWND    hwndRichEdit  = 0;
     int    *vyskytyPismen;
     TCHAR  *vysledok;
@@ -26,12 +27,13 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
     horizontal    = vysledok;
 
     // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndHistogram, hwndRichEdit);
+    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit);
 
 	if (hwndListView && hwndHistogram && hwndRichEdit)
     {
         spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Máme aj horizontal (=vysledok), aj vertical
-        naplnListView(hwndListView, vyskytyPismen);
+        naplnListView(hwndListView,  vyskytyPismen, CHARS_TYPE_ALPHA);
+        naplnListView(hwndListView1, vyskytyPismen, CHARS_TYPE_DIGIT);
 
         // Let another file shows item in the last used order
         LPARAM lastClickedColumn = (LPARAM) GetProp(hwndListView, LAST_CLICKED_COLUMN);
@@ -52,7 +54,7 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
         InvalidateRect(hwndHistogram, pRect, TRUE);
         UpdateWindow  (hwndHistogram);
 
-        switchTab(hwndTabCtrl, hwndListView, hwndHistogram, hwndRichEdit, horizontal, vertical, about);
+        switchTab(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit, horizontal, vertical, about);
         return LISTPLUGIN_OK;
     }
     else

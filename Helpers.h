@@ -35,13 +35,13 @@
 
     /********************  Prototypy funkcií  ***********************/
 
-    void switchTab(HWND hwndTabCtrl, HWND hwndListView, HWND hwndHistogram, HWND hwndRichEdit,
+    void switchTab(HWND hwndTabCtrl, HWND hwndListView, HWND hwndListView1, HWND hwndHistogram, HWND hwndRichEdit,
                TCHAR * horizontal, TCHAR * vertical, TCHAR * about);
-    void getHandlesOfChildrensWindows(HWND hwndTabCtrl, HWND &hwndListView, HWND &hwndHistogram, HWND &hwndRichEdit);
-    void getFullIniFilePath(TCHAR * result);
+void getHandlesOfChildrensWindows(HWND hwndTabCtrl,
+                                  HWND &hwndListView, HWND &hwndListView1, HWND &hwndHistogram, HWND &hwndRichEdit);    void getFullIniFilePath(TCHAR * result);
     int   CALLBACK
           cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec);
-    void  naplnListView(HWND hwndListView, int * vyskytyPismen);
+    void  naplnListView(HWND hwndListView, int * vyskytyPismen, int charsType);
     void  nulujPole(int pole[], int pocetPrvkov);
     bool  jeVelkePismeno(int znak);
     bool  jeMalePismeno(int znak);
@@ -51,7 +51,7 @@
     void  tlacHlavicky(TCHAR *spolu, int pocetMiest);
     void  tlacVyskytuPismen(TCHAR *spolu, int vyskytyPismen[], int pocetMiest);
     void  tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPismeno, int pocetMiest);
-    int   spoluVyskytov(int vyskytyPismen[]);
+    int   spoluVyskytov(int vyskytyPismen[], int charsType);
     void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno, int pocetMiest);
     void  tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
     void  spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVertical, const char * FileToLoad);

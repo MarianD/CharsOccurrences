@@ -11,15 +11,18 @@
     #define MAX_ZNAKOV                  6000
     #define MAX_ZNAKOV_ABOUT             900
     #define POCET_VELKYCH_PISMEN        ('Z' - 'A' + 1)
+    #define POCET_CISLIC                  10
     #define MAX_DLZ_CIARY               (15 * POCET_VELKYCH_PISMEN)
     #define RICHEDIT_ID                 0
     #define LISTVIEW_ID                 1
-    #define HISTOGRAM_ID                2
+    #define LISTVIEW1_ID                2
+    #define HISTOGRAM_ID                3
     #define TAB_LISTVIEW                0
-    #define TAB_HISTOGRAM               1
-    #define TAB_VERTICAL                2
-    #define TAB_HORIZONTAL              3
-    #define TAB_ABOUT                   4
+    #define TAB_LISTVIEW1               1
+    #define TAB_HISTOGRAM               2
+    #define TAB_VERTICAL                3
+    #define TAB_HORIZONTAL              4
+    #define TAB_ABOUT                   5
     #define LISTVIEW_PROP           TEXT("0")
     #define HISTOGRAM_PROP          TEXT("1")
     #define VERTICAL_PROP           TEXT("2")
@@ -34,5 +37,7 @@
     #define LAST_CHOSEN_TAB         TEXT("Last chosen tab")
     #define INI_SECTION_TAB         TEXT("Tabs")
     #define INI_KEY_LAST_CHOSEN_TAB TEXT("LastChosenTab")
+    #define CHARS_TYPE_ALPHA            0
+    #define CHARS_TYPE_DIGIT            1
 
 #endif // ndef

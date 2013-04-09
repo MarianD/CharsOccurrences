@@ -1,3 +1,15 @@
+08 April 2013
+   released version 1.3.3 of CharsOccurrences
+
+     Change log:
+        -Fixed: In the case of no letters in the file plugin crashed
+
+07 April 2013
+   released version 1.3.2 of CharsOccurrences
+
+     Change log:
+        -Added: Last chosen tab is saved to the INI file and automatically restored
+
 03 April 2013
    released version 1.3.1 of CharsOccurrences
 

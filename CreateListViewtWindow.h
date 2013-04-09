@@ -8,7 +8,7 @@
     #include <commctrl.h>
     #include <tchar.h>
 
-    HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect);
+    HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id);
 
 #endif // ndef
 

@@ -3,11 +3,11 @@
 #include "CreateListViewtWindow.h"
 #include "Constants.h"
 
-HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
+HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
 {
     HWND      hwndListView;
     HINSTANCE hinst   = 0;
-    HMENU     childID = (HMENU) LISTVIEW_ID;
+    HMENU     childID = (HMENU) id;
 
     hwndListView = CreateWindowEx(0, WC_LISTVIEW, TEXT(""),
                                   WS_CHILD   | LVS_REPORT | LVS_EDITLABELS |
@@ -21,8 +21,8 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect)
     {
         // InitListViewColumns - adds columns to a list-view control.
 
-        const TCHAR * szText  [4] = {TEXT(""), TEXT("Letter"), TEXT("Count"), TEXT("Percent")};
-        const int     colWidth[4] = {0, 42, 50, 60};
+        const TCHAR * szText  [4] = {TEXT(""), TEXT("Char"), TEXT("Count"), TEXT("Percent")};
+        const int     colWidth[4] = {0, 40, 50, 60};
         LVCOLUMN      lvc;
         int           iCol;
 

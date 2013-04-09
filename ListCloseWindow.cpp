@@ -12,6 +12,7 @@ ListCloseWindow(HWND ListWin)
 {
 	HWND   hwndTabCtrl        = ListWin;
 	HWND   hwndListView       = 0;
+	HWND   hwndListView1      = 0;
 	HWND   hwndRichEdit       = 0;
 	HWND   hwndHistogram      = 0;
     void  *vyskytyPismen      = 0;
@@ -29,7 +30,8 @@ ListCloseWindow(HWND ListWin)
     WritePrivateProfileString(INI_SECTION_TAB, INI_KEY_LAST_CHOSEN_TAB, strLastChosenTab, iniFile);
 
     // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndHistogram, hwndRichEdit);
+    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit);
+
 
     /*
      *  Removing all items in the property list of the windows

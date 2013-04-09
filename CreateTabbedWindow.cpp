@@ -29,27 +29,32 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
     LPTCITEM tab2 = new TCITEM;
     LPTCITEM tab3 = new TCITEM;
     LPTCITEM tab4 = new TCITEM;
+    LPTCITEM tab5 = new TCITEM;
 
     // Naplnenie ušiek hodnotami
     tab0->mask       = TCIF_TEXT;
-    tab0->pszText    = (TCHAR *) TEXT ("Flexible");
+    tab0->pszText    = (TCHAR *) TEXT ("Alphabet");
     tab0->cchTextMax = 60;
 
     tab1->mask       = TCIF_TEXT;
-    tab1->pszText    = (TCHAR *) TEXT ("Histogram");
+    tab1->pszText    = (TCHAR *) TEXT ("Digits");
     tab1->cchTextMax = 60;
 
     tab2->mask       = TCIF_TEXT;
-    tab2->pszText    = (TCHAR *) TEXT ("Vertical");
+    tab2->pszText    = (TCHAR *) TEXT ("Histogram");
     tab2->cchTextMax = 60;
 
     tab3->mask       = TCIF_TEXT;
-    tab3->pszText    = (TCHAR *) TEXT ("Horizontal");
+    tab3->pszText    = (TCHAR *) TEXT ("Vertical");
     tab3->cchTextMax = 60;
 
     tab4->mask       = TCIF_TEXT;
-    tab4->pszText    = (TCHAR *) TEXT ("About");
+    tab4->pszText    = (TCHAR *) TEXT ("Horizontal");
     tab4->cchTextMax = 60;
+
+    tab5->mask       = TCIF_TEXT;
+    tab5->pszText    = (TCHAR *) TEXT ("About");
+    tab5->cchTextMax = 60;
 
     // Pridanie pripravených ušiek
     TabCtrl_InsertItem(hwndTabCtrl, 0, tab0);

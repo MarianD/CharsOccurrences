@@ -15,12 +15,13 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
     HWND    hwndHistogram =  0;
     HWND    hwndRichEdit  =  0;
     HWND    hwndListView  =  0;
+    HWND    hwndListView1 =  0;
     TCHAR  *horizontal    =  0;
     TCHAR  *vertical      =  0;
     TCHAR  *about         =  0;
 
     // Získanie manipulátorov dcérskych okien
-    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndHistogram, hwndRichEdit);
+    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit);
     if (Message == WM_NOTIFY)
     {
         switch ( ((NMHDR *) lParam) -> code)
@@ -34,9 +35,10 @@ ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam
             about      = (TCHAR *) GetProp(hwndTabCtrl, ABOUT_PROP);
 
             SetProp  (hwndTabCtrl, LAST_CHOSEN_TAB, (HANDLE) TabCtrl_GetCurSel(hwndTabCtrl));
-            switchTab(hwndTabCtrl, hwndListView, hwndHistogram, hwndRichEdit, horizontal, vertical, about);
-            return 0;       // Pre správu TCN_SELCHANGE je návratová hodnota ignorovaná
+            switchTab(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit, horizontal, vertical,
+                      about);
+            return 0;           // To return some (ignored) value
         }
     }
-    return 0;       // To return some value
+    return 0;       // To return some (ignored) value
 }

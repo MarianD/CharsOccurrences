@@ -14,7 +14,10 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     HWND    hwndTabCtrl    =  hWnd;
     HWND    hwndHistogram  =  0;
     HWND    hwndListView   =  0;
+    HWND    hwndListView1  =  0;
     HWND    hwndRichEdit   =  0;
+    HWND    hwndFrom       =  0;
+    NMHDR * pNotifMsgHdr   =  0;
     int     cx, cy;
     RECT    rect, * pRect  = &rect;
     WNDPROC OldTabCtrlProc;
@@ -22,7 +25,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP);
 
     // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndHistogram, hwndRichEdit);
+    getHandlesOfChildrensWindows(hwndTabCtrl, hwndListView, hwndListView1, hwndHistogram, hwndRichEdit);
 
     switch (uMsg)
     {
@@ -38,6 +41,11 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                    pRect->bottom - pRect->top,
                    TRUE);
 
+        MoveWindow(hwndListView1,  pRect->left, pRect->top,
+                   pRect->right  - pRect->left,
+                   pRect->bottom - pRect->top,
+                   TRUE);
+
         MoveWindow(hwndHistogram,  pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
@@ -49,7 +57,10 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                    TRUE);
         return 0;
     case WM_NOTIFY:
-        switch ( ((NMHDR *) lParam) -> code)
+        pNotifMsgHdr = (NMHDR *) lParam;
+        hwndFrom     = pNotifMsgHdr->hwndFrom;
+
+        switch (pNotifMsgHdr->code)
         {
         case LVN_COLUMNCLICK:
             LPNMLISTVIEW pnmv;
@@ -57,8 +68,8 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             int          lastClickedColumn;     // It is increased by 1 to have oportunity to save it with + or -
             int          signum;                // +1 means order in the preferred direction,
                                                 // -1 in the opposite direction
-            pnmv   = (LPNMLISTVIEW) lParam;
-            column = pnmv->iSubItem;            // Numbered from 0, in spite of deleting the original column zero
+            pnmv     = (LPNMLISTVIEW) lParam;
+            column   = pnmv->iSubItem;          // Numbered from 0, in spite of deleting the original column zero
             column++;                           // Now numbered from 1
 
             /*
@@ -70,7 +81,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == 3)
                 column = 2;
 
-            lastClickedColumn = (INT64) GetProp(hwndListView, LAST_CLICKED_COLUMN);
+            lastClickedColumn = (INT64) GetProp(hwndFrom, LAST_CLICKED_COLUMN);
 
             /*
              *  Changing the direction of order by the second click
@@ -85,7 +96,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 MessageBox(0, oznam, TEXT("Bla"), 0) ;
             #endif
 
-            ListView_SortItems(hwndListView, cmpFunction, (LPARAM) signum * column);
+            ListView_SortItems(hwndFrom, cmpFunction, (LPARAM) signum * column);
 
             /*
              *  If it was the immediate second click on the same
@@ -94,8 +105,8 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == lastClickedColumn)
                 column = -column;
 
-            SetProp(hwndListView, LAST_CLICKED_COLUMN, (HANDLE) column);
-            break;
+            SetProp(hwndFrom, LAST_CLICKED_COLUMN, (HANDLE) column);
+            return 0;       // The return value is ignored
         default:
             break;
         }
@@ -141,6 +152,8 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             vyskyt    = vyskytyPismen[i];
             maxVyskyt = (vyskyt > maxVyskyt) ? vyskyt : maxVyskyt;
         }
+        if (maxVyskyt == 0)
+            maxVyskyt  = 1;              // It will be the divisor, so it must not be 0
 
         // Getting dimensions of the client area of THIS window
         lParam   = (LPARAM) GetProp(hWnd, CLIENT_WIDTH_AND_HIGHT);
