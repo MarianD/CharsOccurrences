@@ -3,10 +3,7 @@
 #include "Main.h"
 
 BOOL APIENTRY
-DllMain(HANDLE hModule,
-        DWORD  ul_reason_for_call,
-        LPVOID lpReserved
-        )
+DllMain(HANDLE /*hModule*/, DWORD  ul_reason_for_call, LPVOID /*lpReserved*/)
 {
     HMODULE FLibHandle = 0;
 

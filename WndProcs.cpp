@@ -153,18 +153,17 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         SetProp(hWnd, CLIENT_WIDTH_AND_HIGHT, (HANDLE) lParam);
         return 0;
     case WM_PAINT:
-        // TODO: RozlÌöiù histogramy, napr. switch(GetWindowLong(hWnd, GWL_ID)
         switch (GetWindowLong(hWnd, GWL_ID))
         {
-        case HISTOGRAM_ID:
+        case HistogramAlphaId:
             base     = 0;
             baseChar = TEXT('A');
-            numChars = POCET_VELKYCH_PISMEN;
+            numChars = NumOfCapitalLetters;
             break;
-        case HISTOGRAM1_ID:
-            base     = 0 + POCET_VELKYCH_PISMEN;
+        case HistogramDigitId:
+            base     = 0 + NumOfCapitalLetters;
             baseChar = TEXT('0');
-            numChars = POCET_CISLIC;
+            numChars = NumOfDigits;
             break;
 
         default:

@@ -21,15 +21,12 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
     {
         // InitListViewColumns - adds columns to a list-view control.
 
-        TCHAR     szText[4][10];
-        const int colWidth[4] = {0, 50, 50, 60};
+        TCHAR     colHeader[4][10] = {TEXT(""), TEXT("???"), TEXT("Count"), TEXT("Percent")};
+        const int colWidth [4]     = {0,        50,          50,            60};
         LVCOLUMN  lvc;
-        int       iCol;
+        int       column;
 
-        lstrcpy(szText[0], TEXT(""));
-        lstrcpy(szText[1], (id == LISTVIEW_ID) ? TEXT("Letter") : TEXT("Digit"));
-        lstrcpy(szText[2], TEXT("Count"));
-        lstrcpy(szText[3], TEXT("Percent"));
+        lstrcpy(colHeader[1], (id == ListViewAlphaId) ? TEXT("Letter") : TEXT("Digit"));
 
         /*
          *  Initialize the LVCOLUMN structure.
@@ -39,14 +36,14 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
         lvc.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
 
         // Add the columns
-        for (iCol = 0; iCol < 4; iCol++)
+        for (column = 0; column < 4; column++)
         {
-            lvc.iSubItem = iCol;
-            lvc.pszText  = (TCHAR *) szText[iCol];
-            lvc.cx       = colWidth[iCol];
-            lvc.fmt = (iCol == 1) ? LVCFMT_CENTER : LVCFMT_RIGHT;
+            lvc.iSubItem = column;
+            lvc.pszText  = colHeader[column];
+            lvc.cx       = colWidth[column];
+            lvc.fmt      = (column == 1) ? LVCFMT_CENTER : LVCFMT_RIGHT;
 
-            ListView_InsertColumn(hwndListView, iCol, &lvc);
+            ListView_InsertColumn(hwndListView, column, &lvc);
         }
 
         /*

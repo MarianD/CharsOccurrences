@@ -2,6 +2,7 @@
 //
 
 #include "CreateTabbedWindow.h"
+#include "Constants.h"
 
 /** \brief  Vytvorenie okna typu Tab Control
  *
@@ -13,8 +14,8 @@
 HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
 {
 	HWND      hwndTabCtrl;
-    HINSTANCE hinst   =  0;
-    HMENU     childID = (HMENU) 0;
+    HINSTANCE hinst    =  0;
+    HMENU     childID  = (HMENU) 0;
 
     hwndTabCtrl = CreateWindowEx(0, WC_TABCONTROL, TEXT(""),
                                 WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN,
@@ -24,51 +25,40 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
                                 ParentWindow, childID, hinst, NULL);
 
     // Vytvorenie nových ušiek
-    LPTCITEM tab0 = new TCITEM;
-    LPTCITEM tab1 = new TCITEM;
-    LPTCITEM tab2 = new TCITEM;
-    LPTCITEM tab3 = new TCITEM;
-    LPTCITEM tab4 = new TCITEM;
-    LPTCITEM tab5 = new TCITEM;
-    LPTCITEM tab6 = new TCITEM;
+    TCITEM tab[NumOfTabs];
 
     // Naplnenie ušiek hodnotami
-    tab0->mask       = TCIF_TEXT;
-    tab0->pszText    = (TCHAR *) TEXT ("Letters");
-    tab0->cchTextMax = 60;
+    tab[ListViewAlphaTab].mask             = TCIF_TEXT;
+    tab[ListViewAlphaTab].pszText          = (TCHAR *) TEXT ("Letters");
+    tab[ListViewAlphaTab].cchTextMax       = 60;
 
-    tab1->mask       = TCIF_TEXT;
-    tab1->pszText    = (TCHAR *) TEXT ("Histogram");
-    tab1->cchTextMax = 60;
+    tab[HistogramAlphaTab].mask            = TCIF_TEXT;
+    tab[HistogramAlphaTab].pszText         = (TCHAR *) TEXT ("Histogram");
+    tab[HistogramAlphaTab].cchTextMax      = 20;
 
-    tab2->mask       = TCIF_TEXT;
-    tab2->pszText    = (TCHAR *) TEXT ("Digits");
-    tab2->cchTextMax = 60;
+    tab[ListViewDigitTab].mask             = TCIF_TEXT;
+    tab[ListViewDigitTab].pszText          = (TCHAR *) TEXT ("Digits");
+    tab[ListViewDigitTab].cchTextMax       = 20;
 
-    tab3->mask       = TCIF_TEXT;
-    tab3->pszText    = (TCHAR *) TEXT ("Histogram");
-    tab3->cchTextMax = 60;
+    tab[HistogramDigitTab].mask            = TCIF_TEXT;
+    tab[HistogramDigitTab].pszText         = (TCHAR *) TEXT ("Histogram");
+    tab[HistogramDigitTab].cchTextMax      = 20;
 
-    tab4->mask       = TCIF_TEXT;
-    tab4->pszText    = (TCHAR *) TEXT ("Vertical");
-    tab4->cchTextMax = 60;
+    tab[VerticalRichEditTab].mask          = TCIF_TEXT;
+    tab[VerticalRichEditTab].pszText       = (TCHAR *) TEXT ("Vertical");
+    tab[VerticalRichEditTab].cchTextMax    = 20;
 
-    tab5->mask       = TCIF_TEXT;
-    tab5->pszText    = (TCHAR *) TEXT ("Horizontal");
-    tab5->cchTextMax = 60;
+    tab[HorizontalRichEditATab].mask       = TCIF_TEXT;
+    tab[HorizontalRichEditATab].pszText    = (TCHAR *) TEXT ("Horizontal");
+    tab[HorizontalRichEditATab].cchTextMax = 20;
 
-    tab6->mask       = TCIF_TEXT;
-    tab6->pszText    = (TCHAR *) TEXT ("About");
-    tab6->cchTextMax = 60;
+    tab[AboutRichEditTab].mask             = TCIF_TEXT;
+    tab[AboutRichEditTab].pszText          = (TCHAR *) TEXT ("About");
+    tab[AboutRichEditTab].cchTextMax       = 20;
 
     // Pridanie pripravených ušiek
-    TabCtrl_InsertItem(hwndTabCtrl, 0, tab0);
-    TabCtrl_InsertItem(hwndTabCtrl, 1, tab1);
-    TabCtrl_InsertItem(hwndTabCtrl, 2, tab2);
-    TabCtrl_InsertItem(hwndTabCtrl, 3, tab3);
-    TabCtrl_InsertItem(hwndTabCtrl, 4, tab4);
-    TabCtrl_InsertItem(hwndTabCtrl, 5, tab5);
-    TabCtrl_InsertItem(hwndTabCtrl, 6, tab6);
+    for (int i = 0; i < NumOfTabs; ++i)
+        TabCtrl_InsertItem(hwndTabCtrl, i, tab + i);
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);

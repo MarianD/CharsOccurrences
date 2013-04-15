@@ -9,7 +9,7 @@
 #include "Constants.h"
 
 int CHARSOCCURRENCESCALL
-ListNotificationReceived(HWND ListWin, int Message, WPARAM wParam, LPARAM lParam)
+ListNotificationReceived(HWND ListWin, int Message, WPARAM /*wParam*/, LPARAM lParam)
 {
     HWND    hwndTabCtrl    =  ListWin;
     HWND    hwndHistogram  =  0;

@@ -9,7 +9,7 @@
 #include "Constants.h"
 
 int CHARSOCCURRENCESCALL
-ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
+ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags*/)
 {
 	HWND    hwndTabCtrl    = ListWin;
 	HWND    hwndListView   = 0;
@@ -34,8 +34,8 @@ ListLoadNext(HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags)
 	if (hwndListView && hwndHistogram && hwndRichEdit)
     {
         spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Máme aj horizontal (=vysledok), aj vertical
-        naplnListView(hwndListView,  vyskytyPismen, CHARS_TYPE_ALPHA);
-        naplnListView(hwndListView1, vyskytyPismen, CHARS_TYPE_DIGIT);
+        naplnListView(hwndListView,  vyskytyPismen, CharsTypeAlpha);
+        naplnListView(hwndListView1, vyskytyPismen, CharsTypeDigit);
 
         // Let another file shows item in the last used order
         LPARAM lastClickedColumn = (LPARAM) GetProp(hwndListView, LAST_CLICKED_COLUMN);

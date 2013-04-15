@@ -13,7 +13,7 @@
 
 
 HWND CHARSOCCURRENCESCALL
-ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
+ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 {
 	HWND    hwndTabCtrl    = 0;
 	HWND    hwndHistogram  = 0;
@@ -38,14 +38,14 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     SetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP, (HANDLE) OldTabCtrlProc);
 
-    int   * vyskytyPismen = (int   *) malloc((POCET_VELKYCH_PISMEN + POCET_CISLIC) * sizeof(int));
-    TCHAR * vysledok      = (TCHAR *) malloc(MAX_ZNAKOV           * sizeof(TCHAR));
-    TCHAR * about         = (TCHAR *) malloc(MAX_ZNAKOV_ABOUT     * sizeof(TCHAR));
+    int   * vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int));
+    TCHAR * vysledok      = (TCHAR *) malloc(MaxCharsHorizAndlVertical           * sizeof(TCHAR));
+    TCHAR * about         = (TCHAR *) malloc((lstrlen(TextAbout) + 1)            * sizeof(TCHAR));
     TCHAR * horizontal    = vysledok;    // Tento reùazec je Ëasùou reùazca vysledok, toto je   ukazovateæ na jeho zaËiatok
     TCHAR * vertical      = 0;           // Tento reùazec je Ëasùou reùazca vysledok, toto bude ukazovateæ na jeho zaËiatok
 
 
-    _stprintf(about, ABOUT,
+    _stprintf(about, TextAbout,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // ZÌskanie obdÂûnika pre zobrazovaciu Ëasù Tab Control
@@ -53,18 +53,18 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int ShowFlags)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Creating child windows in the display area of the Tab Control
-    hwndListView   = CreateListViewWindow (hwndTabCtrl, &rect, LISTVIEW_ID);
-    hwndListView1  = CreateListViewWindow (hwndTabCtrl, &rect, LISTVIEW1_ID);
-    hwndHistogram  = CreateHistogramWindow(hwndTabCtrl, &rect, HISTOGRAM_ID);
-    hwndHistogram1 = CreateHistogramWindow(hwndTabCtrl, &rect, HISTOGRAM1_ID);
+    hwndListView   = CreateListViewWindow (hwndTabCtrl, &rect, ListViewAlphaId);
+    hwndListView1  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewDigitId);
+    hwndHistogram  = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramAlphaId);
+    hwndHistogram1 = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramDigitId);
     hwndRichEdit   = CreateRichEditWindow (hwndTabCtrl, &rect);
 
 	if (hwndListView && hwndListView1 && hwndHistogram && hwndHistogram1 && hwndRichEdit)
     {
         // EnableWindow(hwndRichEdit, FALSE);
         spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
-        naplnListView(hwndListView,  vyskytyPismen, CHARS_TYPE_ALPHA);
-        naplnListView(hwndListView1, vyskytyPismen, CHARS_TYPE_DIGIT);
+        naplnListView(hwndListView,  vyskytyPismen, CharsTypeAlpha);
+        naplnListView(hwndListView1, vyskytyPismen, CharsTypeDigit);
 
         SetProp(hwndTabCtrl,    LISTVIEW_PROP,       (HANDLE) vyskytyPismen);
         SetProp(hwndListView,   LAST_CLICKED_COLUMN, (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked

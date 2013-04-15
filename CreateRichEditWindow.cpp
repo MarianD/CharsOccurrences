@@ -7,7 +7,7 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
 {
 	HWND       hwndRichEdit;
     HINSTANCE  hinst   = 0;
-    HMENU      childID = (HMENU) RICHEDIT_ID;
+    HMENU      childID = (HMENU) RichEditId;
     CHARFORMAT charFormat, *pcharFormat = &charFormat;
 
     /*

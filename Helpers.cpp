@@ -9,36 +9,36 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 /********************** Pomocne funkcie *************************/
 
-void switchTab(HWND    hwndTabCtrl,   HWND    hwndListView,   HWND    hwndListView1,
-               HWND    hwndHistogram, HWND    hwndHistogram1, HWND    hwndRichEdit,
-               TCHAR * horizontal,    TCHAR * vertical,       TCHAR * about)
+void switchTab(HWND    hwndTabCtrl,        HWND    hwndListViewAlpha,   HWND    hwndListViewDigit,
+               HWND    hwndHistogramAlpha, HWND    hwndHistogramDigit,  HWND    hwndRichEdit,
+               TCHAR * horizontal,         TCHAR * vertical,            TCHAR * about)
 {
     switch (TabCtrl_GetCurSel(hwndTabCtrl))
     {
-    case TAB_LISTVIEW:
-        BringWindowToTop(hwndListView);
+    case ListViewAlphaTab:
+        BringWindowToTop(hwndListViewAlpha);
             break;
-    case TAB_HISTOGRAM:
-        BringWindowToTop(hwndHistogram);
-        UpdateWindow(hwndHistogram);
+    case HistogramAlphaTab:
+        BringWindowToTop(hwndHistogramAlpha);
+        UpdateWindow    (hwndHistogramAlpha);
         break;
-    case TAB_LISTVIEW1:
-        BringWindowToTop(hwndListView1);
+    case ListViewDigitTab:
+        BringWindowToTop(hwndListViewDigit);
             break;
-    case TAB_HISTOGRAM1:
-        BringWindowToTop(hwndHistogram1);
-        UpdateWindow(hwndHistogram1);
+    case HistogramDigitTab:
+        BringWindowToTop(hwndHistogramDigit);
+        UpdateWindow    (hwndHistogramDigit);
         break;
-    case TAB_VERTICAL:
-        SetWindowText(hwndRichEdit, vertical);
+    case VerticalRichEditTab:
+        SetWindowText   (hwndRichEdit, vertical);
         BringWindowToTop(hwndRichEdit);
         break;
-    case TAB_HORIZONTAL:
-        SetWindowText(hwndRichEdit, horizontal);
+    case HorizontalRichEditATab:
+        SetWindowText   (hwndRichEdit, horizontal);
         BringWindowToTop(hwndRichEdit);
         break;
-    case TAB_ABOUT:
-        SetWindowText(hwndRichEdit, about);
+    case AboutRichEditTab:
+        SetWindowText   (hwndRichEdit, about);
         BringWindowToTop(hwndRichEdit);
         break;
     default:
@@ -47,11 +47,11 @@ void switchTab(HWND    hwndTabCtrl,   HWND    hwndListView,   HWND    hwndListVi
 }
 
 
-void getHandlesOfChildrensWindows(HWND hwndTabCtrl,    HWND &hwndListView,   HWND &hwndListView1,
-                                  HWND &hwndHistogram, HWND &hwndHistogram1, HWND &hwndRichEdit)
+void getHandlesOfChildrensWindows(HWND hwndTabCtrl,         HWND &hwndListViewAlpha,  HWND &hwndListViewDigit,
+                                  HWND &hwndHistogramAlpha, HWND &hwndHistogramDigit, HWND &hwndRichEdit)
 {
-    HWND    hwndChildWin  =  0;
-    long    childID       = -1;
+    HWND hwndChildWin =  0;
+    long childID      = -1;
 
     // Získanie manipulátorov dcérskych okien
     hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
@@ -60,20 +60,20 @@ void getHandlesOfChildrensWindows(HWND hwndTabCtrl,    HWND &hwndListView,   HWN
     {
         switch(childID = GetWindowLong(hwndChildWin, GWL_ID))
         {
-        case LISTVIEW_ID:
-            hwndListView   = hwndChildWin;
+        case ListViewAlphaId:
+            hwndListViewAlpha  = hwndChildWin;
             break;
-        case LISTVIEW1_ID:
-            hwndListView1  = hwndChildWin;
+        case ListViewDigitId:
+            hwndListViewDigit  = hwndChildWin;
             break;
-        case HISTOGRAM_ID:
-            hwndHistogram  = hwndChildWin;
+        case HistogramAlphaId:
+            hwndHistogramAlpha = hwndChildWin;
             break;
-        case HISTOGRAM1_ID:
-            hwndHistogram1 = hwndChildWin;
+        case HistogramDigitId:
+            hwndHistogramDigit = hwndChildWin;
             break;
-        case RICHEDIT_ID:
-            hwndRichEdit   = hwndChildWin;
+        case RichEditId:
+            hwndRichEdit       = hwndChildWin;
             break;
         default:
             break;
@@ -130,7 +130,7 @@ int CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM plusMinusStlpe
     #endif
 
     if (stlpec == 1)
-        result = (int) hodnota1 % POCET_VELKYCH_PISMEN - (int) hodnota2 % POCET_VELKYCH_PISMEN;
+        result = (int) hodnota1 % NumOfCapitalLetters - (int) hodnota2 % NumOfCapitalLetters;
     else
         result = (int) hodnota2 - (int) hodnota1;
     return signum * result;
@@ -147,14 +147,14 @@ void naplnListView(HWND hwndListView, int * charsOccurrences, int charsType)
 
     switch(charsType)
     {
-    case CHARS_TYPE_ALPHA:
-        pocetZnakov = POCET_VELKYCH_PISMEN;
+    case CharsTypeAlpha:
         base        = 0;
+        pocetZnakov = NumOfCapitalLetters;
         baseChar    = TEXT('A');
         break;
-    case CHARS_TYPE_DIGIT:
-        pocetZnakov = POCET_CISLIC;
-        base        = 0 + POCET_VELKYCH_PISMEN;
+    case CharsTypeDigit:
+        base        = 0 + NumOfCapitalLetters;
+        pocetZnakov = NumOfDigits;
         baseChar    = TEXT('0');
         break;
     }
@@ -177,7 +177,7 @@ void naplnListView(HWND hwndListView, int * charsOccurrences, int charsType)
         lvI.iItem    = riadok;
         lvI.iSubItem = 0;
         lvI.pszText  = pismeno;
-        lvI.lParam   = (LPARAM) (POCET_VELKYCH_PISMEN * occur + riadok);       // For sorting by columns; NO pocetZnakov!
+        lvI.lParam   = (LPARAM) (NumOfCapitalLetters * occur + riadok);       // For sorting by columns; NO pocetZnakov!
         ListView_InsertItem(hwndListView, &lvI);
 
         lvI.mask     = LVIF_TEXT;
@@ -239,7 +239,7 @@ int naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int pole[])
     int pocetMiest = 0;
     int maximum    = 0;
 
-    for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+    for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
         int pocet = pole[i];
         parVyskytPismeno->insert(make_pair(pocet, TEXT('A') + i));
@@ -255,7 +255,7 @@ int naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int pole[])
 
 void zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest)
 {
-    for (int i = 0; i < PRAZD_MIEST + pocetMiest * POCET_VELKYCH_PISMEN; i++)
+    for (int i = 0; i < PRAZD_MIEST + pocetMiest * NumOfCapitalLetters; ++i)
     {
         _stprintf(spolu + lstrlen(spolu), TEXT("%c"), znak);
     }
@@ -268,7 +268,7 @@ void tlacHlavicky(TCHAR *spolu, int pocetMiest)
     zobrazCiaru(spolu + lstrlen(spolu), TEXT('-'), pocetMiest);
     _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
-    for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+    for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
         _stprintf(spolu + lstrlen(spolu), TEXT("%*s%c"), pocetMiest - 1, "", (TCHAR) ('A' + i));
     }
@@ -282,7 +282,7 @@ void tlacVyskytuPismen(TCHAR *spolu, int pole[], int pocetMiest)
 {
     _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));
 
-    for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+    for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
         int pocet = pole[i];
 
@@ -306,7 +306,7 @@ void tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPisme
     */
     _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
-    for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); pos++)
+    for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); ++pos)
     {
         _stprintf(spolu + lstrlen(spolu), TEXT("%*s%c"), pocetMiest - 1, TEXT(""), pos->second);
     }
@@ -319,7 +319,7 @@ void tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPisme
     */
     _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
-    for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); pos++)
+    for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); ++pos)
     {
         int pocet  = pos->first ;
 
@@ -342,20 +342,20 @@ int spoluVyskytov(int charsOccurrences[], int charsType)
 
     switch(charsType)
     {
-    case CHARS_TYPE_ALPHA:
+    case CharsTypeAlpha:
         base     = 0;
-        numChars = POCET_VELKYCH_PISMEN;
+        numChars = NumOfCapitalLetters;
         break;
-    case CHARS_TYPE_DIGIT:
-        base     = 0 + POCET_VELKYCH_PISMEN;
-        numChars = POCET_CISLIC;
+    case CharsTypeDigit:
+        base     = 0 + NumOfCapitalLetters;
+        numChars = NumOfDigits;
         break;
     }
     /*
      *  Sèítanie všetkých výskytov jednotlivých znakov
      */
     int sucetVyskytov = 0;
-    for (int i = 0; i < numChars; i++)
+    for (int i = 0; i < numChars; ++i)
         sucetVyskytov += charsOccurrences[base + i];
 
     return (sucetVyskytov == 0) ? 1 : sucetVyskytov;      // It will be the divisor, so it must not be 0
@@ -370,7 +370,7 @@ void tlacVyskytuPismenPodSebou(TCHAR *spolu, int charsOccurrences[], zostupAsoci
     _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 
     multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin();
-    for (int i = 0; i < POCET_VELKYCH_PISMEN; i++)
+    for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
         /*
          *  Najprv ich vytlaèíme abecedne
@@ -414,7 +414,7 @@ void tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
     int  sirkaStlpcaVyskytov   = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
     int  dlzkaRiadka           = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + STLP_MEDZERA;
 
-    for (int i = 0; i < dlzkaRiadka; i++)
+    for (int i = 0; i < dlzkaRiadka; ++i)
         *(ciara + i) = znak;
 
     *(ciara + dlzkaRiadka) = '\0';
@@ -440,7 +440,7 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, TCHAR ** 
         return;
     }
 
-    nulujPole(charsOccurrences, POCET_VELKYCH_PISMEN + POCET_CISLIC);
+    nulujPole(charsOccurrences, NumOfCapitalLetters + NumOfDigits);
 
     while (!feof(vstup))
     {
@@ -458,8 +458,8 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, TCHAR ** 
             else if (isdigit(znak))
             {
                 int index = znak - '0';
-                index += POCET_VELKYCH_PISMEN;  // Occurrences of digits are just after occurences of letters
-                charsOccurrences[index]++;
+                index += NumOfCapitalLetters;  // Occurrences of digits are just after occurences of letters
+                ++charsOccurrences[index];
             }
         }
     }
@@ -468,7 +468,7 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, TCHAR ** 
     pocetMiest = naplnAsociativnePole(&parVyskytPismeno, charsOccurrences);
 
     // Filling the string from the beginning
-    _stprintf (spolu, HEAD);
+    _stprintf (spolu, TextHead);
 
     tlacHlavicky(spolu, pocetMiest);
     tlacVyskytuPismen(spolu, charsOccurrences, pocetMiest);
@@ -478,11 +478,11 @@ void spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, TCHAR ** 
     *spolu      = TEXT('\0');                                         // Aby mal ïalší reazec nulovú dåžku (len istota)
 
     // Filling the second part of the string from the beginning, again
-    _stprintf (spolu, HEAD);
+    _stprintf (spolu, TextHead);
 
-    tlacVyskytuPismenPodSebou(spolu, charsOccurrences, &parVyskytPismeno, pocetMiest, CHARS_TYPE_ALPHA);
+    tlacVyskytuPismenPodSebou(spolu, charsOccurrences, &parVyskytPismeno, pocetMiest, CharsTypeAlpha);
 
-    int sucetVyskytov = spoluVyskytov(charsOccurrences, CHARS_TYPE_ALPHA);
+    int sucetVyskytov = spoluVyskytov(charsOccurrences, CharsTypeAlpha);
     tlacSuctovehoRiadka(spolu, sucetVyskytov, pocetMiest);
 }
 

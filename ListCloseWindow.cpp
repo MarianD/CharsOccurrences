@@ -51,6 +51,7 @@ ListCloseWindow(HWND ListWin)
     RemoveProp(hwndListView1,  LAST_CLICKED_COLUMN);    RemoveProp(hwndHistogram,  ARRAY_OF_OCCURENCES);
     RemoveProp(hwndHistogram1, ARRAY_OF_OCCURENCES);
     RemoveProp(hwndHistogram,  CLIENT_WIDTH_AND_HIGHT);
+    RemoveProp(hwndHistogram1, CLIENT_WIDTH_AND_HIGHT);
 
     // Uvoænenie alokovanej pam‰te pre reùazce
     if (vyskytyPismen)
@@ -62,7 +63,7 @@ ListCloseWindow(HWND ListWin)
     if (about)
         free(about);
 
-    DestroyWindow(hwndTabCtrl);      // ZruöÌ aj dcÈrske okn·
+//    DestroyWindow(hwndTabCtrl);      // ZruöÌ aj dcÈrske okn·
 
 //      MessageBoxA(0, "Tak Ëo, za padneö?!", "Padne?", 0);
 

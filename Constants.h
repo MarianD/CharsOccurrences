@@ -1,45 +1,62 @@
 #ifndef CONSTANTS_H
     #define CONSTANTS_H
 
-    #define ABOUT TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n" \
-                 "Author: Marian Denes" \
-                 "\n\n\nThis plugin is freeware, created in Code::Blocks IDE.")
+    #include <windows.h>
 
-    #define HEAD TEXT("\nOccurrences of individual ASCII letters, ") \
-                 TEXT("case insensitive:\n\n")
+    const TCHAR * const TextAbout       = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n" \
+                                                "Author: Marian Denes\n\n\n" \
+                                                "This plugin is freeware, created in Code::Blocks IDE.");
 
-    #define MAX_ZNAKOV                  6000
-    #define MAX_ZNAKOV_ABOUT             900
-    #define POCET_VELKYCH_PISMEN        ('Z' - 'A' + 1)
-    #define POCET_CISLIC                  10
-    #define MAX_DLZ_CIARY               (15 * POCET_VELKYCH_PISMEN)
-    #define RICHEDIT_ID                 0
-    #define LISTVIEW_ID                 1
-    #define LISTVIEW1_ID                2
-    #define HISTOGRAM_ID                3
-    #define HISTOGRAM1_ID               4
-    #define TAB_LISTVIEW                0
-    #define TAB_HISTOGRAM               1
-    #define TAB_LISTVIEW1               2
-    #define TAB_HISTOGRAM1              3
-    #define TAB_VERTICAL                4
-    #define TAB_HORIZONTAL              5
-    #define TAB_ABOUT                   6
-    #define LISTVIEW_PROP           TEXT("0")
-    #define HISTOGRAM_PROP          TEXT("1")
-    #define VERTICAL_PROP           TEXT("2")
-    #define HORIZONTAL_PROP         TEXT("3")
-    #define ABOUT_PROP              TEXT("4")
-    #define ARRAY_OF_OCCURENCES     TEXT("ArrayOfOccurences")
-    #define OLD_TAB_WNDPROC_PROP    TEXT("OldTabCtrlProc")
-    #define DETECT_STRING           "ext=\"TXT\" | force"
-    #define LAST_CLICKED_COLUMN     TEXT("Last clicked column")
-    #define CLIENT_WIDTH_AND_HIGHT  TEXT("Client width and hight")
-    #define INI_FILE                TEXT("CharsOccurrences.ini")
-    #define LAST_CHOSEN_TAB         TEXT("Last chosen tab")
-    #define INI_SECTION_TAB         TEXT("Tabs")
-    #define INI_KEY_LAST_CHOSEN_TAB TEXT("LastChosenTab")
-    #define CHARS_TYPE_ALPHA            0
-    #define CHARS_TYPE_DIGIT            1
+    const TCHAR * const TextHead        = TEXT("\nOccurrences of individual ASCII letters, " \
+                                                "case insensitive:\n\n");
+
+    const TCHAR * const HistogramClass  = TEXT("ChOcc Histogram");
+
+    const int MaxCharsHorizAndlVertical = 6000;
+    const int NumOfDigits               =   10;
+    const int NumOfCapitalLetters       = ('Z' - 'A' + 1);
+    const int MAX_DLZ_CIARY             = (15 * NumOfCapitalLetters);
+
+    enum
+    {
+        CharsTypeAlpha,
+        CharsTypeDigit,
+    };
+
+    enum
+    {
+        RichEditId,
+        ListViewAlphaId,
+        ListViewDigitId,
+        HistogramAlphaId,
+        HistogramDigitId,
+    };
+
+    enum              // The order here is important, because it will be the order of the tabs in the Tab View
+    {
+        ListViewAlphaTab,
+        HistogramAlphaTab,
+        ListViewDigitTab,
+        HistogramDigitTab,
+        VerticalRichEditTab,
+        HorizontalRichEditATab,
+        AboutRichEditTab,
+        NumOfTabs               // This must be the last item, because it is not a tab for adding into Tab View
+    };
+
+    const TCHAR * const LISTVIEW_PROP           = TEXT("0");
+    const TCHAR * const HISTOGRAM_PROP          = TEXT("1");
+    const TCHAR * const VERTICAL_PROP           = TEXT("2");
+    const TCHAR * const HORIZONTAL_PROP         = TEXT("3");
+    const TCHAR * const ABOUT_PROP              = TEXT("4");
+    const TCHAR * const ARRAY_OF_OCCURENCES     = TEXT("ArrayOfOccurences");
+    const TCHAR * const OLD_TAB_WNDPROC_PROP    = TEXT("OldTabCtrlProc");
+    const TCHAR * const LAST_CLICKED_COLUMN     = TEXT("Last clicked column");
+    const TCHAR * const CLIENT_WIDTH_AND_HIGHT  = TEXT("Client width and hight");
+    const TCHAR * const LAST_CHOSEN_TAB         = TEXT("Last chosen tab");
+    const char  * const DETECT_STRING           = "ext=\"TXT\" | force";
+    const TCHAR * const INI_FILE                = TEXT("CharsOccurrences.ini");
+    const TCHAR * const INI_SECTION_TAB         = TEXT("Tabs");
+    const TCHAR * const INI_KEY_LAST_CHOSEN_TAB = TEXT("LastChosenTab");
 
 #endif // ndef
