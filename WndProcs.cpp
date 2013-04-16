@@ -23,7 +23,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     RECT    rect, * pRect  = &rect;
     WNDPROC OldTabCtrlProc;
 
-    OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP);
+    OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OldTabCtrlWndProc);
 
     // Getting handles of the child windows
     getHandlesOfChildrensWindows(hwndTabCtrl,   hwndListView,   hwndListView1,
@@ -88,7 +88,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == 3)
                 column = 2;
 
-            lastClickedColumn = (INT64) GetProp(hwndFrom, LAST_CLICKED_COLUMN);
+            lastClickedColumn = (INT64) GetProp(hwndFrom, LastClickedColumn);
 
             /*
              *  Changing the direction of order by the second click
@@ -112,7 +112,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == lastClickedColumn)
                 column = -column;
 
-            SetProp(hwndFrom, LAST_CLICKED_COLUMN, (HANDLE) column);
+            SetProp(hwndFrom, LastClickedColumn, (HANDLE) column);
             return 0;       // The return value is ignored
         default:
             break;
@@ -150,7 +150,7 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
     case WM_SIZE:
         // Saving dimension of the client area of THIS window
-        SetProp(hWnd, CLIENT_WIDTH_AND_HIGHT, (HANDLE) lParam);
+        SetProp(hWnd, ClientWidthAndHight, (HANDLE) lParam);
         return 0;
     case WM_PAINT:
         switch (GetWindowLong(hWnd, GWL_ID))
@@ -172,7 +172,7 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         hdc = BeginPaint (hWnd, &ps);
 
-        vyskytyPismen = (int *) GetProp(hWnd, ARRAY_OF_OCCURENCES);
+        vyskytyPismen = (int *) GetProp(hWnd, ArrayOfOccurrences);
 
         for (int i = 0; i < numChars; i++)
         {
@@ -183,7 +183,7 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             maxVyskyt  = 1;              // It will be the divisor, so it must not be 0
 
         // Getting dimensions of the client area of THIS window
-        lParam   = (LPARAM) GetProp(hWnd, CLIENT_WIDTH_AND_HIGHT);
+        lParam   = (LPARAM) GetProp(hWnd, ClientWidthAndHight);
         cxClient = GET_X_LPARAM (lParam);
         cyClient = GET_Y_LPARAM (lParam);
 

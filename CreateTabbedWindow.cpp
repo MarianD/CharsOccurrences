@@ -24,41 +24,25 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
                                 pRect->bottom - pRect->top,
                                 ParentWindow, childID, hinst, NULL);
 
-    // Vytvorenie nových ušiek
+    // Creating new tabs
     TCITEM tab[NumOfTabs];
 
-    // Naplnenie ušiek hodnotami
-    tab[ListViewAlphaTab].mask             = TCIF_TEXT;
-    tab[ListViewAlphaTab].pszText          = (TCHAR *) TEXT ("Letters");
-    tab[ListViewAlphaTab].cchTextMax       = 60;
+    // Filling these tabs with individual values
+    tab[ListViewAlphaTab]      .pszText = (TCHAR *) TEXT ("Letters");
+    tab[HistogramAlphaTab]     .pszText = (TCHAR *) TEXT ("Histogram");
+    tab[ListViewDigitTab]      .pszText = (TCHAR *) TEXT ("Digits");
+    tab[HistogramDigitTab]     .pszText = (TCHAR *) TEXT ("Histogram");
+    tab[VerticalRichEditTab]   .pszText = (TCHAR *) TEXT ("Vertical");
+    tab[HorizontalRichEditATab].pszText = (TCHAR *) TEXT ("Horizontal");
+    tab[AboutRichEditTab]      .pszText = (TCHAR *) TEXT ("About");
 
-    tab[HistogramAlphaTab].mask            = TCIF_TEXT;
-    tab[HistogramAlphaTab].pszText         = (TCHAR *) TEXT ("Histogram");
-    tab[HistogramAlphaTab].cchTextMax      = 20;
-
-    tab[ListViewDigitTab].mask             = TCIF_TEXT;
-    tab[ListViewDigitTab].pszText          = (TCHAR *) TEXT ("Digits");
-    tab[ListViewDigitTab].cchTextMax       = 20;
-
-    tab[HistogramDigitTab].mask            = TCIF_TEXT;
-    tab[HistogramDigitTab].pszText         = (TCHAR *) TEXT ("Histogram");
-    tab[HistogramDigitTab].cchTextMax      = 20;
-
-    tab[VerticalRichEditTab].mask          = TCIF_TEXT;
-    tab[VerticalRichEditTab].pszText       = (TCHAR *) TEXT ("Vertical");
-    tab[VerticalRichEditTab].cchTextMax    = 20;
-
-    tab[HorizontalRichEditATab].mask       = TCIF_TEXT;
-    tab[HorizontalRichEditATab].pszText    = (TCHAR *) TEXT ("Horizontal");
-    tab[HorizontalRichEditATab].cchTextMax = 20;
-
-    tab[AboutRichEditTab].mask             = TCIF_TEXT;
-    tab[AboutRichEditTab].pszText          = (TCHAR *) TEXT ("About");
-    tab[AboutRichEditTab].cchTextMax       = 20;
-
-    // Pridanie pripravených ušiek
+    // Filling these tabs with common values and adding them to the Tab View
     for (int i = 0; i < NumOfTabs; ++i)
+    {
+        tab[i].mask       = TCIF_TEXT;
+        tab[i].cchTextMax = 20;
         TabCtrl_InsertItem(hwndTabCtrl, i, tab + i);
+    }
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);

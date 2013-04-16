@@ -6,6 +6,7 @@
 #include "CreateHistogramWindow.h"
 #include "CreateRichEditWindow.h"
 #include "CreateListViewtWindow.h"
+#include "Classic.h"
 #include "Helpers.h"
 #include "Exports.h"
 #include "version.h"
@@ -15,13 +16,13 @@
 HWND CHARSOCCURRENCESCALL
 ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 {
-	HWND    hwndTabCtrl    = 0;
-	HWND    hwndHistogram  = 0;
-	HWND    hwndHistogram1 = 0;
-	HWND    hwndRichEdit   = 0;
-	HWND    hwndListView   = 0;
-	HWND    hwndListView1  = 0;
-	int     lastChosenTab  = 0;
+	HWND    hwndTabCtrl        = 0;
+	HWND    hwndListViewAlpha  = 0;
+	HWND    hwndListViewDigit  = 0;
+	HWND    hwndHistogramAlpha = 0;
+	HWND    hwndHistogramDigit = 0;
+	HWND    hwndRichEdit       = 0;
+	int     lastChosenTab      = 0;
 	RECT    rect;
 	TCHAR   iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
@@ -36,14 +37,13 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 
     // Subclassing of this window and saving the pointer of the old WindowProc as his property
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
-    SetProp(hwndTabCtrl, OLD_TAB_WNDPROC_PROP, (HANDLE) OldTabCtrlProc);
+    SetProp(hwndTabCtrl, OldTabCtrlWndProc, (HANDLE) OldTabCtrlProc);
 
     int   * vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int));
     TCHAR * vysledok      = (TCHAR *) malloc(MaxCharsHorizAndlVertical           * sizeof(TCHAR));
     TCHAR * about         = (TCHAR *) malloc((lstrlen(TextAbout) + 1)            * sizeof(TCHAR));
     TCHAR * horizontal    = vysledok;    // Tento reùazec je Ëasùou reùazca vysledok, toto je   ukazovateæ na jeho zaËiatok
     TCHAR * vertical      = 0;           // Tento reùazec je Ëasùou reùazca vysledok, toto bude ukazovateæ na jeho zaËiatok
-
 
     _stprintf(about, TextAbout,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
@@ -53,27 +53,27 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Creating child windows in the display area of the Tab Control
-    hwndListView   = CreateListViewWindow (hwndTabCtrl, &rect, ListViewAlphaId);
-    hwndListView1  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewDigitId);
-    hwndHistogram  = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramAlphaId);
-    hwndHistogram1 = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramDigitId);
-    hwndRichEdit   = CreateRichEditWindow (hwndTabCtrl, &rect);
+    hwndListViewAlpha  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewAlphaId);
+    hwndListViewDigit  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewDigitId);
+    hwndHistogramAlpha = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramAlphaId);
+    hwndHistogramDigit = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramDigitId);
+    hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect);
 
-	if (hwndListView && hwndListView1 && hwndHistogram && hwndHistogram1 && hwndRichEdit)
+	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndRichEdit)
     {
         // EnableWindow(hwndRichEdit, FALSE);
-        spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
-        naplnListView(hwndListView,  vyskytyPismen, CharsTypeAlpha);
-        naplnListView(hwndListView1, vyskytyPismen, CharsTypeDigit);
+        Classic::spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Uû m·me aj reùazec vertical
+        Classic::naplnListView(hwndListViewAlpha, vyskytyPismen, CharsTypeAlpha);
+        Classic::naplnListView(hwndListViewDigit, vyskytyPismen, CharsTypeDigit);
 
-        SetProp(hwndTabCtrl,    LISTVIEW_PROP,       (HANDLE) vyskytyPismen);
-        SetProp(hwndListView,   LAST_CLICKED_COLUMN, (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
-        SetProp(hwndListView1,  LAST_CLICKED_COLUMN, (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
-        SetProp(hwndHistogram,  ARRAY_OF_OCCURENCES, (HANDLE) vyskytyPismen);
-        SetProp(hwndHistogram1, ARRAY_OF_OCCURENCES, (HANDLE) vyskytyPismen);
-        SetProp(hwndTabCtrl,    VERTICAL_PROP,       (HANDLE) vertical);
-        SetProp(hwndTabCtrl,    HORIZONTAL_PROP,     (HANDLE) vysledok);
-        SetProp(hwndTabCtrl,    ABOUT_PROP,          (HANDLE) about);
+        SetProp(hwndTabCtrl,        ArrayOfOccurrences, (HANDLE) vyskytyPismen);
+        SetProp(hwndListViewAlpha,  LastClickedColumn,  (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
+        SetProp(hwndListViewDigit,  LastClickedColumn,  (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
+        SetProp(hwndHistogramAlpha, ArrayOfOccurrences, (HANDLE) vyskytyPismen);
+        SetProp(hwndHistogramDigit, ArrayOfOccurrences, (HANDLE) vyskytyPismen);
+        SetProp(hwndTabCtrl,        VerticalText,       (HANDLE) vertical);
+        SetProp(hwndTabCtrl,        HorizontalText,     (HANDLE) vysledok);
+        SetProp(hwndTabCtrl,        AboutText,          (HANDLE) about);
 
         #ifdef _DEBUG
             _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
@@ -90,18 +90,18 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
          *  of the Tab Control window
          */
         getFullIniFilePath(iniFile);
-        lastChosenTab = GetPrivateProfileInt(INI_SECTION_TAB, INI_KEY_LAST_CHOSEN_TAB, 0, iniFile);
-        SetProp(hwndTabCtrl, LAST_CHOSEN_TAB, (HANDLE) lastChosenTab);       // For the case when default and user didn't choose other
+        lastChosenTab = GetPrivateProfileInt(IniFileTabsSection, IniFileLastChosenTabKey, 0, iniFile);
+        SetProp(hwndTabCtrl, LastChosenTab, (HANDLE) lastChosenTab);       // For the case when default and user didn't choose other
 
         TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
-        switchTab(hwndTabCtrl,   hwndListView,   hwndListView1,
-                  hwndHistogram, hwndHistogram1, hwndRichEdit,  horizontal, vertical, about);
+        switchTab(hwndTabCtrl,        hwndListViewAlpha,  hwndListViewDigit,
+                  hwndHistogramAlpha, hwndHistogramDigit, hwndRichEdit,      horizontal, vertical, about);
 
-        ShowWindow(hwndListView,   SW_SHOW);
-        ShowWindow(hwndListView1,  SW_SHOW);
-        ShowWindow(hwndHistogram,  SW_SHOW);
-        ShowWindow(hwndHistogram1, SW_SHOW);
-        ShowWindow(hwndRichEdit,   SW_SHOW);
+        ShowWindow(hwndListViewAlpha,  SW_SHOW);
+        ShowWindow(hwndListViewDigit,  SW_SHOW);
+        ShowWindow(hwndHistogramAlpha, SW_SHOW);
+        ShowWindow(hwndHistogramDigit, SW_SHOW);
+        ShowWindow(hwndRichEdit,       SW_SHOW);
     }
 
     return hwndTabCtrl;             // The function ListLoadNext() will use it

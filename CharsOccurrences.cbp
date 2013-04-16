@@ -83,6 +83,8 @@
 			<Add library="comdlg32" />
 			<Add library="comctl32" />
 		</Linker>
+		<Unit filename="Classic.cpp" />
+		<Unit filename="Classic.h" />
 		<Unit filename="Constants.h" />
 		<Unit filename="CreateHistogramWindow.cpp" />
 		<Unit filename="CreateHistogramWindow.h" />
