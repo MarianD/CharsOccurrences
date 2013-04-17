@@ -39,13 +39,13 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     SetProp(hwndTabCtrl, OldTabCtrlWndProc, (HANDLE) OldTabCtrlProc);
 
-    int   * vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int));
-    TCHAR * vysledok      = (TCHAR *) malloc(MaxCharsHorizAndlVertical           * sizeof(TCHAR));
-    TCHAR * about         = (TCHAR *) malloc((lstrlen(TextAbout) + 1)            * sizeof(TCHAR));
+    int   * vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits)     * sizeof(int));
+    TCHAR * vysledok      = (TCHAR *) malloc(MaxCharsHorizAndlVertical               * sizeof(TCHAR));
+    TCHAR * about         = (TCHAR *) malloc((lstrlen(Classic::getTextAbout()) + 10) * sizeof(TCHAR));
     TCHAR * horizontal    = vysledok;    // Tento reùazec je Ëasùou reùazca vysledok, toto je   ukazovateæ na jeho zaËiatok
     TCHAR * vertical      = 0;           // Tento reùazec je Ëasùou reùazca vysledok, toto bude ukazovateæ na jeho zaËiatok
 
-    _stprintf(about, TextAbout,
+    _stprintf(about, Classic::getTextAbout(),
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // ZÌskanie obdÂûnika pre zobrazovaciu Ëasù Tab Control

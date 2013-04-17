@@ -5,6 +5,17 @@
 #include "Constants.h"
 
 
+const TCHAR * const
+Classic::textAbout = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n" \
+                                              "Author: Marian Denes\n\n\n" \
+                                              "This plugin is freeware, created in Code::Blocks IDE.");
+const TCHAR * const
+Classic::textHead  = TEXT("\nOccurrences of individual ASCII letters, " \
+                                             "case insensitive:\n\n");
+const int
+Classic::MAX_DLZ_CIARY = (15 * NumOfCapitalLetters);
+
+
 void Classic::naplnListView(HWND hwndListView, int * charsOccurrences, int charsType)
 {
     int    sucetVyskytov = spoluVyskytov(charsOccurrences, charsType);
@@ -336,7 +347,7 @@ void Classic::spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, 
     pocetMiest = naplnAsociativnePole(&parVyskytPismeno, charsOccurrences);
 
     // Filling the string from the beginning
-    _stprintf (spolu, TextHead);
+    _stprintf (spolu, textHead);
 
     tlacHlavicky(spolu, pocetMiest);
     tlacVyskytuPismen(spolu, charsOccurrences, pocetMiest);
@@ -346,7 +357,7 @@ void Classic::spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, 
     *spolu      = TEXT('\0');                                         // Aby mal ÔalöÌ reùazec nulov˙ dÂûku (len istota)
 
     // Filling the second part of the string from the beginning, again
-    _stprintf (spolu, TextHead);
+    _stprintf (spolu, textHead);
 
     tlacVyskytuPismenPodSebou(spolu, charsOccurrences, &parVyskytPismeno, pocetMiest, CharsTypeAlpha);
 

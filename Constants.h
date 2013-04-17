@@ -3,19 +3,9 @@
 
     #include <windows.h>
 
-    const TCHAR * const TextAbout       = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n" \
-                                                "Author: Marian Denes\n\n\n" \
-                                                "This plugin is freeware, created in Code::Blocks IDE.");
-
-    const TCHAR * const TextHead        = TEXT("\nOccurrences of individual ASCII letters, " \
-                                                "case insensitive:\n\n");
-
-    const TCHAR * const HistogramClass  = TEXT("ChOcc Histogram");
-
     const int MaxCharsHorizAndlVertical = 6000;
     const int NumOfDigits               =   10;
     const int NumOfCapitalLetters       = ('Z' - 'A' + 1);
-    const int MAX_DLZ_CIARY             = (15 * NumOfCapitalLetters);
 
     enum
     {

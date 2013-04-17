@@ -32,22 +32,14 @@
 1365510755 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	<winver.h>
 
-1366100308 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1366101286 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 
-1366100443 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
+1366110454 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
 	<windows.h>
-	<tchar.h>
-	<map>
 	<string>
-	<cstdio>
-	<malloc.h>
-	<richedit.h>
-	<commdlg.h>
-	<cmath>
 	<commctrl.h>
-	"version.h"
 
 1365558693 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
@@ -57,7 +49,7 @@
 1358267014 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1366101007 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1366104492 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -120,7 +112,7 @@
 	<commctrl.h>
 	<richedit.h>
 
-1366101007 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+1366105950 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
 	<windows.h>
 
 1366101008 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
@@ -163,7 +155,7 @@
 	"NaplnStrukturuWndClassEx.h"
 	"Constants.h"
 
-1365510755 c:\users\marian\documents\codeblocks\charsoccurrences\createhistogramwindow.h
+1366104696 c:\users\marian\documents\codeblocks\charsoccurrences\createhistogramwindow.h
 	<windows.h>
 
 1365981254 c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.h
@@ -173,19 +165,16 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1366101319 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1366109704 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	"Classic.h"
 	"Constants.h"
 
-1366100614 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
+1366110044 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
 	<windows.h>
 	<tchar.h>
 	<map>
 	<string>
 	<cstdio>
-	<malloc.h>
-	<richedit.h>
-	<commdlg.h>
 	<cmath>
 	<commctrl.h>
 	"version.h"

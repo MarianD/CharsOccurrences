@@ -23,9 +23,6 @@
     #include <map>
     #include <string>
     #include <cstdio>
-    #include <malloc.h>
-    #include <richedit.h>
-    #include <commdlg.h>
     #include <cmath>
     #include <commctrl.h>
 
@@ -42,7 +39,12 @@
 
     class Classic
     {
+    private:
+        static const TCHAR * const textAbout;
+        static const TCHAR * const textHead;
+        static const int MAX_DLZ_CIARY;
     public:
+        static const TCHAR * getTextAbout() {return textAbout;}
         static void  spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVertical, const char * FileToLoad);
         static int   spoluVyskytov(int vyskytyPismen[], int charsType);
         static void  naplnListView(HWND hwndListView, int * vyskytyPismen, int charsType);
