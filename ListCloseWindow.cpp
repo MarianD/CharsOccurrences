@@ -6,22 +6,23 @@
 #include "Exports.h"
 #include "Constants.h"
 #include "Helpers.h"
+#include "Classic.h"
 
 void CHARSOCCURRENCESCALL
 ListCloseWindow(HWND ListWin)
 {
-	HWND   hwndTabCtrl        = ListWin;
-	HWND   hwndListViewAlpha  = 0;
-	HWND   hwndListViewDigit  = 0;
-	HWND   hwndRichEdit       = 0;
-	HWND   hwndHistogramAlpha = 0;
-	HWND   hwndHistogramDigit = 0;
-    void  *vyskytyPismen      = 0;
-    void  *vysledok           = 0;
-    void  *about              = 0;
-	int    lastChosenTab      = 0;
-	TCHAR  strLastChosenTab[3];
-	TCHAR  iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
+	HWND      hwndTabCtrl        = ListWin;
+	HWND      hwndListViewAlpha  = 0;
+	HWND      hwndListViewDigit  = 0;
+	HWND      hwndRichEdit       = 0;
+	HWND      hwndHistogramAlpha = 0;
+	HWND      hwndHistogramDigit = 0;
+	Classic * pClassic           = 0;
+    void    * vysledok           = 0;
+    void    * about              = 0;
+	int      lastChosenTab       = 0;
+	TCHAR    strLastChosenTab[3];
+	TCHAR    iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
     // Saving the last chosen tab of Tab Control to ini file
     lastChosenTab = (INT64) GetProp(hwndTabCtrl, LastChosenTab);
@@ -40,28 +41,27 @@ ListCloseWindow(HWND ListWin)
      *  and getting pointers to allocated chunks of the memory
      */
 
-    vyskytyPismen = (void *) RemoveProp(hwndTabCtrl,   ArrayOfOccurrences);
-    vysledok      = (void *) RemoveProp(hwndTabCtrl,   HorizontalText);
-    vysledok      = (void *) RemoveProp(hwndTabCtrl,   AboutText);
+    pClassic      = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
+    vysledok      = (void *)    RemoveProp(hwndTabCtrl, HorizontalText);
+    vysledok      = (void *)    RemoveProp(hwndTabCtrl, AboutText);
 
     RemoveProp(hwndTabCtrl,         VerticalText);
     RemoveProp(hwndTabCtrl,         OldTabCtrlWndProc);
     RemoveProp(hwndTabCtrl,         LastChosenTab);
     RemoveProp(hwndListViewAlpha,   LastClickedColumn);
-    RemoveProp(hwndListViewDigit,   LastClickedColumn);    RemoveProp(hwndHistogramAlpha,  ArrayOfOccurrences);
-    RemoveProp(hwndHistogramDigit,  ArrayOfOccurrences);
-    RemoveProp(hwndHistogramAlpha,  ClientWidthAndHight);
+    RemoveProp(hwndListViewDigit,   LastClickedColumn);    RemoveProp(hwndHistogramAlpha,  ClientWidthAndHight);
     RemoveProp(hwndHistogramDigit,  ClientWidthAndHight);
+    RemoveProp(hwndHistogramAlpha,  PointerToClassic);
+    RemoveProp(hwndHistogramDigit,  PointerToClassic);
 
     // Uvoænenie alokovanej pam‰te pre reùazce
-    if (vyskytyPismen)
-        free(vyskytyPismen);
-
     if (vysledok)
         free(vysledok);
 
     if (about)
         free(about);
+
+    delete pClassic;
 
 //    DestroyWindow(hwndTabCtrl);      // ZruöÌ aj dcÈrske okn·
 

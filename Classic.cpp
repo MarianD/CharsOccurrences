@@ -5,6 +5,8 @@
 #include "Constants.h"
 
 
+//Classic * Classic::singleObject = 0;
+
 const TCHAR * const
 Classic::textAbout = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n" \
                                               "Author: Marian Denes\n\n\n" \
@@ -13,12 +15,31 @@ const TCHAR * const
 Classic::textHead  = TEXT("\nOccurrences of individual ASCII letters, " \
                                              "case insensitive:\n\n");
 const int
-Classic::MAX_DLZ_CIARY = (15 * NumOfCapitalLetters);
+Classic::maxDlzkaCiary = (15 * NumOfCapitalLetters);
+
+//Classic::vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int));
 
 
-void Classic::naplnListView(HWND hwndListView, int * charsOccurrences, int charsType)
+//Classic * Classic::getInstance(const char * FileToLoad)
+//{
+//    if (singleObject == 0)
+//        singleObject = new Classic();
+//
+//    return singleObject;
+//}
+
+Classic::Classic()
 {
-    int    sucetVyskytov = spoluVyskytov(charsOccurrences, charsType);
+    vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int));
+}
+
+Classic::~Classic()
+{
+    free(vyskytyPismen);
+}
+void Classic::naplnListView(HWND hwndListView, int charsType)
+{
+    int    sucetVyskytov = spoluVyskytov(charsType);
     int    pocetZnakov   = -1;
     int    base          = -1;
     TCHAR  baseChar      = -1;
@@ -44,7 +65,7 @@ void Classic::naplnListView(HWND hwndListView, int * charsOccurrences, int chars
     {
         TCHAR pismeno[]     = TEXT("X");
         pismeno[0]          = baseChar + riadok;
-        int   occur         = charsOccurrences[base + riadok];
+        int   occur         = vyskytyPismen[base + riadok];
         float percent       = (float) occur / sucetVyskytov * 100.;
         TCHAR chOccur  [20];
         TCHAR chPercent[20];
@@ -71,7 +92,7 @@ void Classic::naplnListView(HWND hwndListView, int * charsOccurrences, int chars
 }
 
 
-void Classic::nulujPole(int pole[], int pocetPrvkov)
+void Classic::nulujPole(int * const pole, int pocetPrvkov)
 {
     for(int i = 0; i < pocetPrvkov; i++)
         pole[i] = 0;
@@ -107,34 +128,31 @@ int Classic::zmenMaleNaVelke(int pismeno)
 
 /** \brief Naplnenie asociatívneho po¾a a zistenie poètu miest nutných pre oddelenie poètu jednotlivých výskytov
  *
- * \param  parVyskytPismeno - zostupné asociatívne pole, ktoré sa má naplni
- * \param  pole - pole celých èísel, výskytov príslušných písmen (0. prvok pre A, 1. prvok pre B atï.)
  * \return poèet miest potrebných pre oddelenie èísel v riadku = poèet miest najväèšieho èísla + 1
  *
  */
-//TODO: Buï toto urobi tiež pre parVyskytCislica, alebo do parVyskytPismeno da aj èíslice
-int Classic::naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int pole[])
+int Classic::naplnAsociativnePole()
 {
     int pocetMiest = 0;
     int maximum    = 0;
 
     for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
-        int pocet = pole[i];
-        parVyskytPismeno->insert(make_pair(pocet, TEXT('A') + i));
+        int pocet = vyskytyPismen[i];
+        parVyskytPismeno.insert(make_pair(pocet, TEXT('A') + i));
         if (pocet > maximum)
             maximum = pocet;
     }
 
     maximum = (maximum == 0) ? 1 : maximum;                        // We will get logarithm of it, so it must not be 0
     pocetMiest = floor(log10(maximum)) + 2;                        // Poèet miest najväèšieho èísla + 1
-    return (pocetMiest > POCET_MIEST) ? pocetMiest : POCET_MIEST;
+    return (pocetMiest > MinPocetMiest) ? pocetMiest : MinPocetMiest;
 }
 
 
 void Classic::zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest)
 {
-    for (int i = 0; i < PRAZD_MIEST + pocetMiest * NumOfCapitalLetters; ++i)
+    for (int i = 0; i < UvodnychMedzier + pocetMiest * NumOfCapitalLetters; ++i)
     {
         _stprintf(spolu + lstrlen(spolu), TEXT("%c"), znak);
     }
@@ -145,7 +163,7 @@ void Classic::zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest)
 void Classic::tlacHlavicky(TCHAR *spolu, int pocetMiest)
 {
     zobrazCiaru(spolu + lstrlen(spolu), TEXT('-'), pocetMiest);
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), UvodnychMedzier, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
     for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
@@ -157,13 +175,13 @@ void Classic::tlacHlavicky(TCHAR *spolu, int pocetMiest)
 }
 
 
-void Classic::tlacVyskytuPismen(TCHAR *spolu, int pole[], int pocetMiest)
+void Classic::tlacVyskytuPismen(TCHAR *spolu, int pocetMiest)
 {
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), UvodnychMedzier, TEXT(""));
 
     for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
-        int pocet = pole[i];
+        int pocet = vyskytyPismen[i];
 
         if (pocet != 0)
             _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
@@ -175,7 +193,7 @@ void Classic::tlacVyskytuPismen(TCHAR *spolu, int pole[], int pocetMiest)
 }
 
 
-void Classic::tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPismeno, int pocetMiest)
+void Classic::tlacVyskytuPismenZoradeny(TCHAR *spolu, int pocetMiest)
 {
     zobrazCiaru(spolu + lstrlen(spolu), TEXT('*'), pocetMiest);
 
@@ -183,9 +201,9 @@ void Classic::tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVy
      * Tlaè hlavièky s písmenami usporiadanými
      * d¾a ich výskytu zostupne
     */
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), UvodnychMedzier, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
-    for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); ++pos)
+    for (descendingDirectory::iterator pos = parVyskytPismeno.begin(); pos != parVyskytPismeno.end(); ++pos)
     {
         _stprintf(spolu + lstrlen(spolu), TEXT("%*s%c"), pocetMiest - 1, TEXT(""), pos->second);
     }
@@ -196,9 +214,9 @@ void Classic::tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVy
     /*
      * Tlaè výskytu jednotlivých písmen
     */
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), PRAZD_MIEST, TEXT(""));     // Zaèiatoèný prázdny ståpec
+    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), UvodnychMedzier, TEXT(""));     // Zaèiatoèný prázdny ståpec
 
-    for (multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin(); pos != parVyskytPismeno->end(); ++pos)
+    for (descendingDirectory::iterator pos = parVyskytPismeno.begin(); pos != parVyskytPismeno.end(); ++pos)
     {
         int pocet  = pos->first ;
 
@@ -214,7 +232,7 @@ void Classic::tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVy
 }
 
 
-int Classic::spoluVyskytov(int charsOccurrences[], int charsType)
+int Classic::spoluVyskytov(int charsType)
 {
     int numChars = -1;
     int base     = -1;
@@ -235,26 +253,25 @@ int Classic::spoluVyskytov(int charsOccurrences[], int charsType)
      */
     int sucetVyskytov = 0;
     for (int i = 0; i < numChars; ++i)
-        sucetVyskytov += charsOccurrences[base + i];
+        sucetVyskytov += vyskytyPismen[base + i];
 
     return (sucetVyskytov == 0) ? 1 : sucetVyskytov;      // It will be the divisor, so it must not be 0
 }
 
 
-void Classic::tlacVyskytuPismenPodSebou(TCHAR *spolu, int charsOccurrences[], zostupAsociativPole *parVyskytPismeno,
-                               int pocetMiest, int charsType)
+void Classic::tlacVyskytuPismenPodSebou(TCHAR *spolu, int pocetMiest, int charsType)
 {
-    int sucetVyskytov = spoluVyskytov(charsOccurrences, charsType);
+    int sucetVyskytov = spoluVyskytov(charsType);
 
     _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 
-    multimap <int, TCHAR>::iterator pos = parVyskytPismeno->begin();
+    descendingDirectory::iterator pos = parVyskytPismeno.begin();
     for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
         /*
          *  Najprv ich vytlaèíme abecedne
          */
-        int    pocet   = charsOccurrences[i];
+        int    pocet   = vyskytyPismen[i];
         double percent = (double) pocet / sucetVyskytov * 100.;
 
         _stprintf(spolu + lstrlen(spolu), TEXT("%c: "), TEXT('A') + i);
@@ -269,7 +286,7 @@ void Classic::tlacVyskytuPismenPodSebou(TCHAR *spolu, int charsOccurrences[], zo
         /*
          *  Teraz ich vytlaèíme pod¾a výskytov
          */
-        _stprintf(spolu + lstrlen(spolu), TEXT("%*c: "), STLP_MEDZERA + 1, pos->second);
+        _stprintf(spolu + lstrlen(spolu), TEXT("%*c: "), StlpcovaMedzera + 1, pos->second);
 
         pocet   = pos->first ;
         percent = (double) pocet / sucetVyskytov * 100.;
@@ -289,9 +306,9 @@ void Classic::tlacVyskytuPismenPodSebou(TCHAR *spolu, int charsOccurrences[], zo
 void Classic::tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest)
 {
     const TCHAR znak           = TEXT('-');
-    TCHAR ciara[MAX_DLZ_CIARY];
+    TCHAR ciara[maxDlzkaCiary];
     int  sirkaStlpcaVyskytov   = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
-    int  dlzkaRiadka           = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + STLP_MEDZERA;
+    int  dlzkaRiadka           = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + StlpcovaMedzera;
 
     for (int i = 0; i < dlzkaRiadka; ++i)
         *(ciara + i) = znak;
@@ -302,15 +319,14 @@ void Classic::tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMie
     _stprintf(spolu + lstrlen(spolu),
             TEXT("%*d (100.00 %% )%*d (100.00 %% )\n"),
             sirkaStlpcaVyskytov, sucetVyskytov,
-            STLP_MEDZERA + sirkaStlpcaVyskytov, sucetVyskytov);
+            StlpcovaMedzera + sirkaStlpcaVyskytov, sucetVyskytov);
 }
 
 
-void Classic::spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, TCHAR ** pVertical, const char * FileToLoad)
+void Classic::spracovanieVstupnehoSuboru(TCHAR * spolu, TCHAR ** pVertical, const char * FileToLoad)
 {
-    FILE *              vstup = 0;
-    zostupAsociativPole parVyskytPismeno;
-    int                 pocetMiest = 0;
+    FILE * vstup = 0;
+    int    pocetMiest = 0;
 
     if ((vstup = fopen(FileToLoad, "rb")) == 0)
     {
@@ -319,7 +335,7 @@ void Classic::spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, 
         return;
     }
 
-    nulujPole(charsOccurrences, NumOfCapitalLetters + NumOfDigits);
+    nulujPole(vyskytyPismen, NumOfCapitalLetters + NumOfDigits);
 
     while (!feof(vstup))
     {
@@ -332,26 +348,26 @@ void Classic::spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, 
             if (jeVelkePismeno(znak))
             {
                 int index = znak - 'A';         // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
-                charsOccurrences[index]++;
+                vyskytyPismen[index]++;
             }
             else if (isdigit(znak))
             {
                 int index = znak - '0';
                 index += NumOfCapitalLetters;  // Occurrences of digits are just after occurences of letters
-                ++charsOccurrences[index];
+                ++vyskytyPismen[index];
             }
         }
     }
 
     fclose(vstup);
-    pocetMiest = naplnAsociativnePole(&parVyskytPismeno, charsOccurrences);
+    pocetMiest = naplnAsociativnePole();
 
     // Filling the string from the beginning
     _stprintf (spolu, textHead);
 
     tlacHlavicky(spolu, pocetMiest);
-    tlacVyskytuPismen(spolu, charsOccurrences, pocetMiest);
-    tlacVyskytuPismenZoradeny(spolu, &parVyskytPismeno, pocetMiest);
+    tlacVyskytuPismen(spolu, pocetMiest);
+    tlacVyskytuPismenZoradeny(spolu, pocetMiest);
 
     *pVertical  = spolu = spolu + lstrlen(spolu) + sizeof(TCHAR);     // Tu zaèína vertikálny výpis; ideme za koncovú nulu
     *spolu      = TEXT('\0');                                         // Aby mal ïalší reazec nulovú dåžku (len istota)
@@ -359,9 +375,9 @@ void Classic::spracovanieVstupnehoSuboru(TCHAR * spolu, int * charsOccurrences, 
     // Filling the second part of the string from the beginning, again
     _stprintf (spolu, textHead);
 
-    tlacVyskytuPismenPodSebou(spolu, charsOccurrences, &parVyskytPismeno, pocetMiest, CharsTypeAlpha);
+    tlacVyskytuPismenPodSebou(spolu, pocetMiest, CharsTypeAlpha);
 
-    int sucetVyskytov = spoluVyskytov(charsOccurrences, CharsTypeAlpha);
+    int sucetVyskytov = spoluVyskytov(CharsTypeAlpha);
     tlacSuctovehoRiadka(spolu, sucetVyskytov, pocetMiest);
 }
 

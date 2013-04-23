@@ -5,18 +5,9 @@
 
     //**************************  Symboly  **************************/
 
-    #define CHYBA	                1
-    #define OK		                0
-    #define TRUE	                1
-    #define FALSE	                0
-    #define KONIEC_POLA           (-1)
-    #define MAX_ZNAKOV_MENA       256
-    #define MAX_DLZ_RIADKA       1000
-    #define POCET_MIEST             5
-    #define PRAZD_MIEST             0
-    #define STLP_MEDZERA           14
-
-    #define itm_percent	        0xFFFE
+    const int MinPocetMiest   =  5;
+    const int UvodnychMedzier =  0;
+    const int StlpcovaMedzera = 14;
 
     #include <windows.h>
     #include <tchar.h>
@@ -35,32 +26,38 @@
 
     using namespace std;
 
-    typedef multimap <int, TCHAR, greater<int> > zostupAsociativPole;
+    typedef multimap <int, TCHAR, greater<int> > descendingDirectory;
 
     class Classic
     {
     private:
+//        static Classic * singleObject;
         static const TCHAR * const textAbout;
         static const TCHAR * const textHead;
-        static const int MAX_DLZ_CIARY;
+        static const int           maxDlzkaCiary;
+        int *                      vyskytyPismen;
+        descendingDirectory        parVyskytPismeno;
     public:
-        static const TCHAR * getTextAbout() {return textAbout;}
-        static void  spracovanieVstupnehoSuboru(TCHAR * spolu, int * vyskytyPismen, TCHAR ** pVertical, const char * FileToLoad);
-        static int   spoluVyskytov(int vyskytyPismen[], int charsType);
-        static void  naplnListView(HWND hwndListView, int * vyskytyPismen, int charsType);
+//        static Classic * getInstance(const char * FileToLoad);
+        Classic();
+        ~Classic();
+        const TCHAR * getTextAbout() {return textAbout;}
+        int * getVyskytyPismen() {return vyskytyPismen;}
+        void  spracovanieVstupnehoSuboru(TCHAR * spolu, TCHAR ** pVertical, const char * FileToLoad);
+        void  naplnListView(HWND hwndListView, int charsType);
     private:
-        static void  nulujPole(int pole[], int pocetPrvkov);
-        static bool  jeVelkePismeno(int znak);
-        static bool  jeMalePismeno(int znak);
-        static int   zmenMaleNaVelke(int pismeno);
-        static int   naplnAsociativnePole(zostupAsociativPole *parVyskytPismeno, int vyskytyPismen[]);
-        static void  zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest);
-        static void  tlacHlavicky(TCHAR *spolu, int pocetMiest);
-        static void  tlacVyskytuPismen(TCHAR *spolu, int vyskytyPismen[], int pocetMiest);
-        static void  tlacVyskytuPismenZoradeny(TCHAR *spolu, zostupAsociativPole *parVyskytPismeno, int pocetMiest);
-        static void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int vyskytyPismen[], zostupAsociativPole *parVyskytPismeno,
-                                        int pocetMiest, int charsType);
-        static void  tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
+        int   spoluVyskytov(int charsType);
+        void  nulujPole(int * const pole, int pocetPrvkov);
+        bool  jeVelkePismeno(int znak);
+        bool  jeMalePismeno(int znak);
+        int   zmenMaleNaVelke(int pismeno);
+        int   naplnAsociativnePole();
+        void  zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest);
+        void  tlacHlavicky(TCHAR *spolu, int pocetMiest);
+        void  tlacVyskytuPismen(TCHAR *spolu, int pocetMiest);
+        void  tlacVyskytuPismenZoradeny(TCHAR *spolu, int pocetMiest);
+        void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int pocetMiest, int charsType);
+        void  tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
     };
 
 #endif // ndef

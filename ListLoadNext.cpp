@@ -12,20 +12,20 @@
 int CHARSOCCURRENCESCALL
 ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags*/)
 {
-	HWND    hwndTabCtrl        = ListWin;
-	HWND    hwndListViewAlpha  = 0;
-	HWND    hwndListViewDigit  = 0;	HWND    hwndHistogramAlpha = 0;
-	HWND    hwndHistogramDigit = 0;
-	HWND    hwndRichEdit       = 0;
-    int    *vyskytyPismen;
-    TCHAR  *vysledok;
-    TCHAR  *horizontal;
-    TCHAR  *about;
-    TCHAR  *vertical;
+	HWND      hwndTabCtrl        = ListWin;
+	HWND      hwndListViewAlpha  = 0;
+	HWND      hwndListViewDigit  = 0;	HWND      hwndHistogramAlpha = 0;
+	HWND      hwndHistogramDigit = 0;
+	HWND      hwndRichEdit       = 0;
+	Classic * pClassic           = 0;
+    TCHAR   * vysledok;
+    TCHAR   * horizontal;
+    TCHAR   * about;
+    TCHAR   * vertical;
 
-    vyskytyPismen = (int   *) GetProp(hwndTabCtrl, ArrayOfOccurrences);   // Len ukazovate¾ na skutoène alokovaný reazec
-    vysledok      = (TCHAR *) GetProp(hwndTabCtrl, HorizontalText); // Len ukazovate¾ na skutoène alokovaný reazec
-    about         = (TCHAR *) GetProp(hwndTabCtrl, AboutText);
+    pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
+    vysledok      = (TCHAR *)   GetProp(hwndTabCtrl, HorizontalText); // Len ukazovate¾ na skutoène alokovaný reazec
+    about         = (TCHAR *)   GetProp(hwndTabCtrl, AboutText);
     horizontal    = vysledok;
 
     // Getting handles of the child windows
@@ -34,9 +34,9 @@ ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags
 
 	if (hwndListViewAlpha && hwndHistogramAlpha && hwndRichEdit)
     {
-        Classic::spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Máme aj horizontal (=vysledok), aj vertical
-        Classic::naplnListView(hwndListViewAlpha, vyskytyPismen, CharsTypeAlpha);
-        Classic::naplnListView(hwndListViewDigit, vyskytyPismen, CharsTypeDigit);
+        pClassic->spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // Máme aj horizontal (=vysledok), aj vertical
+        pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
+        pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
 
         // Let another file shows item in the last used order
         LPARAM lastClickedColumn = (LPARAM) GetProp(hwndListViewAlpha, LastClickedColumn);

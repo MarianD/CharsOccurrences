@@ -31,6 +31,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     LRESULT CALLBACK
     NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+
     // Vytvorenie okna typu Tab Control, vypåòajúceho rodièovské okno (okno Listera)
     GetClientRect(ParentWindow, &rect);
     hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
@@ -39,13 +40,16 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     SetProp(hwndTabCtrl, OldTabCtrlWndProc, (HANDLE) OldTabCtrlProc);
 
-    int   * vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits)     * sizeof(int));
-    TCHAR * vysledok      = (TCHAR *) malloc(MaxCharsHorizAndlVertical               * sizeof(TCHAR));
-    TCHAR * about         = (TCHAR *) malloc((lstrlen(Classic::getTextAbout()) + 10) * sizeof(TCHAR));
+    // Creating instance of the class Classic and saving the pointer to it in the property of the TabCtrl Window
+    Classic * pClassic = new Classic();
+    SetProp(hwndTabCtrl, PointerToClassic, (HANDLE) pClassic);
+
+    TCHAR * vysledok      = (TCHAR *) malloc(MaxCharsHorizAndlVertical                * sizeof(TCHAR));
+    TCHAR * about         = (TCHAR *) malloc((lstrlen(pClassic->getTextAbout()) + 10) * sizeof(TCHAR));
     TCHAR * horizontal    = vysledok;    // Tento reazec je èasou reazca vysledok, toto je   ukazovate¾ na jeho zaèiatok
     TCHAR * vertical      = 0;           // Tento reazec je èasou reazca vysledok, toto bude ukazovate¾ na jeho zaèiatok
 
-    _stprintf(about, Classic::getTextAbout(),
+    _stprintf(about, pClassic->getTextAbout(),
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
@@ -62,15 +66,14 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndRichEdit)
     {
         // EnableWindow(hwndRichEdit, FALSE);
-        Classic::spracovanieVstupnehoSuboru(vysledok, vyskytyPismen, &vertical, FileToLoad);    // Už máme aj reazec vertical
-        Classic::naplnListView(hwndListViewAlpha, vyskytyPismen, CharsTypeAlpha);
-        Classic::naplnListView(hwndListViewDigit, vyskytyPismen, CharsTypeDigit);
+        pClassic->spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // Už máme aj reazec vertical
+        pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
+        pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
 
-        SetProp(hwndTabCtrl,        ArrayOfOccurrences, (HANDLE) vyskytyPismen);
         SetProp(hwndListViewAlpha,  LastClickedColumn,  (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
         SetProp(hwndListViewDigit,  LastClickedColumn,  (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
-        SetProp(hwndHistogramAlpha, ArrayOfOccurrences, (HANDLE) vyskytyPismen);
-        SetProp(hwndHistogramDigit, ArrayOfOccurrences, (HANDLE) vyskytyPismen);
+        SetProp(hwndHistogramAlpha, PointerToClassic,   (HANDLE) pClassic);
+        SetProp(hwndHistogramDigit, PointerToClassic,   (HANDLE) pClassic);
         SetProp(hwndTabCtrl,        VerticalText,       (HANDLE) vertical);
         SetProp(hwndTabCtrl,        HorizontalText,     (HANDLE) vysledok);
         SetProp(hwndTabCtrl,        AboutText,          (HANDLE) about);

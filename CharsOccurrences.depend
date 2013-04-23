@@ -49,7 +49,7 @@
 1358267014 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1366104492 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1366748439 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -67,7 +67,7 @@
 1365510755 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1366100721 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1366748536 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -112,24 +112,26 @@
 	<commctrl.h>
 	<richedit.h>
 
-1366105950 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+1366748553 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
 	<windows.h>
 
-1366101008 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
+1366750580 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
 	<tchar.h>
 	"ListCloseWindow.h"
 	"Exports.h"
 	"Constants.h"
 	"Helpers.h"
+	"Classic.h"
 
 1360058355 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1366040893 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1366748944 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
 	"Helpers.h"
+	"Classic.h"
 	<wingdi.h>
 
 1361286316 c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.h
@@ -165,11 +167,11 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1366109704 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1366751619 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	"Classic.h"
 	"Constants.h"
 
-1366110044 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
+1366751591 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
 	<windows.h>
 	<tchar.h>
 	<map>

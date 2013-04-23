@@ -5,6 +5,7 @@
 #include "CreateTabbedWindow.h"
 #include "Constants.h"
 #include "Helpers.h"
+#include "Classic.h"
 #include <wingdi.h>
 
 
@@ -132,6 +133,7 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     RECT        rect, * pRect = &rect;
     int         cxClient;
     int         cyClient;
+    Classic *   pClassic;
     int *       vyskytyPismen;             // Array of occurences of individual letters
     int         vyskyt;                    // Occurence of actual letter
     int         xLeft;                     // Positions of 4 verteces of rectangle
@@ -172,7 +174,8 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         hdc = BeginPaint (hWnd, &ps);
 
-        vyskytyPismen = (int *) GetProp(hWnd, ArrayOfOccurrences);
+        pClassic = (Classic *) GetProp(hWnd, PointerToClassic);
+        vyskytyPismen = pClassic->getVyskytyPismen();
 
         for (int i = 0; i < numChars; i++)
         {
@@ -192,7 +195,7 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         desVysky = cyClient / 12;
         maxVyska = 10 * desVysky;
 
-        // Painting of the histogram
+        // Painting the histogram
         for (int i = 0; i < numChars; i++)
         {
             vyskyt  = vyskytyPismen[base + i];
