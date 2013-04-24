@@ -49,7 +49,7 @@
 1358267014 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1366748439 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1366827573 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -67,7 +67,7 @@
 1365510755 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1366748536 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1366827472 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -99,23 +99,24 @@
 	<commctrl.h>
 	<richedit.h>
 
-1366047682 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
+1366827084 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
 	"ListNotificationReceived.h"
 	"CreateRichEditWindow.h"
 	"CreateListViewtWindow.h"
 	"Helpers.h"
 	"Exports.h"
 	"Constants.h"
+	"Classic.h"
 
 1359713933 c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.h
 	<windows.h>
 	<commctrl.h>
 	<richedit.h>
 
-1366748553 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+1366826810 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
 	<windows.h>
 
-1366750580 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
+1366826810 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
 	<tchar.h>
 	"ListCloseWindow.h"
 	"Exports.h"
@@ -167,11 +168,11 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1366751619 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1366827818 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	"Classic.h"
 	"Constants.h"
 
-1366751591 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
+1366828484 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
 	<windows.h>
 	<tchar.h>
 	<map>

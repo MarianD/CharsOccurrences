@@ -18,15 +18,12 @@ ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags
 	HWND      hwndHistogramDigit = 0;
 	HWND      hwndRichEdit       = 0;
 	Classic * pClassic           = 0;
-    TCHAR   * vysledok;
     TCHAR   * horizontal;
     TCHAR   * about;
     TCHAR   * vertical;
 
     pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
-    vysledok      = (TCHAR *)   GetProp(hwndTabCtrl, HorizontalText); // Len ukazovate¾ na skutoène alokovaný reazec
     about         = (TCHAR *)   GetProp(hwndTabCtrl, AboutText);
-    horizontal    = vysledok;
 
     // Getting handles of the child windows
     getHandlesOfChildrensWindows(hwndTabCtrl,        hwndListViewAlpha,  hwndListViewDigit,
@@ -34,22 +31,15 @@ ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags
 
 	if (hwndListViewAlpha && hwndHistogramAlpha && hwndRichEdit)
     {
-        pClassic->spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // Máme aj horizontal (=vysledok), aj vertical
+        pClassic->spracovanieVstupnehoSuboru(FileToLoad);
+        horizontal = pClassic->getHorizontal();
+        vertical   = pClassic->getVertical();
         pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
         pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
 
         // Let another file shows item in the last used order
         LPARAM lastClickedColumn = (LPARAM) GetProp(hwndListViewAlpha, LastClickedColumn);
         ListView_SortItems(hwndListViewAlpha, cmpFunction, lastClickedColumn);
-
-        #ifdef _DEBUG
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoadNext() ***"));
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %p"), hwndTabCtrl);
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\nhwndRichEdit = %p"),   hwndRichEdit);
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nsizeof(TCHAR)   = %d"), sizeof(TCHAR));
-            int znakov = lstrlen(vysledok);
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\Znakov vysledku = %d"), znakov);
-        #endif
 
         // Redrawing histogram by new values of the next file
         RECT          rect, *pRect = &rect;
@@ -66,7 +56,6 @@ ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags
     }
     else
     {
-        free(vysledok);
         free(about);
         return LISTPLUGIN_ERROR;
     }

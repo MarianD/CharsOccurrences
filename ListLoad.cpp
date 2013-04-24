@@ -44,10 +44,9 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     Classic * pClassic = new Classic();
     SetProp(hwndTabCtrl, PointerToClassic, (HANDLE) pClassic);
 
-    TCHAR * vysledok      = (TCHAR *) malloc(MaxCharsHorizAndlVertical                * sizeof(TCHAR));
     TCHAR * about         = (TCHAR *) malloc((lstrlen(pClassic->getTextAbout()) + 10) * sizeof(TCHAR));
-    TCHAR * horizontal    = vysledok;    // Tento reazec je èasou reazca vysledok, toto je   ukazovate¾ na jeho zaèiatok
-    TCHAR * vertical      = 0;           // Tento reazec je èasou reazca vysledok, toto bude ukazovate¾ na jeho zaèiatok
+    TCHAR * horizontal    = pClassic->getHorizontal();    // Ukazovate¾ na budúci reazec
+    TCHAR * vertical      = pClassic->getVertical();      // Ukazovate¾ na budúci reazec
 
     _stprintf(about, pClassic->getTextAbout(),
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
@@ -66,7 +65,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndRichEdit)
     {
         // EnableWindow(hwndRichEdit, FALSE);
-        pClassic->spracovanieVstupnehoSuboru(vysledok, &vertical, FileToLoad);    // Už máme aj reazec vertical
+        pClassic->spracovanieVstupnehoSuboru(FileToLoad);    // Už máme aj reazec vertical
         pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
         pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
 
@@ -74,18 +73,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         SetProp(hwndListViewDigit,  LastClickedColumn,  (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
         SetProp(hwndHistogramAlpha, PointerToClassic,   (HANDLE) pClassic);
         SetProp(hwndHistogramDigit, PointerToClassic,   (HANDLE) pClassic);
-        SetProp(hwndTabCtrl,        VerticalText,       (HANDLE) vertical);
-        SetProp(hwndTabCtrl,        HorizontalText,     (HANDLE) vysledok);
         SetProp(hwndTabCtrl,        AboutText,          (HANDLE) about);
-
-        #ifdef _DEBUG
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\n *** Volala sa funkcia ListLoad() ***"));
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nhwndTabCtrl  = %p"), hwndTabCtrl);
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\nhwndRichEdit = %p"),   hwndRichEdit);
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\nsizeof(TCHAR)   = %d"), sizeof(TCHAR));
-            int znakov = lstrlen(vysledok);
-            _stprintf(vysledok + lstrlen(vysledok), TEXT("\n\Znakov vysledku = %d"), znakov);
-        #endif
 
         /*
          *  Restore the last chosen tab from the INI file and store it

@@ -38,16 +38,13 @@
     const TCHAR * const INI_FILE                = TEXT("CharsOccurrences.ini");
 
     // Names of window properties
-    const TCHAR * const VerticalText            = TEXT("Vertical text");
-    const TCHAR * const HorizontalText          = TEXT("Horizontal text");
     const TCHAR * const AboutText               = TEXT("About text");
-//    const TCHAR * const ArrayOfOccurrences      = TEXT("Array of occurences");
     const TCHAR * const OldTabCtrlWndProc       = TEXT("Old Tab Control Window Proc");
     const TCHAR * const PointerToClassic        = TEXT("Pointer to Classic instance");
     const TCHAR * const LastClickedColumn       = TEXT("Last clicked column");
     const TCHAR * const ClientWidthAndHight     = TEXT("Client width and hight");
     const TCHAR * const LastChosenTab           = TEXT("Last chosen tab");
-    const TCHAR * const IniFileTabsSection       = TEXT("Tabs");
+    const TCHAR * const IniFileTabsSection      = TEXT("Tabs");
     const TCHAR * const IniFileLastChosenTabKey = TEXT("LastChosenTab");
 
 #endif // ndef

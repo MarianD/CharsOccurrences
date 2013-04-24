@@ -18,7 +18,6 @@ ListCloseWindow(HWND ListWin)
 	HWND      hwndHistogramAlpha = 0;
 	HWND      hwndHistogramDigit = 0;
 	Classic * pClassic           = 0;
-    void    * vysledok           = 0;
     void    * about              = 0;
 	int      lastChosenTab       = 0;
 	TCHAR    strLastChosenTab[3];
@@ -42,10 +41,8 @@ ListCloseWindow(HWND ListWin)
      */
 
     pClassic      = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
-    vysledok      = (void *)    RemoveProp(hwndTabCtrl, HorizontalText);
-    vysledok      = (void *)    RemoveProp(hwndTabCtrl, AboutText);
+    about         = (void *)    RemoveProp(hwndTabCtrl, AboutText);
 
-    RemoveProp(hwndTabCtrl,         VerticalText);
     RemoveProp(hwndTabCtrl,         OldTabCtrlWndProc);
     RemoveProp(hwndTabCtrl,         LastChosenTab);
     RemoveProp(hwndListViewAlpha,   LastClickedColumn);
@@ -55,9 +52,6 @@ ListCloseWindow(HWND ListWin)
     RemoveProp(hwndHistogramDigit,  PointerToClassic);
 
     // Uvoænenie alokovanej pam‰te pre reùazce
-    if (vysledok)
-        free(vysledok);
-
     if (about)
         free(about);
 

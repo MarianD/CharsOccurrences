@@ -32,32 +32,40 @@
     {
     private:
 //        static Classic * singleObject;
-        static const TCHAR * const textAbout;
-        static const TCHAR * const textHead;
-        static const int           maxDlzkaCiary;
-        int *                      vyskytyPismen;
-        descendingDirectory        parVyskytPismeno;
+        static const
+        TCHAR * const       textAbout;
+        static const
+        TCHAR * const       textHead;
+        static const int    maxDlzkaCiary;
+        int *               vyskytyPismen;
+        descendingDirectory parVyskytPismeno;
+        int                 pocetMiest;          // Number of positions of the larger number of occurrences + 1
+        TCHAR *             spolu;
+        TCHAR *             vertical;
     public:
 //        static Classic * getInstance(const char * FileToLoad);
         Classic();
         ~Classic();
-        const TCHAR * getTextAbout() {return textAbout;}
-        int * getVyskytyPismen() {return vyskytyPismen;}
-        void  spracovanieVstupnehoSuboru(TCHAR * spolu, TCHAR ** pVertical, const char * FileToLoad);
-        void  naplnListView(HWND hwndListView, int charsType);
+        const
+        TCHAR * getTextAbout()             {return textAbout;}
+        int   * getVyskytyPismen()         {return vyskytyPismen;}
+        TCHAR * getHorizontal()            {return spolu;}
+        TCHAR * getVertical()              {return vertical;}
+        void    spracovanieVstupnehoSuboru (const char * FileToLoad);
+        void    naplnListView              (HWND hwndListView, int charsType);
     private:
-        int   spoluVyskytov(int charsType);
-        void  nulujPole(int * const pole, int pocetPrvkov);
-        bool  jeVelkePismeno(int znak);
-        bool  jeMalePismeno(int znak);
-        int   zmenMaleNaVelke(int pismeno);
-        int   naplnAsociativnePole();
-        void  zobrazCiaru(TCHAR *spolu, TCHAR znak, int pocetMiest);
-        void  tlacHlavicky(TCHAR *spolu, int pocetMiest);
-        void  tlacVyskytuPismen(TCHAR *spolu, int pocetMiest);
-        void  tlacVyskytuPismenZoradeny(TCHAR *spolu, int pocetMiest);
-        void  tlacVyskytuPismenPodSebou(TCHAR *spolu, int pocetMiest, int charsType);
-        void  tlacSuctovehoRiadka(TCHAR * spolu, int sucetVyskytov, int pocetMiest);
+        int   spoluVyskytov                (int charsType);
+        void  nulujPole                    (int * const pole, int pocetPrvkov);
+        bool  jeVelkePismeno               (int znak);
+        bool  jeMalePismeno                (int znak);
+        int   zmenMaleNaVelke              (int pismeno);
+        void  naplnAsociativnePole         ();
+        void  zobrazCiaru                  (TCHAR znak);
+        void  tlacHlavicky                 ();
+        void  tlacVyskytuPismen            ();
+        void  tlacVyskytuPismenZoradeny    ();
+        void  tlacVyskytuPismenPodSebou    (int charsType);
+        void  tlacSuctovehoRiadka          (int sucetVyskytov);
     };
 
 #endif // ndef
