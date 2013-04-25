@@ -12,53 +12,39 @@ void CHARSOCCURRENCESCALL
 ListCloseWindow(HWND ListWin)
 {
 	HWND      hwndTabCtrl        = ListWin;
-	HWND      hwndListViewAlpha  = 0;
-	HWND      hwndListViewDigit  = 0;
-	HWND      hwndRichEdit       = 0;
-	HWND      hwndHistogramAlpha = 0;
-	HWND      hwndHistogramDigit = 0;
 	Classic * pClassic           = 0;
-    void    * about              = 0;
 	int      lastChosenTab       = 0;
 	TCHAR    strLastChosenTab[3];
 	TCHAR    iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
     // Saving the last chosen tab of Tab Control to ini file
-    lastChosenTab = (INT64) GetProp(hwndTabCtrl, LastChosenTab);
+    lastChosenTab = (INT64) RemoveProp(hwndTabCtrl, LastChosenTab);
     _stprintf(strLastChosenTab, TEXT("%d"), lastChosenTab);
 
   	getFullIniFilePath(iniFile);
     WritePrivateProfileString(IniFileTabsSection, IniFileLastChosenTabKey, strLastChosenTab, iniFile);
-
-    // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl,        hwndListViewAlpha,  hwndListViewDigit,
-                                 hwndHistogramAlpha, hwndHistogramDigit, hwndRichEdit);
-
 
     /*
      *  Removing all items in the property list of the windows
      *  and getting pointers to allocated chunks of the memory
      */
 
-    pClassic      = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
-    about         = (void *)    RemoveProp(hwndTabCtrl, AboutText);
+    pClassic = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
 
-    RemoveProp(hwndTabCtrl,         OldTabCtrlWndProc);
-    RemoveProp(hwndTabCtrl,         LastChosenTab);
-    RemoveProp(hwndListViewAlpha,   LastClickedColumn);
-    RemoveProp(hwndListViewDigit,   LastClickedColumn);    RemoveProp(hwndHistogramAlpha,  ClientWidthAndHight);
-    RemoveProp(hwndHistogramDigit,  ClientWidthAndHight);
-    RemoveProp(hwndHistogramAlpha,  PointerToClassic);
-    RemoveProp(hwndHistogramDigit,  PointerToClassic);
+    RemoveProp(hwndTabCtrl,                        OldTabCtrlWndProc);
+    RemoveProp(hwndTabCtrl,                        LastChosenTab);
 
-    // Uvo¾nenie alokovanej pamäte pre reazce
-    if (about)
-        free(about);
+    RemoveProp(pClassic->getHwndListViewAlpha (),  LastClickedColumn);
+    RemoveProp(pClassic->getHwndListViewDigit (),  LastClickedColumn);    RemoveProp(pClassic->getHwndHistogramAlpha(),  ClientWidthAndHight);
+    RemoveProp(pClassic->getHwndHistogramDigit(),  ClientWidthAndHight);
+    RemoveProp(pClassic->getHwndHistogramAlpha(),  PointerToClassic);
+    RemoveProp(pClassic->getHwndHistogramDigit(),  PointerToClassic);
 
+    // Uvo¾nenie alokovanej pamäte pre exemplár triedy
     delete pClassic;
 
-//    DestroyWindow(hwndTabCtrl);      // Zruší aj dcérske okná
+    DestroyWindow(hwndTabCtrl);         // It will destroy child windows, too
 
-//      MessageBoxA(0, "Tak èo, za padneš?!", "Padne?", 0);
+//      MessageBoxA(0, "Tak èo, zas padneš?!", "Padne?", 0);
 
 }

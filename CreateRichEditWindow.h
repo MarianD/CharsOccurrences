@@ -20,7 +20,7 @@
     #include <commctrl.h>
     #include <richedit.h>
 
-    HWND CreateRichEditWindow(HWND ParrentWindow, RECT * pRect);
+    HWND CreateRichEditWindow(HWND ParrentWindow, RECT * pRect, int id);
 
 #endif // ndef
 

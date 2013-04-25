@@ -18,12 +18,8 @@
     /********************  Prototypy funkcií  ***********************/
 
     void
-    switchTab(HWND    hwndTabCtrl,   HWND    hwndListView,   HWND    hwndListView1,
-                   HWND    hwndHistogram, HWND    hwndHistogram1, HWND    hwndRichEdit,
-                   TCHAR * horizontal,    TCHAR * vertical,       TCHAR * about);
-    void
-    getHandlesOfChildrensWindows(HWND hwndTabCtrl,    HWND &hwndListView,   HWND &hwndListView1,
-                                      HWND &hwndHistogram, HWND &hwndHistogram1, HWND &hwndRichEdit);
+    switchTab(const HWND hwndTabCtrl);
+
     void
     getFullIniFilePath(TCHAR * result);
 

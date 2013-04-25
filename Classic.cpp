@@ -5,42 +5,27 @@
 #include "Constants.h"
 
 
-//Classic * Classic::singleObject = 0;
-
-const TCHAR * const
-Classic::textAbout = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n" \
-                                              "Author: Marian Denes\n\n\n" \
-                                              "This plugin is freeware, created in Code::Blocks IDE.");
-const TCHAR * const
-Classic::textHead  = TEXT("\nOccurrences of individual ASCII letters, " \
-                                             "case insensitive:\n\n");
 const int
 Classic::maxDlzkaCiary = (15 * NumOfCapitalLetters);
 
-//Classic::vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int));
-
-
-//Classic * Classic::getInstance(const char * FileToLoad)
-//{
-//    if (singleObject == 0)
-//        singleObject = new Classic();
-//
-//    return singleObject;
-//}
-
 Classic::Classic()
+  : horizontal   ( (TCHAR *) malloc(MaxCharsHorizAndlVertical           * sizeof(TCHAR)) ),
+    about        ( (TCHAR *) malloc((lstrlen(TextAbout) + 10)           * sizeof(TCHAR)) ),
+    vyskytyPismen( (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int))   )
+
 {
-    vyskytyPismen = (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int));
-    spolu      = (TCHAR *) malloc(MaxCharsHorizAndlVertical * sizeof(TCHAR));
+    _stprintf(about, TextAbout,
+        AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
 }
 
 Classic::~Classic()
 {
     free(vyskytyPismen);
-    free(spolu);
+    free(horizontal);
+    free(about);
 }
-void Classic::naplnListView(HWND hwndListView, int charsType)
+void Classic::naplnListView(HWND hwndListView, int charsType) const
 {
     int    sucetVyskytov = spoluVyskytov(charsType);
     int    pocetZnakov   = -1;
@@ -95,7 +80,7 @@ void Classic::naplnListView(HWND hwndListView, int charsType)
 }
 
 
-void Classic::nulujPole(int * const pole, int pocetPrvkov)
+void Classic::nulujPole(int * pole, int pocetPrvkov)
 {
     for(int i = 0; i < pocetPrvkov; i++)
         pole[i] = 0;
@@ -234,7 +219,7 @@ void Classic::tlacVyskytuPismenZoradeny()
 }
 
 
-int Classic::spoluVyskytov(int charsType)
+int Classic::spoluVyskytov(int charsType) const
 {
     int numChars = -1;
     int base     = -1;
@@ -327,7 +312,8 @@ void Classic::tlacSuctovehoRiadka(int sucetVyskytov)
 
 void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
 {
-    FILE * vstup = 0;
+    FILE  * vstup = 0;
+    spolu = horizontal;
 
     if ((vstup = fopen(FileToLoad, "rb")) == 0)
     {
@@ -364,24 +350,21 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     naplnAsociativnePole();
 
     // Filling the string from the beginning
-    _stprintf (spolu, textHead);
+    _stprintf (spolu, TextHead);
 
     tlacHlavicky();
     tlacVyskytuPismen();
     tlacVyskytuPismenZoradeny();
 
-    TCHAR * temp = spolu;                                           // Saving the pointer to horizontal part
     vertical  = spolu = spolu + lstrlen(spolu) + sizeof(TCHAR);     // Tu zaèína vertikálny výpis; ideme za koncovú nulu
     *spolu    = TEXT('\0');                                         // Aby mal ïalší reazec nulovú dåžku (len istota)
 
     // Filling the second part of the string from the beginning, again
-    _stprintf (spolu, textHead);
+    _stprintf (spolu, TextHead);
 
     tlacVyskytuPismenPodSebou(CharsTypeAlpha);
 
     int sucetVyskytov = spoluVyskytov(CharsTypeAlpha);
     tlacSuctovehoRiadka(sucetVyskytov);
-
-    spolu = temp;                       // Restorint the pointer to horizontal part
 }
 

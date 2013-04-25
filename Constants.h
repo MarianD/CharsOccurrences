@@ -3,9 +3,8 @@
 
     #include <windows.h>
 
-    const int MaxCharsHorizAndlVertical = 6000;
-    const int NumOfDigits               =   10;
-    const int NumOfCapitalLetters       = ('Z' - 'A' + 1);
+    const int NumOfDigits         =  10;
+    const int NumOfCapitalLetters = ('Z' - 'A' + 1);
 
     enum
     {
@@ -38,12 +37,13 @@
     const TCHAR * const INI_FILE                = TEXT("CharsOccurrences.ini");
 
     // Names of window properties
-    const TCHAR * const AboutText               = TEXT("About text");
     const TCHAR * const OldTabCtrlWndProc       = TEXT("Old Tab Control Window Proc");
     const TCHAR * const PointerToClassic        = TEXT("Pointer to Classic instance");
     const TCHAR * const LastClickedColumn       = TEXT("Last clicked column");
     const TCHAR * const ClientWidthAndHight     = TEXT("Client width and hight");
     const TCHAR * const LastChosenTab           = TEXT("Last chosen tab");
+
+    // Names for INI file sections and keys
     const TCHAR * const IniFileTabsSection      = TEXT("Tabs");
     const TCHAR * const IniFileLastChosenTabKey = TEXT("LastChosenTab");
 

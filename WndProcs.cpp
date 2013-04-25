@@ -12,23 +12,17 @@
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND    hwndTabCtrl    =  hWnd;
-    HWND    hwndHistogram  =  0;
-    HWND    hwndHistogram1 =  0;
-    HWND    hwndListView   =  0;
-    HWND    hwndListView1  =  0;
-    HWND    hwndRichEdit   =  0;
-    HWND    hwndFrom       =  0;
-    NMHDR * pNotifMsgHdr   =  0;
-    int     cx, cy;
-    RECT    rect, * pRect  = &rect;
-    WNDPROC OldTabCtrlProc;
+    HWND      hwndTabCtrl    =  hWnd;
+    HWND      hwndFrom       =  0;
+    Classic * pClassic       =  0;
+    NMHDR *   pNotifMsgHdr   =  0;
+    int       cx, cy;
+    RECT      rect, * pRect  = &rect;
+    WNDPROC   OldTabCtrlProc;
 
     OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OldTabCtrlWndProc);
+    pClassic       = (Classic *) GetProp(hWnd, PointerToClassic);
 
-    // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl,   hwndListView,   hwndListView1,
-                                 hwndHistogram, hwndHistogram1, hwndRichEdit);
 
     switch (uMsg)
     {
@@ -39,27 +33,27 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         SetRect(pRect, 0, 0, cx, cy);
         TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
-        MoveWindow(hwndListView,   pRect->left, pRect->top,
+        MoveWindow(pClassic->getHwndListViewAlpha(),  pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
 
-        MoveWindow(hwndListView1,  pRect->left, pRect->top,
+        MoveWindow(pClassic->getHwndListViewDigit(),  pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
 
-        MoveWindow(hwndHistogram,  pRect->left, pRect->top,
+        MoveWindow(pClassic->getHwndHistogramAlpha(), pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
 
-        MoveWindow(hwndHistogram1, pRect->left, pRect->top,
+        MoveWindow(pClassic->getHwndHistogramDigit(), pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
 
-        MoveWindow(hwndRichEdit,   pRect->left, pRect->top,
+        MoveWindow(pClassic->getHwndRichEdit(),       pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
@@ -134,6 +128,7 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     int         cxClient;
     int         cyClient;
     Classic *   pClassic;
+    const
     int *       vyskytyPismen;             // Array of occurences of individual letters
     int         vyskyt;                    // Occurence of actual letter
     int         xLeft;                     // Positions of 4 verteces of rectangle

@@ -3,82 +3,47 @@
 
 #include "Helpers.h"
 #include "Constants.h"
+#include "Classic.h"
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 
 /********************** Pomocne funkcie *************************/
 
-void switchTab(HWND    hwndTabCtrl,        HWND    hwndListViewAlpha,   HWND    hwndListViewDigit,
-               HWND    hwndHistogramAlpha, HWND    hwndHistogramDigit,  HWND    hwndRichEdit,
-               TCHAR * horizontal,         TCHAR * vertical,            TCHAR * about)
+void switchTab(const HWND hwndTabCtrl)
 {
+    Classic * pClassic = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
+
     switch (TabCtrl_GetCurSel(hwndTabCtrl))
     {
     case ListViewAlphaTab:
-        BringWindowToTop(hwndListViewAlpha);
+        BringWindowToTop(pClassic->getHwndListViewAlpha());
             break;
     case HistogramAlphaTab:
-        BringWindowToTop(hwndHistogramAlpha);
-        UpdateWindow    (hwndHistogramAlpha);
+        BringWindowToTop(pClassic->getHwndHistogramAlpha());
+        UpdateWindow    (pClassic->getHwndHistogramAlpha());
         break;
     case ListViewDigitTab:
-        BringWindowToTop(hwndListViewDigit);
+        BringWindowToTop(pClassic->getHwndListViewDigit());
             break;
     case HistogramDigitTab:
-        BringWindowToTop(hwndHistogramDigit);
-        UpdateWindow    (hwndHistogramDigit);
+        BringWindowToTop(pClassic->getHwndHistogramDigit());
+        UpdateWindow    (pClassic->getHwndHistogramDigit());
         break;
     case VerticalRichEditTab:
-        SetWindowText   (hwndRichEdit, vertical);
-        BringWindowToTop(hwndRichEdit);
+        SetWindowText   (pClassic->getHwndRichEdit(), pClassic->getVertical());
+        BringWindowToTop(pClassic->getHwndRichEdit());
         break;
     case HorizontalRichEditATab:
-        SetWindowText   (hwndRichEdit, horizontal);
-        BringWindowToTop(hwndRichEdit);
+        SetWindowText   (pClassic->getHwndRichEdit(), pClassic->getHorizontal());
+        BringWindowToTop(pClassic->getHwndRichEdit());
         break;
     case AboutRichEditTab:
-        SetWindowText   (hwndRichEdit, about);
-        BringWindowToTop(hwndRichEdit);
+        SetWindowText   (pClassic->getHwndRichEdit(), pClassic->getAbout());
+        BringWindowToTop(pClassic->getHwndRichEdit());
         break;
     default:
         break;
-    }
-}
-
-
-void getHandlesOfChildrensWindows(HWND hwndTabCtrl,         HWND &hwndListViewAlpha,  HWND &hwndListViewDigit,
-                                  HWND &hwndHistogramAlpha, HWND &hwndHistogramDigit, HWND &hwndRichEdit)
-{
-    HWND hwndChildWin =  0;
-    long childID      = -1;
-
-    // Získanie manipulátorov dcérskych okien
-    hwndChildWin = GetWindow(hwndTabCtrl, GW_CHILD);            // Topmost child Window
-
-    while (hwndChildWin)
-    {
-        switch(childID = GetWindowLong(hwndChildWin, GWL_ID))
-        {
-        case ListViewAlphaId:
-            hwndListViewAlpha  = hwndChildWin;
-            break;
-        case ListViewDigitId:
-            hwndListViewDigit  = hwndChildWin;
-            break;
-        case HistogramAlphaId:
-            hwndHistogramAlpha = hwndChildWin;
-            break;
-        case HistogramDigitId:
-            hwndHistogramDigit = hwndChildWin;
-            break;
-        case RichEditId:
-            hwndRichEdit       = hwndChildWin;
-            break;
-        default:
-            break;
-        }
-        hwndChildWin = GetWindow(hwndChildWin, GW_HWNDNEXT);
     }
 }
 

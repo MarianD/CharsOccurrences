@@ -3,11 +3,11 @@
 #include "CreateRichEditWindow.h"
 #include "Constants.h"
 
-HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect)
+HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect, int id)
 {
 	HWND       hwndRichEdit;
     HINSTANCE  hinst   = 0;
-    HMENU      childID = (HMENU) RichEditId;
+    HMENU      childID = (HMENU) id;
     CHARFORMAT charFormat, *pcharFormat = &charFormat;
 
     /*

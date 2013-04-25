@@ -44,13 +44,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     Classic * pClassic = new Classic();
     SetProp(hwndTabCtrl, PointerToClassic, (HANDLE) pClassic);
 
-    TCHAR * about         = (TCHAR *) malloc((lstrlen(pClassic->getTextAbout()) + 10) * sizeof(TCHAR));
-    TCHAR * horizontal    = pClassic->getHorizontal();    // Ukazovate¾ na budúci reazec
-    TCHAR * vertical      = pClassic->getVertical();      // Ukazovate¾ na budúci reazec
-
-    _stprintf(about, pClassic->getTextAbout(),
-        AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
-
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     GetClientRect(hwndTabCtrl, &rect);
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
@@ -60,12 +53,18 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     hwndListViewDigit  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewDigitId);
     hwndHistogramAlpha = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramAlphaId);
     hwndHistogramDigit = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramDigitId);
-    hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect);
+    hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect, RichEditId);
 
-	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndRichEdit)
+	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndHistogramDigit)
     {
-        // EnableWindow(hwndRichEdit, FALSE);
-        pClassic->spracovanieVstupnehoSuboru(FileToLoad);    // Už máme aj reazec vertical
+        // Saving the windows handles
+        pClassic->setHwndListViewAlpha (hwndListViewAlpha);
+        pClassic->setHwndListViewDigit (hwndListViewDigit);
+        pClassic->setHwndHistogramAlpha(hwndHistogramAlpha);
+        pClassic->setHwndHistogramDigit(hwndHistogramDigit);
+        pClassic->setHwndRichEdit      (hwndRichEdit);
+
+        pClassic->spracovanieVstupnehoSuboru(FileToLoad);
         pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
         pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
 
@@ -73,7 +72,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         SetProp(hwndListViewDigit,  LastClickedColumn,  (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
         SetProp(hwndHistogramAlpha, PointerToClassic,   (HANDLE) pClassic);
         SetProp(hwndHistogramDigit, PointerToClassic,   (HANDLE) pClassic);
-        SetProp(hwndTabCtrl,        AboutText,          (HANDLE) about);
 
         /*
          *  Restore the last chosen tab from the INI file and store it
@@ -85,8 +83,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         SetProp(hwndTabCtrl, LastChosenTab, (HANDLE) lastChosenTab);       // For the case when default and user didn't choose other
 
         TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
-        switchTab(hwndTabCtrl,        hwndListViewAlpha,  hwndListViewDigit,
-                  hwndHistogramAlpha, hwndHistogramDigit, hwndRichEdit,      horizontal, vertical, about);
+        switchTab(hwndTabCtrl);
 
         ShowWindow(hwndListViewAlpha,  SW_SHOW);
         ShowWindow(hwndListViewDigit,  SW_SHOW);

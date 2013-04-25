@@ -12,51 +12,33 @@
 int CHARSOCCURRENCESCALL
 ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags*/)
 {
-	HWND      hwndTabCtrl        = ListWin;
-	HWND      hwndListViewAlpha  = 0;
-	HWND      hwndListViewDigit  = 0;	HWND      hwndHistogramAlpha = 0;
-	HWND      hwndHistogramDigit = 0;
-	HWND      hwndRichEdit       = 0;
-	Classic * pClassic           = 0;
-    TCHAR   * horizontal;
-    TCHAR   * about;
-    TCHAR   * vertical;
+	HWND      hwndTabCtrl   = ListWin;
+    Classic * pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
 
-    pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
-    about         = (TCHAR *)   GetProp(hwndTabCtrl, AboutText);
+    pClassic->spracovanieVstupnehoSuboru(FileToLoad);
+    pClassic->naplnListView(pClassic->getHwndListViewAlpha(), CharsTypeAlpha);
+    pClassic->naplnListView(pClassic->getHwndListViewDigit(), CharsTypeDigit);
 
-    // Getting handles of the child windows
-    getHandlesOfChildrensWindows(hwndTabCtrl,        hwndListViewAlpha,  hwndListViewDigit,
-                                 hwndHistogramAlpha, hwndHistogramDigit, hwndRichEdit);
+    // Let this another file shows item in the last used order
+    LPARAM lastClickedColumnAlpha = (LPARAM) GetProp(pClassic->getHwndListViewAlpha(), LastClickedColumn);
+    LPARAM lastClickedColumnDigit = (LPARAM) GetProp(pClassic->getHwndListViewDigit(), LastClickedColumn);
 
-	if (hwndListViewAlpha && hwndHistogramAlpha && hwndRichEdit)
-    {
-        pClassic->spracovanieVstupnehoSuboru(FileToLoad);
-        horizontal = pClassic->getHorizontal();
-        vertical   = pClassic->getVertical();
-        pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
-        pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
+    ListView_SortItems(pClassic->getHwndListViewAlpha(), cmpFunction, lastClickedColumnAlpha);
+    ListView_SortItems(pClassic->getHwndListViewDigit(), cmpFunction, lastClickedColumnDigit);
 
-        // Let another file shows item in the last used order
-        LPARAM lastClickedColumn = (LPARAM) GetProp(hwndListViewAlpha, LastClickedColumn);
-        ListView_SortItems(hwndListViewAlpha, cmpFunction, lastClickedColumn);
 
-        // Redrawing histogram by new values of the next file
-        RECT          rect, *pRect = &rect;
-        GetClientRect (hwndHistogramAlpha, pRect);
-        InvalidateRect(hwndHistogramAlpha, pRect, TRUE);
-        InvalidateRect(hwndHistogramDigit, pRect, TRUE);
-        UpdateWindow  (hwndHistogramAlpha);
-        UpdateWindow  (hwndHistogramDigit);
+    // Redrawing the histogram by the new values of this next file
+    RECT rect, *pRect = &rect;
 
-        switchTab(hwndTabCtrl,        hwndListViewAlpha,  hwndListViewDigit,
-                  hwndHistogramAlpha, hwndHistogramDigit, hwndRichEdit,      horizontal, vertical, about);
+    GetClientRect (pClassic->getHwndHistogramAlpha(), pRect);
 
-        return LISTPLUGIN_OK;
-    }
-    else
-    {
-        free(about);
-        return LISTPLUGIN_ERROR;
-    }
+    InvalidateRect(pClassic->getHwndHistogramAlpha(), pRect, TRUE);
+    InvalidateRect(pClassic->getHwndHistogramDigit(), pRect, TRUE);
+    UpdateWindow  (pClassic->getHwndHistogramAlpha());
+    UpdateWindow  (pClassic->getHwndHistogramDigit());
+
+    // Putting the appropriate child window onto top
+    switchTab(hwndTabCtrl);
+
+    return LISTPLUGIN_OK;
 }
