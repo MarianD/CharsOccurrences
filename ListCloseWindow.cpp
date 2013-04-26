@@ -34,8 +34,7 @@ ListCloseWindow(HWND ListWin)
     RemoveProp(hwndTabCtrl,                        OldTabCtrlWndProc);
     RemoveProp(hwndTabCtrl,                        LastChosenTab);
 
-    RemoveProp(pClassic->getHwndListViewAlpha (),  LastClickedColumn);
-    RemoveProp(pClassic->getHwndListViewDigit (),  LastClickedColumn);    RemoveProp(pClassic->getHwndHistogramAlpha(),  ClientWidthAndHight);
+    RemoveProp(pClassic->getHwndHistogramAlpha(),  ClientWidthAndHight);
     RemoveProp(pClassic->getHwndHistogramDigit(),  ClientWidthAndHight);
     RemoveProp(pClassic->getHwndHistogramAlpha(),  PointerToClassic);
     RemoveProp(pClassic->getHwndHistogramDigit(),  PointerToClassic);

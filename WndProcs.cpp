@@ -83,7 +83,9 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == 3)
                 column = 2;
 
-            lastClickedColumn = (INT64) GetProp(hwndFrom, LastClickedColumn);
+            lastClickedColumn = (hwndFrom == pClassic->getHwndListViewAlpha()) ?
+                                 pClassic->getLastClickedColumnAlpha() :
+                                 pClassic->getLastClickedColumnDigit();
 
             /*
              *  Changing the direction of order by the second click
@@ -107,7 +109,11 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == lastClickedColumn)
                 column = -column;
 
-            SetProp(hwndFrom, LastClickedColumn, (HANDLE) column);
+            if (hwndFrom == pClassic->getHwndListViewAlpha())
+                pClassic->setLastClickedColumnAlpha(column);
+            else
+                pClassic->setLastClickedColumnDigit(column);
+
             return 0;       // The return value is ignored
         default:
             break;

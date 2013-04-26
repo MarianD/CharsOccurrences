@@ -8,14 +8,14 @@
 
     //**************************  Konštanty  **************************/
 
-    const int     MaxCharsHorizAndlVertical = 6000;
+    const int     MaxCharsHorizAndlVertical = 4000;
     const int     MinPocetMiest             =    5;
-    const int     UvodnychMedzier           =    0;
     const int     StlpcovaMedzera           =   14;
     const
     TCHAR * const TextAbout       = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n"
                                            "Author: Marian Denes\n\n\n"
                                            "This plugin is freeware, created in Code::Blocks IDE.");
+    const int     AboutLength     = lstrlen(TextAbout) + 10;
     const
     TCHAR * const TextHead        = TEXT("\nOccurrences of individual ASCII letters, " \
                                            "case insensitive:\n\n");
@@ -49,8 +49,13 @@
         TCHAR * const       about;
         int   * const       vyskytyPismen;
         TCHAR *             spolu;
+        int                 lastClickedColumnAlpha;
+        int                 lastClickedColumnDigit;
         descendingDirectory parVyskytPismeno;
-        int                 pocetMiest;        // Number of positions of the larger number of occurrences + 1
+        int                 pocetMiest;         // Number of positions of the larger number of occurrences + 1
+        int                 restChars;          // How many chars remainds in the output buffer "spolu"
+        bool                warningWritten;
+        bool                verticalIsSet;
         HWND                hwndListViewAlpha;
         HWND                hwndListViewDigit;
         HWND                hwndHistogramAlpha;
@@ -60,23 +65,27 @@
         Classic();
        ~Classic();
         const
-        TCHAR * getAbout() const              {return about;}
+        TCHAR * getAbout() const                    {return about;}
         const
-        int   * getVyskytyPismen() const      {return vyskytyPismen;}
+        int   * getVyskytyPismen() const            {return vyskytyPismen;}
         const
-        TCHAR * getHorizontal() const         {return horizontal;}
+        TCHAR * getHorizontal() const               {return horizontal;}
         const
-        TCHAR * getVertical() const           {return vertical;}
-        HWND    getHwndListViewAlpha () const {return hwndListViewAlpha;}
-        void    setHwndListViewAlpha (HWND h) {hwndListViewAlpha = h;}
-        HWND    getHwndListViewDigit () const {return hwndListViewDigit;}
-        void    setHwndListViewDigit (HWND h) {hwndListViewDigit = h;}
-        HWND    getHwndHistogramAlpha() const {return hwndHistogramAlpha;}
-        void    setHwndHistogramAlpha(HWND h) {hwndHistogramAlpha = h;}
-        HWND    getHwndHistogramDigit() const {return hwndHistogramDigit;}
-        void    setHwndHistogramDigit(HWND h) {hwndHistogramDigit = h;}
-        HWND    getHwndRichEdit      () const {return hwndRichEdit;}
-        void    setHwndRichEdit      (HWND h) {hwndRichEdit = h;}
+        TCHAR * getVertical() const                 {return vertical;}
+        HWND    getHwndListViewAlpha      () const  {return hwndListViewAlpha;}
+        void    setHwndListViewAlpha      (HWND h)  {hwndListViewAlpha = h;}
+        HWND    getHwndListViewDigit      () const  {return hwndListViewDigit;}
+        void    setHwndListViewDigit      (HWND h)  {hwndListViewDigit = h;}
+        HWND    getHwndHistogramAlpha     () const  {return hwndHistogramAlpha;}
+        void    setHwndHistogramAlpha     (HWND h)  {hwndHistogramAlpha = h;}
+        HWND    getHwndHistogramDigit     () const  {return hwndHistogramDigit;}
+        void    setHwndHistogramDigit     (HWND h)  {hwndHistogramDigit = h;}
+        HWND    getHwndRichEdit           () const  {return hwndRichEdit;}
+        void    setHwndRichEdit           (HWND h)  {hwndRichEdit = h;}
+        int     getLastClickedColumnAlpha () const  {return lastClickedColumnAlpha;}
+        void    setLastClickedColumnAlpha (int col) {lastClickedColumnAlpha = col;}
+        int     getLastClickedColumnDigit () const  {return lastClickedColumnDigit;}
+        void    setLastClickedColumnDigit (int col) {lastClickedColumnDigit = col;}
         void    spracovanieVstupnehoSuboru    (const char * FileToLoad);
         void    naplnListView                 (HWND hwndListView, int charsType) const;
     private:
@@ -88,6 +97,7 @@
         bool    jeMalePismeno                 (int znak);
         static
         int     zmenMaleNaVelke               (int pismeno);
+        void    appendString                  (const TCHAR * formatString, ...);
         int     spoluVyskytov                 (int charsType) const;
         void    naplnAsociativnePole          ();
         void    zobrazCiaru                   (TCHAR znak);

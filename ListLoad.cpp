@@ -68,10 +68,11 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
         pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
 
-        SetProp(hwndListViewAlpha,  LastClickedColumn,  (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
-        SetProp(hwndListViewDigit,  LastClickedColumn,  (HANDLE) 1);           // As column 0 (renumbered as 1) was yet clicked
         SetProp(hwndHistogramAlpha, PointerToClassic,   (HANDLE) pClassic);
         SetProp(hwndHistogramDigit, PointerToClassic,   (HANDLE) pClassic);
+
+        pClassic->setLastClickedColumnAlpha(1);      // As column 0 (renumbered as 1) was already clicked
+        pClassic->setLastClickedColumnDigit(1);      // As column 0 (renumbered as 1) was already clicked
 
         /*
          *  Restore the last chosen tab from the INI file and store it

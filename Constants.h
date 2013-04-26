@@ -39,7 +39,6 @@
     // Names of window properties
     const TCHAR * const OldTabCtrlWndProc       = TEXT("Old Tab Control Window Proc");
     const TCHAR * const PointerToClassic        = TEXT("Pointer to Classic instance");
-    const TCHAR * const LastClickedColumn       = TEXT("Last clicked column");
     const TCHAR * const ClientWidthAndHight     = TEXT("Client width and hight");
     const TCHAR * const LastChosenTab           = TEXT("Last chosen tab");
 

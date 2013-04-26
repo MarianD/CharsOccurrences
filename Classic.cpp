@@ -1,6 +1,7 @@
 // Classic.cpp :
 //
 
+#include <cstdarg>
 #include "Classic.h"
 #include "Constants.h"
 
@@ -10,14 +11,18 @@ Classic::maxDlzkaCiary = (15 * NumOfCapitalLetters);
 
 Classic::Classic()
   : horizontal   ( (TCHAR *) malloc(MaxCharsHorizAndlVertical           * sizeof(TCHAR)) ),
-    about        ( (TCHAR *) malloc((lstrlen(TextAbout) + 10)           * sizeof(TCHAR)) ),
+    about        ( (TCHAR *) malloc(AboutLength                         * sizeof(TCHAR)) ),
     vyskytyPismen( (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int))   )
-
 {
-    _stprintf(about, TextAbout,
+    _sntprintf(about, AboutLength, TextAbout,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
+    // Initializations only for the safety
+    restChars      = MaxCharsHorizAndlVertical - 1;
+    warningWritten = false;
+    verticalIsSet  = false;
 }
+
 
 Classic::~Classic()
 {
@@ -114,6 +119,41 @@ int Classic::zmenMaleNaVelke(int pismeno)
 }
 
 
+/** \brief Write just formatted string into position showing by pointer "spolu",
+ *   if ther is sufficient space indicated by restChars, and updating this pointer
+ *   and the restChars
+ *
+ * \param formatString const TCHAR* - as the first parameter for printf()
+ * \param ...
+ * \return void
+ *
+ */
+void Classic::appendString(const TCHAR * formatString, ...)
+{
+    const TCHAR * const warning       = TEXT("\n\n>>>>>>  SPACE FOR APPENDING THE NEXT STRING EXHAUSTED!  <<<<<<");
+    const int           criticalSpace = lstrlen(warning) + 100;
+    va_list             args;
+
+    va_start(args, formatString);       // Filling the args by variable number of arguments after "formatString"
+
+    if (restChars > criticalSpace)
+    {
+        restChars -= _vsntprintf(spolu, restChars, formatString, args);
+        spolu     += lstrlen(spolu);
+    }
+    else if (!warningWritten)       // To write the warning only once
+    {
+        _sntprintf(spolu, lstrlen(warning) + 1, warning);
+        warningWritten = true;
+        restChars      = -1;        // For safety only
+
+        if (!verticalIsSet)       // Vertical part yet not began
+            vertical = spolu;     // Settomg it just at warning message
+    }
+    va_end(args);
+}
+
+
 /** \brief Naplnenie asociatÌvneho poæa a zistenie poËtu miest nutn˝ch pre oddelenie poËtu jednotliv˝ch v˝skytov
  *
  * \return poËet miest potrebn˝ch pre oddelenie ËÌsel v riadku = poËet miest najv‰Ëöieho ËÌsla + 1
@@ -121,7 +161,7 @@ int Classic::zmenMaleNaVelke(int pismeno)
  */
 void Classic::naplnAsociativnePole()
 {
-    int maximum    = 0;
+    int maximum = 0;
 
     for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
@@ -139,44 +179,42 @@ void Classic::naplnAsociativnePole()
 
 void Classic::zobrazCiaru(TCHAR znak)
 {
-    for (int i = 0; i < UvodnychMedzier + pocetMiest * NumOfCapitalLetters; ++i)
+    for (int i = 0; i < pocetMiest * NumOfCapitalLetters; ++i)
     {
-        _stprintf(spolu + lstrlen(spolu), TEXT("%c"), znak);
+        appendString(TEXT("%c"), znak);
     }
-    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
+    appendString(TEXT("\n"));
 }
 
 
 void Classic::tlacHlavicky()
 {
     zobrazCiaru(TEXT('-'));
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), UvodnychMedzier, TEXT(""));     // ZaËiatoËn˝ pr·zdny stÂpec
 
     for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
-        _stprintf(spolu + lstrlen(spolu), TEXT("%*s%c"), pocetMiest - 1, "", (TCHAR) ('A' + i));
+        appendString(TEXT("%*s%c"), pocetMiest - 1, "", (TCHAR) ('A' + i));
+
     }
 
-    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
+    appendString(TEXT("\n"));
     zobrazCiaru(TEXT('-'));
 }
 
 
 void Classic::tlacVyskytuPismen()
 {
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), UvodnychMedzier, TEXT(""));
-
     for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
         int pocet = vyskytyPismen[i];
 
         if (pocet != 0)
-            _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
+            appendString(TEXT("%*d"), pocetMiest, pocet);
         else
-            _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), pocetMiest, TEXT("-"));
+            appendString(TEXT("%*s"), pocetMiest, TEXT("-"));
     }
 
-    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
+    appendString(TEXT("\n"));
 }
 
 
@@ -188,34 +226,30 @@ void Classic::tlacVyskytuPismenZoradeny()
      * TlaË hlaviËky s pÌsmenami usporiadan˝mi
      * dæa ich v˝skytu zostupne
     */
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), UvodnychMedzier, TEXT(""));     // ZaËiatoËn˝ pr·zdny stÂpec
-
     for (descendingDirectory::iterator pos = parVyskytPismeno.begin(); pos != parVyskytPismeno.end(); ++pos)
     {
-        _stprintf(spolu + lstrlen(spolu), TEXT("%*s%c"), pocetMiest - 1, TEXT(""), pos->second);
+        appendString(TEXT("%*s%c"), pocetMiest - 1, TEXT(""), pos->second);
     }
-    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 
-    zobrazCiaru(TEXT('-'));
+    appendString(TEXT("\n"));
+    zobrazCiaru (TEXT('-'));
 
     /*
      * TlaË v˝skytu jednotliv˝ch pÌsmen
     */
-    _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), UvodnychMedzier, TEXT(""));     // ZaËiatoËn˝ pr·zdny stÂpec
-
     for (descendingDirectory::iterator pos = parVyskytPismeno.begin(); pos != parVyskytPismeno.end(); ++pos)
     {
         int pocet  = pos->first ;
 
         if (pocet != 0)
-            _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
+            appendString(TEXT("%*d"), pocetMiest, pocet);
         else
-            _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), pocetMiest, TEXT("-"));
+            appendString(TEXT("%*s"), pocetMiest, TEXT("-"));
     }
-    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
 
-    zobrazCiaru(TEXT('-'));
-    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
+    appendString(TEXT("\n"));
+    zobrazCiaru (TEXT('-'));
+    appendString(TEXT("\n"));
 }
 
 
@@ -250,7 +284,7 @@ void Classic::tlacVyskytuPismenPodSebou(int charsType)
 {
     int sucetVyskytov = spoluVyskytov(charsType);
 
-    _stprintf(spolu + lstrlen(spolu), TEXT("\n"));
+    appendString(TEXT("\n"));
 
     descendingDirectory::iterator pos = parVyskytPismeno.begin();
     for (int i = 0; i < NumOfCapitalLetters; ++i)
@@ -261,29 +295,31 @@ void Classic::tlacVyskytuPismenPodSebou(int charsType)
         int    pocet   = vyskytyPismen[i];
         double percent = (double) pocet / sucetVyskytov * 100.;
 
-        _stprintf(spolu + lstrlen(spolu), TEXT("%c: "), TEXT('A') + i);
+        appendString(TEXT("%c: "), TEXT('A') + i);
 
         if (pocet != 0)
-            _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
+            appendString(TEXT("%*d"), pocetMiest, pocet);
         else
-            _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), pocetMiest, TEXT("-"));
+            appendString(TEXT("%*s"), pocetMiest, TEXT("-"));
 
-        _stprintf(spolu + lstrlen(spolu), TEXT("  (%5.2f %% )"), percent);
+        appendString(TEXT("  (%5.2f %% )"), percent);
+
 
         /*
          *  Teraz ich vytlaËÌme podæa v˝skytov
          */
-        _stprintf(spolu + lstrlen(spolu), TEXT("%*c: "), StlpcovaMedzera + 1, pos->second);
+        appendString(TEXT("%*c: "), StlpcovaMedzera + 1, pos->second);
 
         pocet   = pos->first ;
         percent = (double) pocet / sucetVyskytov * 100.;
 
         if (pocet != 0)
-            _stprintf(spolu + lstrlen(spolu), TEXT("%*d"), pocetMiest, pocet);
+            appendString(TEXT("%*d"), pocetMiest, pocet);
         else
-            _stprintf(spolu + lstrlen(spolu), TEXT("%*s"), pocetMiest, TEXT("-"));
+            appendString(TEXT("%*s"), pocetMiest, TEXT("-"));
 
-        _stprintf(spolu + lstrlen(spolu), TEXT("  (%5.2f %% )\n"), percent);
+
+        appendString(TEXT("  (%5.2f %% )\n"), percent);
 
         ++pos;
     }
@@ -302,27 +338,32 @@ void Classic::tlacSuctovehoRiadka(int sucetVyskytov)
 
     *(ciara + dlzkaRiadka) = '\0';
 
-    _stprintf(spolu + lstrlen(spolu), TEXT("%s\n"), ciara);
-    _stprintf(spolu + lstrlen(spolu),
-            TEXT("%*d (100.00 %% )%*d (100.00 %% )\n"),
-            sirkaStlpcaVyskytov, sucetVyskytov,
-            StlpcovaMedzera + sirkaStlpcaVyskytov, sucetVyskytov);
+    appendString(TEXT("%s\n"), ciara);
+    appendString(TEXT("%*d (100.00 %% )%*d (100.00 %% )\n"),
+                 sirkaStlpcaVyskytov, sucetVyskytov,
+                 StlpcovaMedzera + sirkaStlpcaVyskytov, sucetVyskytov);
 }
 
 
 void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
 {
-    FILE  * vstup = 0;
-    spolu = horizontal;
+    spolu          = horizontal;                    // Reset of the member variable
+    *spolu         = TEXT('\0');                    // To have the zero length (for safety only)
+    verticalIsSet  = false;                         // For testing whether vertical part already began
+    restChars      = MaxCharsHorizAndlVertical - 1;
+    warningWritten = false;
+
+    FILE   * vstup = 0;
 
     if ((vstup = fopen(FileToLoad, "rb")) == 0)
     {
-        _stprintf (spolu, TEXT("\nOpening of the file\n\n  \"%S\"\n\nfailed ")
-                TEXT("(probably it is the folder).\n\n"), FileToLoad);
+        appendString(TEXT("\nOpening of the file\n\n  \"%S\"\n\nfailed ")
+                     TEXT("(probably it is the folder).\n\n"), FileToLoad);
         return;
     }
 
     nulujPole(vyskytyPismen, NumOfCapitalLetters + NumOfDigits);
+    parVyskytPismeno.clear();
 
     while (!feof(vstup))
     {
@@ -350,21 +391,26 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     naplnAsociativnePole();
 
     // Filling the string from the beginning
-    _stprintf (spolu, TextHead);
+    appendString(TextHead);
 
     tlacHlavicky();
     tlacVyskytuPismen();
     tlacVyskytuPismenZoradeny();
 
-    vertical  = spolu = spolu + lstrlen(spolu) + sizeof(TCHAR);     // Tu zaËÌna vertik·lny v˝pis; ideme za koncov˙ nulu
-    *spolu    = TEXT('\0');                                         // Aby mal ÔalöÌ reùazec nulov˙ dÂûku (len istota)
+    if(!warningWritten)             // In the opposite case vertical is already set to warning message
+    {
+        vertical      = spolu = spolu + lstrlen(spolu) + sizeof(TCHAR);     // Here begins vetical listing; moving after binary zero
+        verticalIsSet = true;
+        *spolu        = TEXT('\0');                                         // Setting of zero length, only for the safety
 
-    // Filling the second part of the string from the beginning, again
-    _stprintf (spolu, TextHead);
+        // Filling the second part of the string from the beginning, again
+        appendString(TextHead);
 
-    tlacVyskytuPismenPodSebou(CharsTypeAlpha);
+        tlacVyskytuPismenPodSebou(CharsTypeAlpha);
 
-    int sucetVyskytov = spoluVyskytov(CharsTypeAlpha);
-    tlacSuctovehoRiadka(sucetVyskytov);
+        int sucetVyskytov = spoluVyskytov(CharsTypeAlpha);
+        tlacSuctovehoRiadka(sucetVyskytov);
+
+    }
 }
 

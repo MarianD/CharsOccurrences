@@ -20,8 +20,8 @@ ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags
     pClassic->naplnListView(pClassic->getHwndListViewDigit(), CharsTypeDigit);
 
     // Let this another file shows item in the last used order
-    LPARAM lastClickedColumnAlpha = (LPARAM) GetProp(pClassic->getHwndListViewAlpha(), LastClickedColumn);
-    LPARAM lastClickedColumnDigit = (LPARAM) GetProp(pClassic->getHwndListViewDigit(), LastClickedColumn);
+    int lastClickedColumnAlpha = pClassic->getLastClickedColumnAlpha();
+    int lastClickedColumnDigit = pClassic->getLastClickedColumnDigit();
 
     ListView_SortItems(pClassic->getHwndListViewAlpha(), cmpFunction, lastClickedColumnAlpha);
     ListView_SortItems(pClassic->getHwndListViewDigit(), cmpFunction, lastClickedColumnDigit);
