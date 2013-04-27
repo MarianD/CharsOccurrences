@@ -43,7 +43,6 @@
     private:
         static const
         TCHAR * const       textHead;
-        static const int    maxDlzkaCiary;
         TCHAR * const       horizontal;
         TCHAR *             vertical;
         TCHAR * const       about;

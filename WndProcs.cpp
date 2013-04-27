@@ -141,10 +141,10 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     int         xRight;
     int         xTop;
     int         xBottom;
-    int         zakladna;                  //  = cxClient / (POCET_VELKYCH_PISMEN + 2);
+    int         zakladna;                  //  = cxClient / (numChars + 2);
     int         desVysky;                  //  = cyClient / 12;
     int         maxVyska;                  //  = 10 * desVysky;
-    int         maxVyskyt =  0;
+    int         maxVyskyt =  1;            // It will be the divisor, so it must not be 0
     int         base      = -1;
     int         numChars  = -1;
     TCHAR       baseChar = TEXT('?');
@@ -181,10 +181,8 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         for (int i = 0; i < numChars; i++)
         {
             vyskyt    = vyskytyPismen[base + i];
-            maxVyskyt = (vyskyt > maxVyskyt) ? vyskyt : maxVyskyt;
+            maxVyskyt = max(maxVyskyt, vyskyt);
         }
-        if (maxVyskyt == 0)
-            maxVyskyt  = 1;              // It will be the divisor, so it must not be 0
 
         // Getting dimensions of the client area of THIS window
         lParam   = (LPARAM) GetProp(hWnd, ClientWidthAndHight);

@@ -128,7 +128,7 @@
 1360058355 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1366964244 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1367051466 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
@@ -169,12 +169,12 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1367003492 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1367053026 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	<cstdarg>
 	"Classic.h"
 	"Constants.h"
 
-1367005676 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
+1367045695 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
 	<windows.h>
 	<tchar.h>
 	<map>
