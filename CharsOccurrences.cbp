@@ -67,6 +67,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Weffc++" />
 			<Add option="-DWIN32" />
 			<Add option="-D_WINDOWS" />
 			<Add option="-D_MBCS" />
@@ -111,6 +112,8 @@
 		<Unit filename="Main.h" />
 		<Unit filename="NaplnStrukturuWndClassEx.cpp" />
 		<Unit filename="NaplnStrukturuWndClassEx.h" />
+		<Unit filename="Status.cpp" />
+		<Unit filename="Status.h" />
 		<Unit filename="WndProcs.cpp" />
 		<Unit filename="WndProcs.h" />
 		<Unit filename="resource.rc">

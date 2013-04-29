@@ -7,6 +7,7 @@
 #include "CreateRichEditWindow.h"
 #include "CreateListViewtWindow.h"
 #include "Classic.h"
+#include "Status.h"
 #include "Helpers.h"
 #include "Exports.h"
 #include "version.h"
@@ -22,7 +23,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 	HWND    hwndHistogramAlpha = 0;
 	HWND    hwndHistogramDigit = 0;
 	HWND    hwndRichEdit       = 0;
-	int     lastChosenTab      = 0;
 	RECT    rect;
 	TCHAR   iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
@@ -40,9 +40,11 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     SetProp(hwndTabCtrl, OldTabCtrlWndProc, (HANDLE) OldTabCtrlProc);
 
-    // Creating instance of the class Classic and saving the pointer to it in the property of the TabCtrl Window
+    // Creating instance of the classes and saving the pointer to it in the property of the TabCtrl Window
     Classic * pClassic = new Classic();
+    Status  * pStatus  = new Status();
     SetProp(hwndTabCtrl, PointerToClassic, (HANDLE) pClassic);
+    SetProp(hwndTabCtrl, PointerToStatus,  (HANDLE) pStatus);
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     GetClientRect(hwndTabCtrl, &rect);
@@ -58,30 +60,41 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndHistogramDigit)
     {
         // Saving the windows handles
-        pClassic->setHwndListViewAlpha (hwndListViewAlpha);
-        pClassic->setHwndListViewDigit (hwndListViewDigit);
-        pClassic->setHwndHistogramAlpha(hwndHistogramAlpha);
-        pClassic->setHwndHistogramDigit(hwndHistogramDigit);
-        pClassic->setHwndRichEdit      (hwndRichEdit);
+        pStatus->setHwndListViewAlpha (hwndListViewAlpha);
+        pStatus->setHwndListViewDigit (hwndListViewDigit);
+        pStatus->setHwndHistogramAlpha(hwndHistogramAlpha);
+        pStatus->setHwndHistogramDigit(hwndHistogramDigit);
+        pStatus->setHwndRichEdit      (hwndRichEdit);
 
         pClassic->spracovanieVstupnehoSuboru(FileToLoad);
         pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
         pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
 
-        SetProp(hwndHistogramAlpha, PointerToClassic,   (HANDLE) pClassic);
-        SetProp(hwndHistogramDigit, PointerToClassic,   (HANDLE) pClassic);
-
-        pClassic->setLastClickedColumnAlpha(1);      // As column 0 (renumbered as 1) was already clicked
-        pClassic->setLastClickedColumnDigit(1);      // As column 0 (renumbered as 1) was already clicked
-
         /*
-         *  Restore the last chosen tab from the INI file and store it
-         *  in the properties
-         *  of the Tab Control window
+         *  Restore the last values from the INI file and store it
+         *  into the instance of the Status class
+         *
+         *  Note:
+         *  Sorting by the column 3 ("Percent") is the same as the sorting by
+         *  the column 2 ("Count") to don't confuse the user by no reaction after
+         *  clicking alternately to the headers of the column 2 and column 3.
          */
         getFullIniFilePath(iniFile);
-        lastChosenTab = GetPrivateProfileInt(IniFileTabsSection, IniFileLastChosenTabKey, 0, iniFile);
-        SetProp(hwndTabCtrl, LastChosenTab, (HANDLE) lastChosenTab);       // For the case when default and user didn't choose other
+
+        int lastChosenTab          = GetPrivateProfileInt(IniFileTabsSection,
+                                                      IniFileLastChosenTabKey,  0, iniFile);
+        int lastClickedColumnAlpha = GetPrivateProfileInt(IniFileSortSection,
+                                                      IniFileLastClColAlphaKey, 1, iniFile);
+        int lastClickedColumnDigit = GetPrivateProfileInt(IniFileSortSection,
+                                                      IniFileLastClColDigitKey, 1, iniFile);
+
+        pStatus->setLastChosenTab         (lastChosenTab);
+        pStatus->setLastClickedColumnAlpha(lastClickedColumnAlpha);
+        pStatus->setLastClickedColumnDigit(lastClickedColumnDigit);
+
+        // Let show items in the ListViews in the last used order
+        ListView_SortItems(pStatus->getHwndListViewAlpha(), cmpFunction, pStatus->getLastClickedColumnAlpha());
+        ListView_SortItems(pStatus->getHwndListViewDigit(), cmpFunction, pStatus->getLastClickedColumnDigit());
 
         TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
         switchTab(hwndTabCtrl);

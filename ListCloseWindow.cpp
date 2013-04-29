@@ -7,40 +7,45 @@
 #include "Constants.h"
 #include "Helpers.h"
 #include "Classic.h"
+#include "Status.h"
 
 void CHARSOCCURRENCESCALL
 ListCloseWindow(HWND ListWin)
 {
-	HWND      hwndTabCtrl        = ListWin;
-	Classic * pClassic           = 0;
-	int      lastChosenTab       = 0;
-	TCHAR    strLastChosenTab[3];
+	HWND     hwndTabCtrl        = ListWin;
+	TCHAR    strLastChosenTab [3];
+	TCHAR    strlastClColAlpha[3];
+	TCHAR    strlastClColDigit[3];
 	TCHAR    iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
-    // Saving the last chosen tab of Tab Control to ini file
-    lastChosenTab = (INT64) RemoveProp(hwndTabCtrl, LastChosenTab);
-    _stprintf(strLastChosenTab, TEXT("%d"), lastChosenTab);
+    Classic * pClassic = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
+    Status  * pStatus  = (Status  *) RemoveProp(hwndTabCtrl, PointerToStatus );
+
+    // Saving status to ini file
+    _stprintf(strLastChosenTab,  TEXT("%d"), pStatus->getLastChosenTab());
+    _stprintf(strlastClColAlpha, TEXT("%d"), pStatus->getLastClickedColumnAlpha());
+    _stprintf(strlastClColDigit, TEXT("%d"), pStatus->getLastClickedColumnDigit());
 
   	getFullIniFilePath(iniFile);
-    WritePrivateProfileString(IniFileTabsSection, IniFileLastChosenTabKey, strLastChosenTab, iniFile);
+    WritePrivateProfileString(IniFileTabsSection, IniFileLastChosenTabKey,  strLastChosenTab,  iniFile);
+    WritePrivateProfileString(IniFileSortSection, IniFileLastClColAlphaKey, strlastClColAlpha, iniFile);
+    WritePrivateProfileString(IniFileSortSection, IniFileLastClColDigitKey, strlastClColDigit, iniFile);
 
     /*
      *  Removing all items in the property list of the windows
      *  and getting pointers to allocated chunks of the memory
      */
 
-    pClassic = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
-
     RemoveProp(hwndTabCtrl,                        OldTabCtrlWndProc);
     RemoveProp(hwndTabCtrl,                        LastChosenTab);
+    RemoveProp(hwndTabCtrl,                        PointerToStatus);
 
-    RemoveProp(pClassic->getHwndHistogramAlpha(),  ClientWidthAndHight);
-    RemoveProp(pClassic->getHwndHistogramDigit(),  ClientWidthAndHight);
-    RemoveProp(pClassic->getHwndHistogramAlpha(),  PointerToClassic);
-    RemoveProp(pClassic->getHwndHistogramDigit(),  PointerToClassic);
+    RemoveProp(pStatus->getHwndHistogramAlpha(),  ClientWidthAndHight);
+    RemoveProp(pStatus->getHwndHistogramDigit(),  ClientWidthAndHight);
 
-    // Uvo¾nenie alokovanej pamäte pre exemplár triedy
+    // Uvo¾nenie alokovanej pamäte pre exempláre triedy
     delete pClassic;
+    delete pStatus;
 
     DestroyWindow(hwndTabCtrl);         // It will destroy child windows, too
 

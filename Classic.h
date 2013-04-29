@@ -6,20 +6,6 @@
     #include <windows.h>
 
 
-    //**************************  Konštanty  **************************/
-
-    const int     MaxCharsHorizAndlVertical = 4000;
-    const int     MinPocetMiest             =    5;
-    const int     StlpcovaMedzera           =   14;
-    const
-    TCHAR * const TextAbout       = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n"
-                                           "Author: Marian Denes\n\n\n"
-                                           "This plugin is freeware, created in Code::Blocks IDE.");
-    const int     AboutLength     = lstrlen(TextAbout) + 10;
-    const
-    TCHAR * const TextHead        = TEXT("\nOccurrences of individual ASCII letters, " \
-                                           "case insensitive:\n\n");
-
     #include <tchar.h>
     #include <map>
     #include <string>
@@ -48,18 +34,11 @@
         TCHAR * const       about;
         int   * const       vyskytyPismen;
         TCHAR *             spolu;
-        int                 lastClickedColumnAlpha;
-        int                 lastClickedColumnDigit;
         descendingDirectory parVyskytPismeno;
         int                 pocetMiest;         // Number of positions of the larger number of occurrences + 1
         int                 restChars;          // How many chars remainds in the output buffer "spolu"
         bool                warningWritten;
         bool                verticalIsSet;
-        HWND                hwndListViewAlpha;
-        HWND                hwndListViewDigit;
-        HWND                hwndHistogramAlpha;
-        HWND                hwndHistogramDigit;
-        HWND                hwndRichEdit;
     public:
         Classic();
        ~Classic();
@@ -71,23 +50,11 @@
         TCHAR * getHorizontal() const               {return horizontal;}
         const
         TCHAR * getVertical() const                 {return vertical;}
-        HWND    getHwndListViewAlpha      () const  {return hwndListViewAlpha;}
-        void    setHwndListViewAlpha      (HWND h)  {hwndListViewAlpha = h;}
-        HWND    getHwndListViewDigit      () const  {return hwndListViewDigit;}
-        void    setHwndListViewDigit      (HWND h)  {hwndListViewDigit = h;}
-        HWND    getHwndHistogramAlpha     () const  {return hwndHistogramAlpha;}
-        void    setHwndHistogramAlpha     (HWND h)  {hwndHistogramAlpha = h;}
-        HWND    getHwndHistogramDigit     () const  {return hwndHistogramDigit;}
-        void    setHwndHistogramDigit     (HWND h)  {hwndHistogramDigit = h;}
-        HWND    getHwndRichEdit           () const  {return hwndRichEdit;}
-        void    setHwndRichEdit           (HWND h)  {hwndRichEdit = h;}
-        int     getLastClickedColumnAlpha () const  {return lastClickedColumnAlpha;}
-        void    setLastClickedColumnAlpha (int col) {lastClickedColumnAlpha = col;}
-        int     getLastClickedColumnDigit () const  {return lastClickedColumnDigit;}
-        void    setLastClickedColumnDigit (int col) {lastClickedColumnDigit = col;}
         void    spracovanieVstupnehoSuboru    (const char * FileToLoad);
         void    naplnListView                 (HWND hwndListView, int charsType) const;
     private:
+        Classic                               (const Classic&);     // Declarations only to prevent not wanted
+        Classic& operator=                    (const Classic&);     //  public compiler-generated functions
         static
         void    nulujPole                     (int * pole, int pocetPrvkov);
         static

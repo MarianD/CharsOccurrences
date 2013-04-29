@@ -7,9 +7,17 @@
 
 
 Classic::Classic()
+    // Some initializations are here only for the safety - to have some reasonable values
   : horizontal   ( (TCHAR *) malloc(MaxCharsHorizAndlVertical           * sizeof(TCHAR)) ),
+    vertical     (horizontal),
     about        ( (TCHAR *) malloc(AboutLength                         * sizeof(TCHAR)) ),
-    vyskytyPismen( (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int))   )
+    vyskytyPismen( (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int))   ),
+    spolu        (horizontal),
+    parVyskytPismeno(),
+    pocetMiest(10),
+    restChars(MaxCharsHorizAndlVertical - 1),
+    warningWritten(false),
+    verticalIsSet(false)
 {
     _sntprintf(about, AboutLength, TextAbout,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);

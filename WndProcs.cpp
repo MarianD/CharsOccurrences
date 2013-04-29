@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include "Helpers.h"
 #include "Classic.h"
+#include "Status.h"
 #include <wingdi.h>
 
 
@@ -14,14 +15,14 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     HWND      hwndTabCtrl    =  hWnd;
     HWND      hwndFrom       =  0;
-    Classic * pClassic       =  0;
+    Status *  pStatus        =  0;
     NMHDR *   pNotifMsgHdr   =  0;
     int       cx, cy;
     RECT      rect, * pRect  = &rect;
     WNDPROC   OldTabCtrlProc;
 
-    OldTabCtrlProc = (WNDPROC) GetProp(hwndTabCtrl, OldTabCtrlWndProc);
-    pClassic       = (Classic *) GetProp(hWnd, PointerToClassic);
+    OldTabCtrlProc = (WNDPROC)  GetProp(hwndTabCtrl, OldTabCtrlWndProc);
+    pStatus        = (Status *) GetProp(hwndTabCtrl, PointerToStatus);
 
 
     switch (uMsg)
@@ -33,27 +34,27 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         SetRect(pRect, 0, 0, cx, cy);
         TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
-        MoveWindow(pClassic->getHwndListViewAlpha(),  pRect->left, pRect->top,
+        MoveWindow(pStatus->getHwndListViewAlpha(),  pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
 
-        MoveWindow(pClassic->getHwndListViewDigit(),  pRect->left, pRect->top,
+        MoveWindow(pStatus->getHwndListViewDigit(),  pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
 
-        MoveWindow(pClassic->getHwndHistogramAlpha(), pRect->left, pRect->top,
+        MoveWindow(pStatus->getHwndHistogramAlpha(), pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
 
-        MoveWindow(pClassic->getHwndHistogramDigit(), pRect->left, pRect->top,
+        MoveWindow(pStatus->getHwndHistogramDigit(), pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
 
-        MoveWindow(pClassic->getHwndRichEdit(),       pRect->left, pRect->top,
+        MoveWindow(pStatus->getHwndRichEdit(),       pRect->left, pRect->top,
                    pRect->right  - pRect->left,
                    pRect->bottom - pRect->top,
                    TRUE);
@@ -83,9 +84,9 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == 3)
                 column = 2;
 
-            lastClickedColumn = (hwndFrom == pClassic->getHwndListViewAlpha()) ?
-                                 pClassic->getLastClickedColumnAlpha() :
-                                 pClassic->getLastClickedColumnDigit();
+            lastClickedColumn = (hwndFrom == pStatus->getHwndListViewAlpha()) ?
+                                 pStatus->getLastClickedColumnAlpha() :
+                                 pStatus->getLastClickedColumnDigit();
 
             /*
              *  Changing the direction of order by the second click
@@ -109,10 +110,10 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if (column == lastClickedColumn)
                 column = -column;
 
-            if (hwndFrom == pClassic->getHwndListViewAlpha())
-                pClassic->setLastClickedColumnAlpha(column);
+            if (hwndFrom == pStatus->getHwndListViewAlpha())
+                pStatus->setLastClickedColumnAlpha(column);
             else
-                pClassic->setLastClickedColumnDigit(column);
+                pStatus->setLastClickedColumnDigit(column);
 
             return 0;       // The return value is ignored
         default:
@@ -128,6 +129,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK
 HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+    HWND        hwndTabCtrl = 0;
     HDC         hdc;
     PAINTSTRUCT ps;
     RECT        rect, * pRect = &rect;
@@ -175,7 +177,9 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         hdc = BeginPaint (hWnd, &ps);
 
-        pClassic = (Classic *) GetProp(hWnd, PointerToClassic);
+        hwndTabCtrl   = (HWND)      GetWindowLongPtr(hWnd,  GWLP_HWNDPARENT);
+        pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
+
         vyskytyPismen = pClassic->getVyskytyPismen();
 
         for (int i = 0; i < numChars; i++)

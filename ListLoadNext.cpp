@@ -5,6 +5,7 @@
 #include "CreateRichEditWindow.h"
 #include "Helpers.h"
 #include "Classic.h"
+#include "Status.h"
 #include "Exports.h"
 #include "version.h"
 #include "Constants.h"
@@ -14,28 +15,26 @@ ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags
 {
 	HWND      hwndTabCtrl   = ListWin;
     Classic * pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
+    Status  * pStatus       = (Status *)  GetProp(hwndTabCtrl, PointerToStatus );
 
     pClassic->spracovanieVstupnehoSuboru(FileToLoad);
-    pClassic->naplnListView(pClassic->getHwndListViewAlpha(), CharsTypeAlpha);
-    pClassic->naplnListView(pClassic->getHwndListViewDigit(), CharsTypeDigit);
+    pClassic->naplnListView(pStatus->getHwndListViewAlpha(), CharsTypeAlpha);
+    pClassic->naplnListView(pStatus->getHwndListViewDigit(), CharsTypeDigit);
 
-    // Let this another file shows item in the last used order
-    int lastClickedColumnAlpha = pClassic->getLastClickedColumnAlpha();
-    int lastClickedColumnDigit = pClassic->getLastClickedColumnDigit();
-
-    ListView_SortItems(pClassic->getHwndListViewAlpha(), cmpFunction, lastClickedColumnAlpha);
-    ListView_SortItems(pClassic->getHwndListViewDigit(), cmpFunction, lastClickedColumnDigit);
+    // Let this another file shows items in the ListViews in the last used order
+    ListView_SortItems(pStatus->getHwndListViewAlpha(), cmpFunction, pStatus->getLastClickedColumnAlpha());
+    ListView_SortItems(pStatus->getHwndListViewDigit(), cmpFunction, pStatus->getLastClickedColumnDigit());
 
 
     // Redrawing the histogram by the new values of this next file
     RECT rect, *pRect = &rect;
 
-    GetClientRect (pClassic->getHwndHistogramAlpha(), pRect);
+    GetClientRect (pStatus->getHwndHistogramAlpha(), pRect);
 
-    InvalidateRect(pClassic->getHwndHistogramAlpha(), pRect, TRUE);
-    InvalidateRect(pClassic->getHwndHistogramDigit(), pRect, TRUE);
-    UpdateWindow  (pClassic->getHwndHistogramAlpha());
-    UpdateWindow  (pClassic->getHwndHistogramDigit());
+    InvalidateRect(pStatus->getHwndHistogramAlpha(), pRect, TRUE);
+    InvalidateRect(pStatus->getHwndHistogramDigit(), pRect, TRUE);
+    UpdateWindow  (pStatus->getHwndHistogramAlpha());
+    UpdateWindow  (pStatus->getHwndHistogramDigit());
 
     // Putting the appropriate child window onto top
     switchTab(hwndTabCtrl);

@@ -4,6 +4,7 @@
 #include "Helpers.h"
 #include "Constants.h"
 #include "Classic.h"
+#include "Status.h"
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
@@ -13,34 +14,35 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 void switchTab(const HWND hwndTabCtrl)
 {
     Classic * pClassic = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
+    Status  * pStatus  = (Status  *) GetProp(hwndTabCtrl, PointerToStatus);
 
     switch (TabCtrl_GetCurSel(hwndTabCtrl))
     {
     case ListViewAlphaTab:
-        BringWindowToTop(pClassic->getHwndListViewAlpha());
+        BringWindowToTop(pStatus->getHwndListViewAlpha());
             break;
     case HistogramAlphaTab:
-        BringWindowToTop(pClassic->getHwndHistogramAlpha());
-        UpdateWindow    (pClassic->getHwndHistogramAlpha());
+        BringWindowToTop(pStatus->getHwndHistogramAlpha());
+        UpdateWindow    (pStatus->getHwndHistogramAlpha());
         break;
     case ListViewDigitTab:
-        BringWindowToTop(pClassic->getHwndListViewDigit());
+        BringWindowToTop(pStatus->getHwndListViewDigit());
             break;
     case HistogramDigitTab:
-        BringWindowToTop(pClassic->getHwndHistogramDigit());
-        UpdateWindow    (pClassic->getHwndHistogramDigit());
+        BringWindowToTop(pStatus->getHwndHistogramDigit());
+        UpdateWindow    (pStatus->getHwndHistogramDigit());
         break;
     case VerticalRichEditTab:
-        SetWindowText   (pClassic->getHwndRichEdit(), pClassic->getVertical());
-        BringWindowToTop(pClassic->getHwndRichEdit());
+        SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getVertical());
+        BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     case HorizontalRichEditATab:
-        SetWindowText   (pClassic->getHwndRichEdit(), pClassic->getHorizontal());
-        BringWindowToTop(pClassic->getHwndRichEdit());
+        SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getHorizontal());
+        BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     case AboutRichEditTab:
-        SetWindowText   (pClassic->getHwndRichEdit(), pClassic->getAbout());
-        BringWindowToTop(pClassic->getHwndRichEdit());
+        SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getAbout());
+        BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     default:
         break;
