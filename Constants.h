@@ -55,7 +55,6 @@
     const TCHAR * const PointerToClassic         = TEXT("Pointer to Classic instance");
     const TCHAR * const PointerToStatus          = TEXT("Pointer to Status  instance");
     const TCHAR * const ClientWidthAndHight      = TEXT("Client width and hight");
-    const TCHAR * const LastChosenTab            = TEXT("Last chosen tab");
 
     // Names for INI file sections and keys
     const TCHAR * const IniFileTabsSection       = TEXT("Tabs");

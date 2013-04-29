@@ -37,7 +37,6 @@ ListCloseWindow(HWND ListWin)
      */
 
     RemoveProp(hwndTabCtrl,                        OldTabCtrlWndProc);
-    RemoveProp(hwndTabCtrl,                        LastChosenTab);
     RemoveProp(hwndTabCtrl,                        PointerToStatus);
 
     RemoveProp(pStatus->getHwndHistogramAlpha(),  ClientWidthAndHight);
