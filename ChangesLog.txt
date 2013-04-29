@@ -1,3 +1,10 @@
+29 April 2013
+   released version 1.4.1 of CharsOccurrences
+
+     Change log:
+        -Added: Keeps sorting order for the letters independent of sorting order for digits when user browses files, saves them to the INI file and automatically restores
+        -Fixed: Total row in the vertical view showed uncorrect values in the case of no occurrences of letters in the file
+
 09 April 2013
    released version 1.4.0 of CharsOccurrences
 
