@@ -26,7 +26,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 	RECT    rect;
 	TCHAR   iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
-    WNDPROC OldTabCtrlProc;
     extern
     LRESULT CALLBACK
     NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -36,15 +35,15 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     GetClientRect(ParentWindow, &rect);
     hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
 
-    // Subclassing of this window and saving the pointer of the old WindowProc as his property
-    OldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
-    SetProp(hwndTabCtrl, OldTabCtrlWndProc, (HANDLE) OldTabCtrlProc);
-
     // Creating instance of the classes and saving the pointer to it in the property of the TabCtrl Window
     Classic * pClassic = new Classic();
     Status  * pStatus  = new Status();
     SetProp(hwndTabCtrl, PointerToClassic, (HANDLE) pClassic);
     SetProp(hwndTabCtrl, PointerToStatus,  (HANDLE) pStatus);
+
+    // Subclassing of this window and saving the pointer of the old WindowProc as his property
+    WNDPROC oldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
+    pStatus->setOldTabCtrlWndProc(oldTabCtrlProc);
 
     // Získanie obdånika pre zobrazovaciu èas Tab Control
     GetClientRect(hwndTabCtrl, &rect);

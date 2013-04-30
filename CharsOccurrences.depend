@@ -29,29 +29,29 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1367240723 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1367264949 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	<winver.h>
 
-1367187294 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 	"Classic.h"
 	"Status.h"
 
-1366888901 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
+1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
 	<windows.h>
 	<string>
 	<commctrl.h>
 
-1367238926 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1367264903 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
-1365937693 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
 
 1358267014 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1367237860 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1367346582 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -70,7 +70,7 @@
 1365510755 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1367220187 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -89,21 +89,21 @@
 	<windows.h>
 	<commctrl.h>
 
-1366047682 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
 	"CreateTabbedWindow.h"
 	"Constants.h"
 
-1366905180 source:c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.cpp
 	"CreateRichEditWindow.h"
 	"Constants.h"
 
-1366905180 c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.h
+1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.h
 	<windows.h>
 	<tchar.h>
 	<commctrl.h>
 	<richedit.h>
 
-1367238658 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
 	"ListNotificationReceived.h"
 	"CreateRichEditWindow.h"
 	"CreateListViewtWindow.h"
@@ -117,10 +117,10 @@
 	<commctrl.h>
 	<richedit.h>
 
-1367246074 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+1367346687 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
 	<windows.h>
 
-1367237851 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
+1367343566 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
 	<tchar.h>
 	"ListCloseWindow.h"
 	"Exports.h"
@@ -132,7 +132,7 @@
 1360058355 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1367241607 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1367347100 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
@@ -150,7 +150,7 @@
 	"Exports.h"
 	"Constants.h"
 
-1365979249 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
 	"CreateListViewtWindow.h"
 	"Constants.h"
 
@@ -159,27 +159,27 @@
 	<commctrl.h>
 	<tchar.h>
 
-1365981513 source:c:\users\marian\documents\codeblocks\charsoccurrences\createhistogramwindow.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\createhistogramwindow.cpp
 	"CreateHistogramWindow.h"
 	"NaplnStrukturuWndClassEx.h"
 	"Constants.h"
 
-1366104696 c:\users\marian\documents\codeblocks\charsoccurrences\createhistogramwindow.h
+1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\createhistogramwindow.h
 	<windows.h>
 
-1365981254 c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.h
+1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.h
 
-1365982426 source:c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.cpp
 	<windows.h>
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1367186890 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	<cstdarg>
 	"Classic.h"
 	"Constants.h"
 
-1367241326 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
+1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
 	<windows.h>
 	<tchar.h>
 	<map>
@@ -189,11 +189,11 @@
 	<commctrl.h>
 	"version.h"
 
-1367237354 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
+1367342961 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
 	<cstdarg>
 	"Status.h"
 	"Constants.h"
 
-1367241310 c:\users\marian\documents\codeblocks\charsoccurrences\status.h
+1367342939 c:\users\marian\documents\codeblocks\charsoccurrences\status.h
 	<windows.h>
 

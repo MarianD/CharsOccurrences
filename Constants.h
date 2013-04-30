@@ -51,10 +51,8 @@
     const TCHAR * const INI_FILE                 = TEXT("CharsOccurrences.ini");
 
     // Names of window properties
-    const TCHAR * const OldTabCtrlWndProc        = TEXT("Old Tab Control Window Proc");
     const TCHAR * const PointerToClassic         = TEXT("Pointer to Classic instance");
     const TCHAR * const PointerToStatus          = TEXT("Pointer to Status  instance");
-    const TCHAR * const ClientWidthAndHight      = TEXT("Client width and hight");
 
     // Names for INI file sections and keys
     const TCHAR * const IniFileTabsSection       = TEXT("Tabs");

@@ -13,7 +13,9 @@ Status::Status()
     hwndHistogramAlpha(0),
     hwndHistogramDigit(0),
     hwndRichEdit(0),
-    lastChosenTab (0),
+    oldTabCtrlWndProc(0),
+    histgClientWidthHight(0),
+    lastChosenTab(0),
     lastClickedColumnAlpha (1),
     lastClickedColumnDigit (1)
 {

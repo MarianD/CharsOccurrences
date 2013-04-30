@@ -18,8 +18,14 @@ ListCloseWindow(HWND ListWin)
 	TCHAR    strlastClColDigit[3];
 	TCHAR    iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
+    /*
+     *  Removing all items in the property list of the windows
+     *  and getting pointers to the instances of the classes
+     */
     Classic * pClassic = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
     Status  * pStatus  = (Status  *) RemoveProp(hwndTabCtrl, PointerToStatus );
+
+    DestroyWindow(hwndTabCtrl);         // It in turn destroys the child windows, too
 
     // Saving status to ini file
     _stprintf(strLastChosenTab,  TEXT("%d"), pStatus->getLastChosenTab());
@@ -31,22 +37,12 @@ ListCloseWindow(HWND ListWin)
     WritePrivateProfileString(IniFileSortSection, IniFileLastClColAlphaKey, strlastClColAlpha, iniFile);
     WritePrivateProfileString(IniFileSortSection, IniFileLastClColDigitKey, strlastClColDigit, iniFile);
 
-    /*
-     *  Removing all items in the property list of the windows
-     *  and getting pointers to allocated chunks of the memory
-     */
 
-    RemoveProp(hwndTabCtrl,                        OldTabCtrlWndProc);
-    RemoveProp(hwndTabCtrl,                        PointerToStatus);
-
-    RemoveProp(pStatus->getHwndHistogramAlpha(),  ClientWidthAndHight);
-    RemoveProp(pStatus->getHwndHistogramDigit(),  ClientWidthAndHight);
 
     // Uvo¾nenie alokovanej pamäte pre exempláre triedy
     delete pClassic;
     delete pStatus;
 
-    DestroyWindow(hwndTabCtrl);         // It will destroy child windows, too
 
 //      MessageBoxA(0, "Tak èo, zas padneš?!", "Padne?", 0);
 

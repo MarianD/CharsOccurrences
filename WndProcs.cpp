@@ -15,14 +15,12 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     HWND      hwndTabCtrl    =  hWnd;
     HWND      hwndFrom       =  0;
-    Status *  pStatus        =  0;
-    NMHDR *   pNotifMsgHdr   =  0;
+    NMHDR  *  pNotifyMsgHdr   =  0;
     int       cx, cy;
     RECT      rect, * pRect  = &rect;
-    WNDPROC   OldTabCtrlProc;
 
-    OldTabCtrlProc = (WNDPROC)  GetProp(hwndTabCtrl, OldTabCtrlWndProc);
-    pStatus        = (Status *) GetProp(hwndTabCtrl, PointerToStatus);
+    Status * pStatus        = (Status *) GetProp(hwndTabCtrl, PointerToStatus);
+    WNDPROC  oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
 
 
     switch (uMsg)
@@ -60,10 +58,10 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                    TRUE);
         return 0;
     case WM_NOTIFY:
-        pNotifMsgHdr = (NMHDR *) lParam;
-        hwndFrom     = pNotifMsgHdr->hwndFrom;
+        pNotifyMsgHdr = (NMHDR *) lParam;
+        hwndFrom     = pNotifyMsgHdr->hwndFrom;
 
-        switch (pNotifMsgHdr->code)
+        switch (pNotifyMsgHdr->code)
         {
         case LVN_COLUMNCLICK:
             LPNMLISTVIEW pnmv;
@@ -73,7 +71,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                                                 // -1 in the opposite direction
             pnmv     = (LPNMLISTVIEW) lParam;
             column   = pnmv->iSubItem;          // Numbered from 0, in spite of deleting the original column zero
-            column++;                           // Now numbered from 1
+            ++column;                           // Now numbered from 1
 
             /*
              *  Let the sorting by the column 3 ("Percent") is the same as the sorting by
@@ -122,20 +120,18 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     default:
         break;
     }
-    return CallWindowProc(OldTabCtrlProc, hWnd, uMsg, wParam, lParam);
+    return CallWindowProc(oldTabCtrlProc, hWnd, uMsg, wParam, lParam);
 }
 
 
 LRESULT CALLBACK
 HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND        hwndTabCtrl = 0;
     HDC         hdc;
     PAINTSTRUCT ps;
     RECT        rect, * pRect = &rect;
     int         cxClient;
     int         cyClient;
-    Classic *   pClassic;
     const
     int *       vyskytyPismen;             // Array of occurences of individual letters
     int         vyskyt;                    // Occurence of actual letter
@@ -151,11 +147,15 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     int         numChars  = -1;
     TCHAR       baseChar = TEXT('?');
 
+    HWND      hwndTabCtrl   = (HWND)      GetWindowLongPtr(hWnd,  GWLP_HWNDPARENT);
+    Classic * pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
+    Status  * pStatus       = (Status  *) GetProp(hwndTabCtrl, PointerToClassic);
+
     switch (uMsg)
     {
     case WM_SIZE:
-        // Saving dimension of the client area of THIS window
-        SetProp(hWnd, ClientWidthAndHight, (HANDLE) lParam);
+        // Saving dimension of the client area of histogram window - both of them must have the same dimensions
+        pStatus->setHistgClientWidthHight(lParam);
         return 0;
     case WM_PAINT:
         switch (GetWindowLong(hWnd, GWL_ID))
@@ -177,9 +177,6 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         hdc = BeginPaint (hWnd, &ps);
 
-        hwndTabCtrl   = (HWND)      GetWindowLongPtr(hWnd,  GWLP_HWNDPARENT);
-        pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
-
         vyskytyPismen = pClassic->getVyskytyPismen();
 
         for (int i = 0; i < numChars; i++)
@@ -188,8 +185,8 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             maxVyskyt = max(maxVyskyt, vyskyt);
         }
 
-        // Getting dimensions of the client area of THIS window
-        lParam   = (LPARAM) GetProp(hWnd, ClientWidthAndHight);
+        // Getting dimension of the client area of histogram window - both of them must have the same dimensions
+        lParam = pStatus->getHistgClientWidthHight();
         cxClient = GET_X_LPARAM (lParam);
         cyClient = GET_Y_LPARAM (lParam);
 
