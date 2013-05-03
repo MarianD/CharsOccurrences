@@ -45,13 +45,13 @@
 
 1367264903 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
-1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
+1367594716 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
 
 1358267014 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1367346582 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1367622659 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -61,13 +61,14 @@
 	"Status.h"
 	"Helpers.h"
 	"Exports.h"
+	"WndProcs.h"
 	"version.h"
 	"Constants.h"
 
-1365211911 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
+1367622707 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
 	<windows.h>
 
-1365510755 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
+1367350803 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
 1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
@@ -120,7 +121,7 @@
 1367346687 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
 	<windows.h>
 
-1367343566 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
+1367565577 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
 	<tchar.h>
 	"ListCloseWindow.h"
 	"Exports.h"
@@ -132,7 +133,7 @@
 1360058355 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1367347100 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1367357972 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
@@ -141,7 +142,7 @@
 	"Status.h"
 	<wingdi.h>
 
-1361286316 c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.h
+1367622606 c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.h
 	<windows.h>
 	<windowsx.h>
 	<tchar.h>
@@ -174,7 +175,7 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1367426446 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	<cstdarg>
 	"Classic.h"
 	"Constants.h"
@@ -189,7 +190,7 @@
 	<commctrl.h>
 	"version.h"
 
-1367342961 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
+1367357610 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
 	<cstdarg>
 	"Status.h"
 	"Constants.h"

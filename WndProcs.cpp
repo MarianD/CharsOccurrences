@@ -11,13 +11,12 @@
 
 
 LRESULT CALLBACK
-NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND      hwndTabCtrl    =  hWnd;
-    HWND      hwndFrom       =  0;
-    NMHDR  *  pNotifyMsgHdr   =  0;
+    HWND      hwndFrom      = 0;
+    NMHDR  *  pNotifyMsgHdr = 0;
     int       cx, cy;
-    RECT      rect, * pRect  = &rect;
+    RECT      rect, * pRect = &rect;
 
     Status * pStatus        = (Status *) GetProp(hwndTabCtrl, PointerToStatus);
     WNDPROC  oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
@@ -120,7 +119,7 @@ NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     default:
         break;
     }
-    return CallWindowProc(oldTabCtrlProc, hWnd, uMsg, wParam, lParam);
+    return CallWindowProc(oldTabCtrlProc, hwndTabCtrl, uMsg, wParam, lParam);
 }
 
 

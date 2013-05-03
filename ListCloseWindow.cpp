@@ -10,9 +10,8 @@
 #include "Status.h"
 
 void CHARSOCCURRENCESCALL
-ListCloseWindow(HWND ListWin)
+ListCloseWindow(HWND hwndTabCtrl)
 {
-	HWND     hwndTabCtrl        = ListWin;
 	TCHAR    strLastChosenTab [3];
 	TCHAR    strlastClColAlpha[3];
 	TCHAR    strlastClColDigit[3];
@@ -25,9 +24,15 @@ ListCloseWindow(HWND ListWin)
     Classic * pClassic = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
     Status  * pStatus  = (Status  *) RemoveProp(hwndTabCtrl, PointerToStatus );
 
-    DestroyWindow(hwndTabCtrl);         // It in turn destroys the child windows, too
+    // Restoring the original Tab Control Window Procedure
+    SetWindowLongPtr(hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) pStatus->getOldTabCtrlWndProc());
 
-    // Saving status to ini file
+    delete pClassic;
+    delete pStatus;
+
+    DestroyWindow(hwndTabCtrl);                         // It in turn destroys the child windows, too
+
+   // Saving status to ini file
     _stprintf(strLastChosenTab,  TEXT("%d"), pStatus->getLastChosenTab());
     _stprintf(strlastClColAlpha, TEXT("%d"), pStatus->getLastClickedColumnAlpha());
     _stprintf(strlastClColDigit, TEXT("%d"), pStatus->getLastClickedColumnDigit());
@@ -37,13 +42,5 @@ ListCloseWindow(HWND ListWin)
     WritePrivateProfileString(IniFileSortSection, IniFileLastClColAlphaKey, strlastClColAlpha, iniFile);
     WritePrivateProfileString(IniFileSortSection, IniFileLastClColDigitKey, strlastClColDigit, iniFile);
 
-
-
-    // Uvo¾nenie alokovanej pamäte pre exempláre triedy
-    delete pClassic;
-    delete pStatus;
-
-
-//      MessageBoxA(0, "Tak èo, zas padneš?!", "Padne?", 0);
-
+    //asm("int3");
 }

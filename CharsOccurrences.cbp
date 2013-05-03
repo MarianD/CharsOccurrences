@@ -11,6 +11,8 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option host_application="C:/TotalCmd/TOTALCMD.EXE" />
+				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
@@ -30,6 +32,8 @@
 				<Option object_output="obj/Release/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option host_application="C:/Users/Marian/Documents/CodeBlocks/TestPlugin/bin/Release/TestPlugin.exe" />
+				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
@@ -68,6 +72,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Weffc++" />
+			<Add option="-D_WIN32" />
 			<Add option="-DWIN32" />
 			<Add option="-D_WINDOWS" />
 			<Add option="-D_MBCS" />

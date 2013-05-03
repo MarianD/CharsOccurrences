@@ -10,6 +10,7 @@
 #include "Status.h"
 #include "Helpers.h"
 #include "Exports.h"
+#include "WndProcs.h"
 #include "version.h"
 #include "Constants.h"
 
@@ -17,23 +18,12 @@
 HWND CHARSOCCURRENCESCALL
 ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 {
-	HWND    hwndTabCtrl        = 0;
-	HWND    hwndListViewAlpha  = 0;
-	HWND    hwndListViewDigit  = 0;
-	HWND    hwndHistogramAlpha = 0;
-	HWND    hwndHistogramDigit = 0;
-	HWND    hwndRichEdit       = 0;
-	RECT    rect;
-	TCHAR   iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
-
-    extern
-    LRESULT CALLBACK
-    NewTabCtrlProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
+	RECT        rect;
+	TCHAR       iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
     // Vytvorenie okna typu Tab Control, vypåòajúceho rodièovské okno (okno Listera)
     GetClientRect(ParentWindow, &rect);
-    hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
+    HWND hwndTabCtrl = CreateTabbedWindow(ParentWindow, &rect);
 
     // Creating instance of the classes and saving the pointer to it in the property of the TabCtrl Window
     Classic * pClassic = new Classic();
@@ -41,7 +31,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     SetProp(hwndTabCtrl, PointerToClassic, (HANDLE) pClassic);
     SetProp(hwndTabCtrl, PointerToStatus,  (HANDLE) pStatus);
 
-    // Subclassing of this window and saving the pointer of the old WindowProc as his property
+    // Subclassing of this window and saving the pointer of the old WindowProc to the instance of the class Status
     WNDPROC oldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     pStatus->setOldTabCtrlWndProc(oldTabCtrlProc);
 
@@ -50,11 +40,11 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Creating child windows in the display area of the Tab Control
-    hwndListViewAlpha  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewAlphaId);
-    hwndListViewDigit  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewDigitId);
-    hwndHistogramAlpha = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramAlphaId);
-    hwndHistogramDigit = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramDigitId);
-    hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect, RichEditId);
+    HWND hwndListViewAlpha  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewAlphaId);
+    HWND hwndListViewDigit  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewDigitId);
+    HWND hwndHistogramAlpha = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramAlphaId);
+    HWND hwndHistogramDigit = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramDigitId);
+    HWND hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect, RichEditId);
 
 	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndHistogramDigit)
     {
