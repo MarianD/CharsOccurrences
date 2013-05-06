@@ -18,8 +18,7 @@
 HWND CHARSOCCURRENCESCALL
 ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 {
-	RECT        rect;
-	TCHAR       iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
+	RECT rect;
 
     // Vytvorenie okna typu Tab Control, vypåòajúceho rodièovské okno (okno Listera)
     GetClientRect(ParentWindow, &rect);
@@ -68,6 +67,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
          *  the column 2 ("Count") to don't confuse the user by no reaction after
          *  clicking alternately to the headers of the column 2 and column 3.
          */
+        TCHAR iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
         getFullIniFilePath(iniFile);
 
         int lastChosenTab          = GetPrivateProfileInt(IniFileTabsSection,

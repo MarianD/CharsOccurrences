@@ -14,7 +14,7 @@ Classic::Classic()
     vyskytyPismen( (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int))   ),
     spolu        (horizontal),
     parVyskytPismeno(),
-    pocetMiest(10),
+    pocetMiest(MinPocetMiest),
     restChars(MaxCharsHorizAndlVertical - 1),
     warningWritten(false),
     verticalIsSet(false)
@@ -84,24 +84,6 @@ void Classic::nulujPole(int * pole, int pocetPrvkov)
 {
     for(int i = 0; i < pocetPrvkov; i++)
         pole[i] = 0;
-}
-
-
-bool Classic::jeVelkePismeno(int znak)
-{
-    if (znak >= 'A' && znak <= 'Z')
-        return true;
-    else
-        return false;
-}
-
-
-bool Classic::jeMalePismeno(int znak)
-{
-    if (znak >= 'a' && znak <= 'z')
-        return true;
-    else
-        return false;
 }
 
 

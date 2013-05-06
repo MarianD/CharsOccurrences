@@ -58,9 +58,9 @@
         static
         void    nulujPole                     (int * pole, int pocetPrvkov);
         static
-        bool    jeVelkePismeno                (int znak);
+        bool    jeVelkePismeno                (int znak) {return znak >= 'A' && znak <= 'Z';}
         static
-        bool    jeMalePismeno                 (int znak);
+        bool    jeMalePismeno                 (int znak) {return znak >= 'a' && znak <= 'z';}
         static
         int     zmenMaleNaVelke               (int pismeno);
         void    appendString                  (const TCHAR * formatString, ...);

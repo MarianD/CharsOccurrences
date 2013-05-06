@@ -51,7 +51,7 @@
 1358267014 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1367622659 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1367623175 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -175,12 +175,12 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1367426446 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1367863348 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	<cstdarg>
 	"Classic.h"
 	"Constants.h"
 
-1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
+1367862996 c:\users\marian\documents\codeblocks\charsoccurrences\classic.h
 	<windows.h>
 	<tchar.h>
 	<map>
