@@ -30,12 +30,12 @@ BEGIN
         BEGIN
             VALUE "Comments",           "Lister Plugin for Total Commander"
             VALUE "CompanyName",        "Marian Denes"
-            VALUE "FileDescription",    "TC lister plugin for displaying occurrences of characters"
+            VALUE "FileDescription",    "TC lister plugin for displaying occurrences of characters and digits"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "CharsOccurrences Lister Plugin"
             VALUE "LegalCopyright",     "© Marian Denes, 2013"
             VALUE "OriginalFilename",   "CharsOccurrences.dll"
-            VALUE "ProductName",        "TC Lister Plugin for Displaying Character's occurrences"
+            VALUE "ProductName",        "TC Lister Plugin for Displaying Character's and Digit's Occurrences"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END

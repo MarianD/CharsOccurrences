@@ -8,16 +8,16 @@
 
 Classic::Classic()
     // Some initializations are here only for the safety - to have some reasonable values
-  : horizontal   ( (TCHAR *) malloc(MaxCharsHorizAndlVertical           * sizeof(TCHAR)) ),
-    vertical     (horizontal),
-    about        ( (TCHAR *) malloc(AboutLength                         * sizeof(TCHAR)) ),
-    vyskytyPismen( (int   *) malloc((NumOfCapitalLetters + NumOfDigits) * sizeof(int))   ),
-    spolu        (horizontal),
+  : horizontal      ( new TCHAR[MaxCharsHorizAndlVertical] ),
+    vertical        ( horizontal ),
+    about           ( new TCHAR[AboutLength] ),
+    vyskytyPismen   ( new int  [NumOfCapitalLetters + NumOfDigits] ),
+    spolu           ( horizontal ),
     parVyskytPismeno(),
-    pocetMiest(MinPocetMiest),
-    restChars(MaxCharsHorizAndlVertical - 1),
-    warningWritten(false),
-    verticalIsSet(false)
+    pocetMiest      (MinPocetMiest),
+    restChars       (MaxCharsHorizAndlVertical - 1),
+    warningWritten  (false),
+    verticalIsSet   (false)
 {
     _sntprintf(about, AboutLength, TextAbout,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
@@ -31,9 +31,9 @@ Classic::Classic()
 
 Classic::~Classic()
 {
-    free(vyskytyPismen);
-    free(horizontal);
-    free(about);
+    delete[] vyskytyPismen;
+    delete[] horizontal;
+    delete[] about;
 }
 
 
@@ -89,10 +89,7 @@ void Classic::nulujPole(int * pole, int pocetPrvkov)
 
 int Classic::zmenMaleNaVelke(int pismeno)
 {
-    if (jeMalePismeno(pismeno))
-        return pismeno - ('a' - 'A');
-    else
-        return pismeno;
+    return jeMalePismeno(pismeno) ? pismeno - ('a' - 'A') : pismeno;
 }
 
 
