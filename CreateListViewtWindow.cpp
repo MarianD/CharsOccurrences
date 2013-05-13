@@ -70,13 +70,6 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
          */
         ListView_DeleteColumn(hwndListView, 0);
 
-        // TODO: Nieèo nasledujúce urobi, aby boli šípky pri usporadúvaní
-//        HDITEM hdi, *phdi = &hdi;
-//        hdi.mask = HDI_BITMAP;      // Kombinácia toho, èo má funkcia Header_GetItem() vráti v štruktúre hdi
-//        int index = 0;              // Index poloky v hlavièke
-//        HWND hwndHeader = ListView_GetHeader(hwndListView);
-//        Header_GetItem(hwndListView, index, phdi);
-
         return hwndListView;
     }
     else

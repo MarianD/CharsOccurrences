@@ -29,16 +29,17 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1368209419 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
-	<winver.h>
+1368470066 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+	"winver.h"
+	"windows.h"
 
-1368201839 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1368485981 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 	"Classic.h"
 	"Status.h"
 
-1368142685 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
+1368471758 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
 	<windows.h>
 	<string>
 	<commctrl.h>
@@ -51,7 +52,7 @@
 1358267014 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1368212706 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1368486393 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -71,7 +72,7 @@
 1367350803 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1368486816 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -133,7 +134,7 @@
 1360058355 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1367357972 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1368478920 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
@@ -151,7 +152,7 @@
 	"Exports.h"
 	"Constants.h"
 
-1368213386 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
+1368471417 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
 	"CreateListViewtWindow.h"
 	"Constants.h"
 	"Helpers.h"
@@ -198,4 +199,7 @@
 
 1367342939 c:\users\marian\documents\codeblocks\charsoccurrences\status.h
 	<windows.h>
+
+1368469902 c:\users\marian\documents\codeblocks\charsoccurrences\winver.h
+	"SpecStrings.h"
 

@@ -82,8 +82,13 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         pStatus->setLastClickedColumnDigit(lastClickedColumnDigit);
 
         // Let show items in the ListViews in the last used order
-        ListView_SortItems(pStatus->getHwndListViewAlpha(), cmpFunction, pStatus->getLastClickedColumnAlpha());
-        ListView_SortItems(pStatus->getHwndListViewDigit(), cmpFunction, pStatus->getLastClickedColumnDigit());
+        HWND hwndListViewAlpha      = pStatus->getHwndListViewAlpha();
+        HWND hwndListViewDigit      = pStatus->getHwndListViewDigit();
+
+        ListView_SortItems(hwndListViewAlpha, cmpFunction, lastClickedColumnAlpha);
+        ListView_SortItems(hwndListViewDigit, cmpFunction, lastClickedColumnDigit);
+        setHeadersArrows  (hwndListViewAlpha, lastClickedColumnAlpha);
+        setHeadersArrows  (hwndListViewDigit, lastClickedColumnDigit);
 
         TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
         switchTab(hwndTabCtrl);

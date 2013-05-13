@@ -29,4 +29,6 @@
     void
     InitListViewImageLists(HWND hWndListView);
 
+    void
+    setHeadersArrows(HWND hwndListView, int lastClickedColumn);
 #endif // ndef

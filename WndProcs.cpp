@@ -66,8 +66,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
             LPNMLISTVIEW pnmv;
             int          column;
             int          lastClickedColumn;     // It is increased by 1 to have oportunity to save it with + or -
-            int          signum;                // +1 means order in the preferred direction,
-                                                // -1 in the opposite direction
+
             pnmv     = (LPNMLISTVIEW) lParam;
             column   = pnmv->iSubItem;          // Numbered from 0, in spite of deleting the original column zero
             ++column;                           // Now numbered from 1
@@ -86,10 +85,11 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
                                  pStatus->getLastClickedColumnDigit();
 
             /*
-             *  Changing the direction of order by the second click
-             *  on the same column's header
+             *  Changing the direction of the ordering to unprefered if it was
+             *  the click on the column's header sorted in the prefered order
              */
-            signum = (column == lastClickedColumn) ? -1 : 1;
+            if (column == lastClickedColumn)
+                column *= -1;                   // + means prefered, - means unprefered order
 
             #ifdef _DEBUG
                 TCHAR oznam[100];
@@ -98,14 +98,8 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 MessageBox(0, oznam, TEXT("Bla"), 0) ;
             #endif
 
-            ListView_SortItems(hwndFrom, cmpFunction, (LPARAM) signum * column);
-
-            /*
-             *  If it was the immediate second click on the same
-             *  column's header, let's save it with the minus sign
-             */
-            if (column == lastClickedColumn)
-                column = -column;
+            ListView_SortItems(hwndFrom, cmpFunction, (LPARAM) column);
+            setHeadersArrows(hwndFrom, column);
 
             if (hwndFrom == pStatus->getHwndListViewAlpha())
                 pStatus->setLastClickedColumnAlpha(column);

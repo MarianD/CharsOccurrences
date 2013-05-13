@@ -99,70 +99,77 @@ int CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM plusMinusStlpe
 
 
 void InitListViewImageLists(HWND hWndListView)
-  {
-      HICON hiconItem;     // Icon for list-view items.
+{
+    HICON hIconItem;     // Icon for list-view items.
 
-//      HIMAGELIST hLarge;   // Image list for icon view.
+//    HIMAGELIST hLarge;   // Image list for icon view.
 
-      HIMAGELIST hSmall;   // Image list for other views.
+    HIMAGELIST hSmall;   // Image list for other views.
 
 
-      // Create the full-sized icon image lists.
+    // Create the full-sized icon image lists.
 
-//      hLarge = ImageList_Create(GetSystemMetrics(SM_CXICON),
-//                                GetSystemMetrics(SM_CYICON),
-//                                ILC_MASK, 1, 1);
-//
-      hSmall = ImageList_Create(GetSystemMetrics(SM_CXSMICON),
-                                GetSystemMetrics(SM_CYSMICON),
-                                ILC_MASK, 1, 1);
+//    hLarge = ImageList_Create(GetSystemMetrics(SM_CXICON),
+//                              GetSystemMetrics(SM_CYICON),
+//                              ILC_MASK, 1, 1);
 
-      // Add an icon to each image list.
+    hSmall = ImageList_Create(GetSystemMetrics(SM_CXSMICON),
+                              GetSystemMetrics(SM_CYSMICON),
+                              ILC_MASK, 1, 1);
 
-//      hiconItem = LoadIcon(g_hInst, MAKEINTRESOURCE(IDI_ITEM));
-//      ImageList_AddIcon(hLarge, hiconItem);
-      hiconItem = LoadIcon(NULL, IDI_EXCLAMATION);
-      ImageList_AddIcon(hSmall, hiconItem);
-      DestroyIcon(hiconItem);
+    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(1));
+    ImageList_AddIcon(hSmall, hIconItem);
+    DestroyIcon(hIconItem);
 
-      hiconItem = LoadIcon(NULL, IDI_HAND);
-      ImageList_AddIcon(hSmall, hiconItem);
-      DestroyIcon(hiconItem);
+    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(2));
+    ImageList_AddIcon(hSmall, hIconItem);
+    DestroyIcon(hIconItem);
 
-      hiconItem = LoadIcon(NULL, IDI_QUESTION);
-      ImageList_AddIcon(hSmall, hiconItem);
-      DestroyIcon(hiconItem);
+    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(3));
+    ImageList_AddIcon(hSmall, hIconItem);
+    DestroyIcon(hIconItem);
 
-      hiconItem = LoadIcon(NULL, IDI_INFORMATION);
-      ImageList_AddIcon(hSmall, hiconItem);
+    DestroyIcon(hIconItem);
 
-      DestroyIcon(hiconItem);
+    // Assign the image lists to the list-view control.
 
-  // When you are dealing with multiple icons, you can use the previous four lines of
+//    ListView_SetImageList(hWndListView, hLarge, LVSIL_NORMAL);
+    ListView_SetImageList(hWndListView, hSmall, LVSIL_SMALL);
+}
 
-  // code inside a loop. The following code shows such a loop. The
+void setHeadersArrows(HWND hwndListView, int lastClickedColumn)
+{
+    HWND   hwndHeader = ListView_GetHeader(hwndListView);
+    HDITEM hdi, *phdi = &hdi;
+    hdi.mask = HDI_IMAGE;      // We vill change only the iImage member of the structure hdi
 
-  // icons are defined in the application's header file as resources, which
-
-  // are numbered consecutively starting with IDS_FIRSTICON. The number of
-
-  // icons is defined in the header file as C_ICONS.
-
-  /*
-    for(index = 0; index < C_ICONS; index++)
+    // First destroing all header images
+    for (int index = 0; index < 3; ++index)     // Index of header's item
     {
-        hIconItem = LoadIcon (g_hinst, MAKEINTRESOURCE(IDS_FIRSTICON + index));
-        ImageList_AddIcon(hSmall, hIconItem);
-        ImageList_AddIcon(hLarge, hIconItem);
-        Destroy(hIconItem);
+        phdi->iImage = -1;                       // No image
+        Header_SetItem(hwndHeader, index, phdi);
     }
-*/
 
+    /*
+     *  Now we set the appropriate image (up- or downarrow)
+     *  for the header(s), by which is their column ordered
+     */
+    int index = abs(lastClickedColumn) - 1;         // lastClickedColumn si numbered from 1 and has sign (+ or -)
+    switch(index)
+    {
+    case 0:
+        phdi->iImage = (lastClickedColumn > 0) ? 1 : 2;     // Characters' column
+        Header_SetItem(hwndHeader, index, phdi);
+        break;
+    case 1:
+        phdi->iImage = (lastClickedColumn > 0) ? 2 : 1;     // Occurences' or percentages' column
+        Header_SetItem(hwndHeader, index, phdi);
+        Header_SetItem(hwndHeader, index + 1, phdi);
+        break;
+    default:
+        //MessageBoxA(0, "Not possible!", "Error", MB_ICONERROR);
+        break;
+    }
+}
 
-      // Assign the image lists to the list-view control.
-
-//      ListView_SetImageList(hWndListView, hLarge, LVSIL_NORMAL);
-//      ListView_SetImageList(hWndListView, hSmall, LVSIL_SMALL);
-      ListView_SetImageList(hWndListView, hSmall, LVSIL_SMALL);
-  }
 

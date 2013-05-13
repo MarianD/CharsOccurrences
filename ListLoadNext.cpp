@@ -13,18 +13,24 @@
 int CHARSOCCURRENCESCALL
 ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags*/)
 {
-	HWND      hwndTabCtrl   = ListWin;
-    Classic * pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
-    Status  * pStatus       = (Status *)  GetProp(hwndTabCtrl, PointerToStatus );
+	HWND      hwndTabCtrl       = ListWin;
+    Classic * pClassic          = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
+    Status  * pStatus           = (Status *)  GetProp(hwndTabCtrl, PointerToStatus );
+    HWND      hwndListViewAlpha = pStatus->getHwndListViewAlpha();
+    HWND      hwndListViewDigit = pStatus->getHwndListViewDigit();
 
     pClassic->spracovanieVstupnehoSuboru(FileToLoad);
-    pClassic->naplnListView(pStatus->getHwndListViewAlpha(), CharsTypeAlpha);
-    pClassic->naplnListView(pStatus->getHwndListViewDigit(), CharsTypeDigit);
+    pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
+    pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
 
     // Let this another file shows items in the ListViews in the last used order
-    ListView_SortItems(pStatus->getHwndListViewAlpha(), cmpFunction, pStatus->getLastClickedColumnAlpha());
-    ListView_SortItems(pStatus->getHwndListViewDigit(), cmpFunction, pStatus->getLastClickedColumnDigit());
+    int lastClickedColumnAlpha = pStatus->getLastClickedColumnAlpha();
+    int lastClickedColumnDigit = pStatus->getLastClickedColumnDigit();
 
+    ListView_SortItems(hwndListViewAlpha, cmpFunction, lastClickedColumnAlpha);
+    ListView_SortItems(hwndListViewDigit, cmpFunction, lastClickedColumnDigit);
+    setHeadersArrows  (hwndListViewAlpha, lastClickedColumnAlpha);
+    setHeadersArrows  (hwndListViewDigit, lastClickedColumnDigit);
 
     // Redrawing the histogram by the new values of this next file
     RECT rect, *pRect = &rect;
