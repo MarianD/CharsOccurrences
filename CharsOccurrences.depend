@@ -29,21 +29,21 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1367939566 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1368209419 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	<winver.h>
 
-1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1368201839 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 	"Classic.h"
 	"Status.h"
 
-1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
+1368142685 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
 	<windows.h>
 	<string>
 	<commctrl.h>
 
-1367264903 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1368209377 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1367594716 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
@@ -51,7 +51,7 @@
 1358267014 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1367623175 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1368212706 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -90,7 +90,7 @@
 	<windows.h>
 	<commctrl.h>
 
-1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
+1368208917 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
 	"CreateTabbedWindow.h"
 	"Constants.h"
 
@@ -151,9 +151,10 @@
 	"Exports.h"
 	"Constants.h"
 
-1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
+1368213386 source:c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.cpp
 	"CreateListViewtWindow.h"
 	"Constants.h"
+	"Helpers.h"
 
 1365510755 c:\users\marian\documents\codeblocks\charsoccurrences\createlistviewtwindow.h
 	<windows.h>
@@ -175,7 +176,7 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1367944208 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1368401457 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	<cstdarg>
 	"Classic.h"
 	"Constants.h"

@@ -26,4 +26,7 @@
     int CALLBACK
     cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM stlpec);
 
+    void
+    InitListViewImageLists(HWND hWndListView);
+
 #endif // ndef

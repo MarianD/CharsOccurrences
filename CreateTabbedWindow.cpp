@@ -18,7 +18,8 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
     HMENU     childID  = (HMENU) 0;
 
     hwndTabCtrl = CreateWindowEx(0, WC_TABCONTROL, TEXT(""),
-                                WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN,
+                                WS_CHILD    | WS_VISIBLE      | WS_CLIPCHILDREN |
+                                TCS_BUTTONS | TCS_FLATBUTTONS | TCS_HOTTRACK,
                                 pRect->left, pRect->top,
                                 pRect->right  - pRect->left,
                                 pRect->bottom - pRect->top,
