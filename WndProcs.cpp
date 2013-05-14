@@ -29,6 +29,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
         cx = GET_X_LPARAM(lParam);
         cy = GET_Y_LPARAM(lParam);
         SetRect(pRect, 0, 0, cx, cy);
+        (void)
         TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
         MoveWindow(pStatus->getHwndListViewAlpha(),  pRect->left, pRect->top,
@@ -98,6 +99,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 MessageBox(0, oznam, TEXT("Bla"), 0) ;
             #endif
 
+            (void)
             ListView_SortItems(hwndFrom, cmpFunction, (LPARAM) column);
             setHeadersArrows(hwndFrom, column);
 

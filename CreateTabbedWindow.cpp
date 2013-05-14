@@ -42,10 +42,12 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
     {
         tab[i].mask       = TCIF_TEXT;
         tab[i].cchTextMax = 20;
+        (void)
         TabCtrl_InsertItem(hwndTabCtrl, i, tab + i);
     }
 
     // ZÌskanie obdÂûnika pre zobrazovaciu Ëasù Tab Control
+    (void)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
     return hwndTabCtrl;

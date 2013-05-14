@@ -6,7 +6,7 @@
 
 HWND CreateHistogramWindow(HWND ParentWindow, RECT * pRect, int id)
 {
-    HMENU      childID     = (HMENU) id;
+    HMENU      childID     = (HMENU) (INT64) id;
     HINSTANCE  hInstance   = NULL;               /* Optional parameter for CreateWindowEx */
     WNDCLASSEX wndClassEx;                       /* Data structure for the Window Class */
     HWND       hwndHistogram;

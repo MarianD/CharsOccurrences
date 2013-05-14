@@ -8,7 +8,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
 {
     HWND      hwndListView;
     HINSTANCE hinst   = 0;
-    HMENU     childID = (HMENU) id;
+    HMENU     childID = (HMENU) (INT64) id;
 
     hwndListView = CreateWindowEx(0
                                   /* | LVS_EX_HEADERDRAGDROP */              // Toto TU neurobilo niè
@@ -26,6 +26,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
 
     if (hwndListView)
     {
+        (void)
         ListView_SetExtendedListViewStyleEx(hwndListView,
                                             LVS_EX_HEADERDRAGDROP | LVS_EX_FULLROWSELECT | LVS_EX_SUBITEMIMAGES,
                                             LVS_EX_HEADERDRAGDROP | LVS_EX_FULLROWSELECT);
@@ -56,7 +57,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
             lvc.fmt      = (column == 1) ? LVCFMT_CENTER : LVCFMT_RIGHT;
             lvc.fmt     |= LVCFMT_BITMAP_ON_RIGHT;
             lvc.iImage   = -1;  // No image
-
+            (void)
             ListView_InsertColumn(hwndListView, column, &lvc);
 
         }
@@ -66,6 +67,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
          *  because the alignment of the leftmost column is always
          *  left-justified and cannot be changed
          */
+        (void)
         ListView_DeleteColumn(hwndListView, 0);
 
         return hwndListView;

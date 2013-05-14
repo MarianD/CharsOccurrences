@@ -16,6 +16,7 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
+					<Add option="-Weffc++" />
 					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add option="-W" />
@@ -38,6 +39,7 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-Weffc++" />
 					<Add option="-Wall" />
 					<Add option="-W" />
 					<Add option="-fexceptions" />
@@ -54,12 +56,13 @@
 				<Option object_output="obj/Release 64/" />
 				<Option type="3" />
 				<Option compiler="gnu_gcc_compiler_for_64_bit" />
-				<Option host_application="bin/Release 64/ListerPluginsTester.exe" />
+				<Option host_application="bin/Release 64/ListerPluginsTeste64.exe" />
 				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-Weffc++" />
 					<Add option="-Wall" />
 					<Add option="-W" />
 					<Add option="-fexceptions" />

@@ -36,6 +36,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     GetClientRect(hwndTabCtrl, &rect);
+    (void)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Creating child windows in the display area of the Tab Control
@@ -85,11 +86,13 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         HWND hwndListViewAlpha      = pStatus->getHwndListViewAlpha();
         HWND hwndListViewDigit      = pStatus->getHwndListViewDigit();
 
+        (void)
         ListView_SortItems(hwndListViewAlpha, cmpFunction, lastClickedColumnAlpha);
+        (void)
         ListView_SortItems(hwndListViewDigit, cmpFunction, lastClickedColumnDigit);
         setHeadersArrows  (hwndListViewAlpha, lastClickedColumnAlpha);
         setHeadersArrows  (hwndListViewDigit, lastClickedColumnDigit);
-
+        (void)
         TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
         switchTab(hwndTabCtrl);
 

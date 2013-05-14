@@ -47,6 +47,7 @@ void Classic::naplnListView(HWND hwndListView, int charsType) const
     TCHAR  baseChar = (charsType == CharsTypeAlpha) ? TEXT('A')           : TEXT('0');
     LVITEM lvI;
 
+    (void)
     ListView_DeleteAllItems(hwndListView);
 
     for (int riadok = 0; riadok < numChars; riadok++)
@@ -66,15 +67,18 @@ void Classic::naplnListView(HWND hwndListView, int charsType) const
         lvI.iSubItem = 0;
         lvI.pszText  = pismeno;
         lvI.lParam   = (LPARAM) (NumOfCapitalLetters * occur + riadok); // For sorting by columns; don't use numChars!
+        (void)
         ListView_InsertItem(hwndListView, &lvI);
 
         lvI.mask     = LVIF_TEXT;
         lvI.iSubItem = 1;
         lvI.pszText  = chOccur;
+        (void)
         ListView_SetItem(hwndListView, &lvI);
 
         lvI.iSubItem = 2;
         lvI.pszText  = chPercent;
+        (void)
         ListView_SetItem(hwndListView, &lvI);
     }
 }

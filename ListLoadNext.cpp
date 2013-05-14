@@ -27,7 +27,9 @@ ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags
     int lastClickedColumnAlpha = pStatus->getLastClickedColumnAlpha();
     int lastClickedColumnDigit = pStatus->getLastClickedColumnDigit();
 
+    (void)
     ListView_SortItems(hwndListViewAlpha, cmpFunction, lastClickedColumnAlpha);
+    (void)
     ListView_SortItems(hwndListViewDigit, cmpFunction, lastClickedColumnDigit);
     setHeadersArrows  (hwndListViewAlpha, lastClickedColumnAlpha);
     setHeadersArrows  (hwndListViewDigit, lastClickedColumnDigit);

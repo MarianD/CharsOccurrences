@@ -138,6 +138,7 @@ void setHeadersArrows(HWND hwndListView, int lastClickedColumn)
     for (int index = 0; index < 3; ++index)     // Index of header's item
     {
         phdi->iImage = -1;                       // No image
+        (void)
         Header_SetItem(hwndHeader, index, phdi);
     }
 
@@ -150,11 +151,14 @@ void setHeadersArrows(HWND hwndListView, int lastClickedColumn)
     {
     case 0:
         phdi->iImage = (lastClickedColumn > 0) ? UpArrow : DownArrow;     // Characters' column
+        (void)
         Header_SetItem(hwndHeader, index, phdi);
         break;
     case 1:
         phdi->iImage = (lastClickedColumn > 0) ? DownArrow : UpArrow;     // Occurences' or percentages' column
+        (void)
         Header_SetItem(hwndHeader, index, phdi);
+        (void)
         Header_SetItem(hwndHeader, index + 1, phdi);
         break;
     default:
