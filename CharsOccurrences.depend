@@ -29,8 +29,7 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1368470066 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
-	"winver.h"
+1368540698 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	"windows.h"
 
 1368485981 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
@@ -44,7 +43,7 @@
 	<string>
 	<commctrl.h>
 
-1368209377 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1368540690 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1367594716 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"

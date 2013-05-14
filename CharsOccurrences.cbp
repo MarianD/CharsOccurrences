@@ -11,6 +11,8 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option host_application="bin/Debug/ListerPluginsTester.exe" />
+				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
@@ -30,7 +32,7 @@
 				<Option object_output="obj/Release/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option host_application="C:/Users/Marian/Documents/CodeBlocks/ListerPluginsTester/bin/Release/ListerPluginsTester.exe" />
+				<Option host_application="bin/Release/ListerPluginsTester.exe" />
 				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
@@ -52,6 +54,8 @@
 				<Option object_output="obj/Release 64/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option host_application="bin/Release 64/ListerPluginsTester.exe" />
+				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
