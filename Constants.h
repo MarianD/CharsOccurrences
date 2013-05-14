@@ -47,6 +47,20 @@
         NumOfTabs               // This must be the last item, because it is not a tab for adding into Tab View
     };
 
+    enum
+    {
+        IcoBlank = 1,
+        IcoUpArrow,
+        IcoDownArrow,
+    };
+
+    enum
+    {
+        Blank,
+        UpArrow,
+        DownArrow,
+    };
+
     const char  * const DETECT_STRING            = "ext=\"TXT\" | force";
     const TCHAR * const INI_FILE                 = TEXT("CharsOccurrences.ini");
 

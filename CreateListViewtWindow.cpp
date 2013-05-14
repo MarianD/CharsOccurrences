@@ -38,7 +38,6 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
         LVCOLUMN  lvc;
 
         lstrcpy(colHeader[1], (id == ListViewAlphaId) ? TEXT("Letter") : TEXT("Digit"));
-        lstrcpy(colHeader[1], (id == ListViewAlphaId) ? TEXT("Letter") : TEXT("Digit"));
 
         /*
          *  Initialize the LVCOLUMN structure.
@@ -46,8 +45,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
          *  of the structure are valid.
          */
         lvc.mask = LVCF_FMT     | LVCF_WIDTH | LVCF_TEXT |
-                   LVCF_SUBITEM | LVCF_IMAGE;               // LVCF_IMAGE je pre HLAVIÈKY ståpcov, LVCF_SUBITEM netreba
-
+                   LVCF_SUBITEM | LVCF_IMAGE;               // LVCF_IMAGE is for columns' HEADERS
 
         // Add the columns
         for (int column = 0; column < 4; ++column)
@@ -57,7 +55,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
             lvc.cx       = colWidth [column];
             lvc.fmt      = (column == 1) ? LVCFMT_CENTER : LVCFMT_RIGHT;
             lvc.fmt     |= LVCFMT_BITMAP_ON_RIGHT;
-            lvc.iImage   = column;
+            lvc.iImage   = -1;  // No image
 
             ListView_InsertColumn(hwndListView, column, &lvc);
 

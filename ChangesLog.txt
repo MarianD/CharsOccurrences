@@ -2,9 +2,9 @@
    released version 1.5.0 of CharsOccurrences
 
      Change log:
-        -Added: Tabs Lettesr and Digits: Full row(s) selection
-        -Added: Tabs Lettesr and Digits: Order of columns  may be changed by dragging their headers
-        -Added: Tabs Lettesr and Digits: Adiing arrow indicator(s) to the header of column(s) by which is the list sorted
+        -Added: Tabs Letters and Digits: Full row(s) selection
+        -Added: Tabs Letters and Digits: Order of columns  may be changed by dragging their headers
+        -Added: Tabs Letters and Digits: Adding arrow indicator(s) to the header of column(s) by which is the list sorted
         -Changed: Tabs appears as buttons to better recognize the active tab
         -Added: Hot track of the tabs - the tab under the mouse pointer is highlighted
 
