@@ -1,5 +1,3 @@
-/* Contents of file ListGetDetectString.h */
-
 #ifndef LISTGETDETECTSTRING_H
     #define LISTGETDETECTSTRING_H
 

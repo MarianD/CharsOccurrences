@@ -12,10 +12,10 @@
 void CHARSOCCURRENCESCALL
 ListCloseWindow(HWND hwndTabCtrl)
 {
-	TCHAR    strLastChosenTab [3];
-	TCHAR    strlastClColAlpha[3];
-	TCHAR    strlastClColDigit[3];
-	TCHAR    iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
+	TCHAR   strLastChosenTab [3];
+	TCHAR   strlastClColAlpha[3];
+	TCHAR   strlastClColDigit[3];
+	TCHAR * iniFile = new TCHAR[_MAX_PATH + lstrlen(INI_FILE) + 1];
 
     /*
      *  Removing all items in the property list of the windows
@@ -42,5 +42,5 @@ ListCloseWindow(HWND hwndTabCtrl)
     WritePrivateProfileString(IniFileSortSection, IniFileLastClColAlphaKey, strlastClColAlpha, iniFile);
     WritePrivateProfileString(IniFileSortSection, IniFileLastClColDigitKey, strlastClColDigit, iniFile);
 
-    //asm("int3");
+    delete[] iniFile;
 }

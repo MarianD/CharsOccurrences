@@ -1,5 +1,3 @@
-/* Contents of file Exports.h */
-
 #ifndef CHARSOCCURRENCES_H
     #define CHARSOCCURRENCES_H
 

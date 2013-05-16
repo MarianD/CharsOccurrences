@@ -1,5 +1,3 @@
-/* Contents of file WndProcs.h */
-
 #ifndef WNDPROCS_H
     #define WNDPROCS_H
 

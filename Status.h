@@ -1,5 +1,3 @@
-/* Contents of file Status.h */
-
 #ifndef STATUS_H
     #define STATUS_H
 

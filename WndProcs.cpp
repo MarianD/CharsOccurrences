@@ -13,8 +13,8 @@
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND      hwndFrom      = 0;
-    NMHDR  *  pNotifyMsgHdr = 0;
+    HWND      hwndFrom      = nullptr;
+    NMHDR  *  pNotifyMsgHdr = nullptr;
     int       cx, cy;
     RECT      rect, * pRect = &rect;
 

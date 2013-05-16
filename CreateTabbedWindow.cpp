@@ -14,7 +14,7 @@
 HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
 {
 	HWND      hwndTabCtrl;
-    HINSTANCE hinst    =  0;
+    HINSTANCE hinst    =  nullptr;
     HMENU     childID  = (HMENU) 0;
 
     hwndTabCtrl = CreateWindowEx(0, WC_TABCONTROL, TEXT(""),
@@ -23,7 +23,7 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
                                 pRect->left, pRect->top,
                                 pRect->right  - pRect->left,
                                 pRect->bottom - pRect->top,
-                                ParentWindow, childID, hinst, NULL);
+                                ParentWindow, childID, hinst, nullptr);
 
     // Creating new tabs
     TCITEM tab[NumOfTabs];

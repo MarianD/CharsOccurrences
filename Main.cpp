@@ -5,14 +5,14 @@
 BOOL APIENTRY
 DllMain(HANDLE /*hModule*/, DWORD  ul_reason_for_call, LPVOID /*lpReserved*/)
 {
-    HMODULE FLibHandle = 0;
+    HMODULE FLibHandle = nullptr;
 
     switch (ul_reason_for_call)
 	{
 		case DLL_PROCESS_ATTACH:
 			break;
 		case DLL_PROCESS_DETACH:
-			if (FLibHandle)
+			if (FLibHandle != nullptr)
 				FreeLibrary(FLibHandle);
 			FLibHandle = 0;
 			break;

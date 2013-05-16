@@ -1,5 +1,3 @@
-/* Contents of file ListCloseWindow.h */
-
 #ifndef LISTCLOSEWINDOW_H
     #define LISTCLOSEWINDOW_H
 

@@ -283,10 +283,10 @@ void Classic::tlacVyskytuPismenPodSebou(int charsType)
 
 void Classic::tlacSuctovehoRiadka(int sucetVyskytov)
 {
-    const TCHAR znak           = TEXT('-');
-    int  sirkaStlpcaVyskytov   = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
-    int  dlzkaRiadka           = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + StlpcovaMedzera;
-    TCHAR ciara[dlzkaRiadka + 1];
+    const TCHAR znak         = TEXT('-');
+    int  sirkaStlpcaVyskytov = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
+    int  dlzkaRiadka         = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + StlpcovaMedzera;
+    TCHAR * ciara            = new TCHAR[dlzkaRiadka + 1];
 
     for (int i = 0; i < dlzkaRiadka; ++i)
         *(ciara + i) = znak;
@@ -301,6 +301,8 @@ void Classic::tlacSuctovehoRiadka(int sucetVyskytov)
     appendString(formatString,
                  sirkaStlpcaVyskytov, sucetVyskytov,
                  StlpcovaMedzera + sirkaStlpcaVyskytov, sucetVyskytov);
+
+    delete[] ciara;
 }
 
 
@@ -312,9 +314,9 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     restChars      = MaxCharsHorizAndlVertical - 1;
     warningWritten = false;
 
-    FILE   * vstup = 0;
+    FILE   * vstup = nullptr;
 
-    if ((vstup = fopen(FileToLoad, "rb")) == 0)
+    if ((vstup = fopen(FileToLoad, "rb")) == nullptr)
     {
         appendString(TEXT("\nOpening of the file\n\n  \"%S\"\n\nfailed ")
                      TEXT("(probably it is the folder).\n\n"), FileToLoad);

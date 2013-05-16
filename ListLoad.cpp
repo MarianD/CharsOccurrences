@@ -68,7 +68,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
          *  the column 2 ("Count") to don't confuse the user by no reaction after
          *  clicking alternately to the headers of the column 2 and column 3.
          */
-        TCHAR iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
+        TCHAR * iniFile = new TCHAR[_MAX_PATH + lstrlen(INI_FILE) + 1];
         getFullIniFilePath(iniFile);
 
         int lastChosenTab          = GetPrivateProfileInt(IniFileTabsSection,
@@ -77,6 +77,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
                                                       IniFileLastClColAlphaKey, 1, iniFile);
         int lastClickedColumnDigit = GetPrivateProfileInt(IniFileSortSection,
                                                       IniFileLastClColDigitKey, 1, iniFile);
+        delete[] iniFile;
 
         pStatus->setLastChosenTab         (lastChosenTab);
         pStatus->setLastClickedColumnAlpha(lastClickedColumnAlpha);
