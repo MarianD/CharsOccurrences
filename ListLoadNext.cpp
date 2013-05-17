@@ -14,14 +14,14 @@ int CHARSOCCURRENCESCALL
 ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags*/)
 {
 	HWND      hwndTabCtrl       = ListWin;
-    Classic * pClassic          = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
-    Status  * pStatus           = (Status *)  GetProp(hwndTabCtrl, PointerToStatus );
+    Classic * pClassic          = (Classic *) GetProp(hwndTabCtrl, cn::PointerToClassic);
+    Status  * pStatus           = (Status *)  GetProp(hwndTabCtrl, cn::PointerToStatus );
     HWND      hwndListViewAlpha = pStatus->getHwndListViewAlpha();
     HWND      hwndListViewDigit = pStatus->getHwndListViewDigit();
 
     pClassic->spracovanieVstupnehoSuboru(FileToLoad);
-    pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
-    pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
+    pClassic->naplnListView(hwndListViewAlpha, cn::CharsTypeAlpha);
+    pClassic->naplnListView(hwndListViewDigit, cn::CharsTypeDigit);
 
     // Let this another file shows items in the ListViews in the last used order
     int lastClickedColumnAlpha = pStatus->getLastClickedColumnAlpha();

@@ -30,7 +30,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
         TCHAR     colHeader[4][10] = {TEXT(""), TEXT("???"), TEXT("Count"), TEXT("Percent")};
         const int colWidth [4]     = {0,        50 + 20,     53 + 20,       60 + 20};
 
-        lstrcpy(colHeader[1], (id == ListViewAlphaId) ? TEXT("Letter") : TEXT("Digit"));
+        lstrcpy(colHeader[1], (id == cn::ListViewAlphaId) ? TEXT("Letter") : TEXT("Digit"));
 
         /*
          *  Initialize the LVCOLUMN structure.

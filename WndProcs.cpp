@@ -18,7 +18,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
     int      cx, cy;
     RECT     rect, * pRect = &rect;
 
-    Status * pStatus        = (Status *) GetProp(hwndTabCtrl, PointerToStatus);
+    Status * pStatus        = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
     WNDPROC  oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
 
     switch (uMsg)
@@ -111,8 +111,8 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     TCHAR       baseChar    = TEXT('?');
 
     HWND        hwndTabCtrl = (HWND)      GetWindowLongPtr(hWnd,  GWLP_HWNDPARENT);
-    Classic *   pClassic    = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
-    Status  *   pStatus     = (Status  *) GetProp(hwndTabCtrl, PointerToClassic);
+    Classic *   pClassic    = (Classic *) GetProp(hwndTabCtrl, cn::PointerToClassic);
+    Status  *   pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToClassic);
 
     switch (uMsg)
     {
@@ -123,15 +123,15 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         switch (GetWindowLong(hWnd, GWL_ID))
         {
-        case HistogramAlphaId:
+        case cn::HistogramAlphaId:
             base     = 0;
             baseChar = TEXT('A');
-            numChars = NumOfCapitalLetters;
+            numChars = cn::NumOfCapitalLetters;
             break;
-        case HistogramDigitId:
-            base     = 0 + NumOfCapitalLetters;
+        case cn::HistogramDigitId:
+            base     = 0 + cn::NumOfCapitalLetters;
             baseChar = TEXT('0');
-            numChars = NumOfDigits;
+            numChars = cn::NumOfDigits;
             break;
 
         default:

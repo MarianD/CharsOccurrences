@@ -13,7 +13,7 @@ int CHARSOCCURRENCESCALL
 ListNotificationReceived(HWND ListWin, int Message, WPARAM /*wParam*/, LPARAM lParam)
 {
     HWND hwndTabCtrl = ListWin;
-    Status * pStatus = (Status *) GetProp(hwndTabCtrl, PointerToStatus);
+    Status * pStatus = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
 
     if (Message == WM_NOTIFY)
     {

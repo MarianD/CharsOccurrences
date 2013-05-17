@@ -13,34 +13,34 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 void switchTab(const HWND hwndTabCtrl)
 {
-    Classic * pClassic = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
-    Status  * pStatus  = (Status  *) GetProp(hwndTabCtrl, PointerToStatus);
+    Classic * pClassic = (Classic *) GetProp(hwndTabCtrl, cn::PointerToClassic);
+    Status  * pStatus  = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
 
     switch (TabCtrl_GetCurSel(hwndTabCtrl))
     {
-    case ListViewAlphaTab:
+    case cn::ListViewAlphaTab:
         BringWindowToTop(pStatus->getHwndListViewAlpha());
             break;
-    case HistogramAlphaTab:
+    case cn::HistogramAlphaTab:
         BringWindowToTop(pStatus->getHwndHistogramAlpha());
         UpdateWindow    (pStatus->getHwndHistogramAlpha());
         break;
-    case ListViewDigitTab:
+    case cn::ListViewDigitTab:
         BringWindowToTop(pStatus->getHwndListViewDigit());
             break;
-    case HistogramDigitTab:
+    case cn::HistogramDigitTab:
         BringWindowToTop(pStatus->getHwndHistogramDigit());
         UpdateWindow    (pStatus->getHwndHistogramDigit());
         break;
-    case VerticalRichEditTab:
+    case cn::VerticalRichEditTab:
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getVertical());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
-    case HorizontalRichEditATab:
+    case cn::HorizontalRichEditATab:
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getHorizontal());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
-    case AboutRichEditTab:
+    case cn::AboutRichEditTab:
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getAbout());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
@@ -70,7 +70,7 @@ void getFullIniFilePath(TCHAR * result)
     fullIniFilePath = strDLLPath;
     lastBackSlash   = fullIniFilePath.rfind(TEXT('\\'));
 
-    fullIniFilePath.erase(++lastBackSlash).append(INI_FILE);
+    fullIniFilePath.erase(++lastBackSlash).append(cn::IniFile);
 
     lstrcpy(result, fullIniFilePath.c_str());
 }
@@ -91,7 +91,7 @@ int CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM plusMinusStlpe
     int result;
 
     if (stlpec == 1)
-        result = (int) hodnota1 % NumOfCapitalLetters - (int) hodnota2 % NumOfCapitalLetters;
+        result = (int) hodnota1 % cn::NumOfCapitalLetters - (int) hodnota2 % cn::NumOfCapitalLetters;
     else
         result = (int) hodnota2 - (int) hodnota1;
     return signum * result;
@@ -105,15 +105,15 @@ void InitListViewImageLists(HWND hWndListView)
                                          GetSystemMetrics(SM_CYSMICON),
                                          ILC_MASK, 1, 1);
     HICON
-    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(IcoBlank));
+    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(cn::IcoBlank));
     ImageList_AddIcon(hSmall, hIconItem);
     DestroyIcon(hIconItem);
 
-    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(IcoUpArrow));
+    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(cn::IcoUpArrow));
     ImageList_AddIcon(hSmall, hIconItem);
     DestroyIcon(hIconItem);
 
-    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(IcoDownArrow));
+    hIconItem = LoadIcon ((HINSTANCE)&__ImageBase, MAKEINTRESOURCE(cn::IcoDownArrow));
     ImageList_AddIcon(hSmall, hIconItem);
     DestroyIcon(hIconItem);
 
@@ -150,12 +150,12 @@ void setHeadersArrows(HWND hwndListView, int lastClickedColumn)
     switch(index)
     {
     case 0:
-        phdi->iImage = (lastClickedColumn > 0) ? UpArrow : DownArrow;     // Characters' column
+        phdi->iImage = (lastClickedColumn > 0) ? cn::UpArrow   : cn::DownArrow;    // Characters' column
         (void)
         Header_SetItem(hwndHeader, index, phdi);
         break;
     case 1:
-        phdi->iImage = (lastClickedColumn > 0) ? DownArrow : UpArrow;     // Occurences' or percentages' column
+        phdi->iImage = (lastClickedColumn > 0) ? cn::DownArrow : cn::UpArrow;      // Occurences' or percentages' column
         (void)
         Header_SetItem(hwndHeader, index, phdi);
         (void)

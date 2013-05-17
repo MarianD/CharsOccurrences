@@ -26,19 +26,19 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
                                 ParentWindow, childID, hinst, nullptr);
 
     // Creating new tabs
-    TCITEM tab[NumOfTabs];
+    TCITEM tab[cn::NumOfTabs];
 
     // Filling these tabs with individual values
-    tab[ListViewAlphaTab]      .pszText = (TCHAR *) TEXT ("Letters");
-    tab[HistogramAlphaTab]     .pszText = (TCHAR *) TEXT ("Histogram");
-    tab[ListViewDigitTab]      .pszText = (TCHAR *) TEXT ("Digits");
-    tab[HistogramDigitTab]     .pszText = (TCHAR *) TEXT ("Histogram");
-    tab[VerticalRichEditTab]   .pszText = (TCHAR *) TEXT ("Vertical");
-    tab[HorizontalRichEditATab].pszText = (TCHAR *) TEXT ("Horizontal");
-    tab[AboutRichEditTab]      .pszText = (TCHAR *) TEXT ("About");
+    tab[cn::ListViewAlphaTab]      .pszText = (TCHAR *) TEXT ("Letters");
+    tab[cn::HistogramAlphaTab]     .pszText = (TCHAR *) TEXT ("Histogram");
+    tab[cn::ListViewDigitTab]      .pszText = (TCHAR *) TEXT ("Digits");
+    tab[cn::HistogramDigitTab]     .pszText = (TCHAR *) TEXT ("Histogram");
+    tab[cn::VerticalRichEditTab]   .pszText = (TCHAR *) TEXT ("Vertical");
+    tab[cn::HorizontalRichEditATab].pszText = (TCHAR *) TEXT ("Horizontal");
+    tab[cn::AboutRichEditTab]      .pszText = (TCHAR *) TEXT ("About");
 
     // Filling these tabs with common values and adding them to the Tab View
-    for (int i = 0; i < NumOfTabs; ++i)
+    for (int i = 0; i < cn::NumOfTabs; ++i)
     {
         tab[i].mask       = TCIF_TEXT;
         tab[i].cchTextMax = 20;
