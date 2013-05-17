@@ -45,7 +45,7 @@
 
 1368547218 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
-1368545949 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
+1368747355 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
 
 1368633433 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
@@ -94,7 +94,7 @@
 	"CreateTabbedWindow.h"
 	"Constants.h"
 
-1368574104 source:c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.cpp
+1368747485 source:c:\users\marian\documents\codeblocks\charsoccurrences\createricheditwindow.cpp
 	"CreateRichEditWindow.h"
 	"Constants.h"
 
@@ -104,7 +104,7 @@
 	<commctrl.h>
 	<richedit.h>
 
-1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
+1368814221 source:c:\users\marian\documents\codeblocks\charsoccurrences\listnotificationreceived.cpp
 	"ListNotificationReceived.h"
 	"CreateRichEditWindow.h"
 	"CreateListViewtWindow.h"
@@ -133,7 +133,7 @@
 1368633322 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1368573988 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1368822002 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
@@ -176,7 +176,7 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1368743265 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1368818941 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	<cstdarg>
 	"Classic.h"
 	"Constants.h"
@@ -191,12 +191,12 @@
 	<commctrl.h>
 	"version.h"
 
-1368545949 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
+1368813765 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
 	<cstdarg>
 	"Status.h"
 	"Constants.h"
 
-1368633452 c:\users\marian\documents\codeblocks\charsoccurrences\status.h
+1368817926 c:\users\marian\documents\codeblocks\charsoccurrences\status.h
 	<windows.h>
 
 1368469902 c:\users\marian\documents\codeblocks\charsoccurrences\winver.h

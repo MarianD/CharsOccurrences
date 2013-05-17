@@ -18,7 +18,6 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
                                   pRect->right  - pRect->left,
                                   pRect->bottom - pRect->top,
                                   ParentWindow, childID, hinst, nullptr);
-
     if (hwndListView)
     {
         (void)

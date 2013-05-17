@@ -27,3 +27,17 @@ Status::~Status()
 }
 
 
+void
+Status::moveAllChildWindows(PRECT pRect)
+{
+    LONG left   = pRect->left;
+    LONG top    = pRect->top;
+    LONG width  = pRect->right  - left;
+    LONG height = pRect->bottom - top;
+
+    MoveWindow(hwndListViewAlpha,  left, top, width, height, TRUE);
+    MoveWindow(hwndListViewDigit,  left, top, width, height, TRUE);
+    MoveWindow(hwndHistogramAlpha, left, top, width, height, TRUE);
+    MoveWindow(hwndHistogramDigit, left, top, width, height, TRUE);
+    MoveWindow(hwndRichEdit,       left, top, width, height, TRUE);
+}

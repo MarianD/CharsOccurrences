@@ -13,14 +13,14 @@ int CHARSOCCURRENCESCALL
 ListNotificationReceived(HWND ListWin, int Message, WPARAM /*wParam*/, LPARAM lParam)
 {
     HWND hwndTabCtrl = ListWin;
-    Status * pStatus = (Status * ) GetProp(hwndTabCtrl, PointerToStatus);
+    Status * pStatus = (Status *) GetProp(hwndTabCtrl, PointerToStatus);
 
     if (Message == WM_NOTIFY)
     {
         switch ( ((NMHDR *) lParam) -> code)
         {
         case TCN_SELCHANGING:
-            return FALSE;       // Povo¾uje sa zmena uška
+            return FALSE;       // Switching to this tab is permitted
         case TCN_SELCHANGE:
             pStatus->setLastChosenTab(TabCtrl_GetCurSel(hwndTabCtrl));
             switchTab(hwndTabCtrl);

@@ -197,19 +197,18 @@ void Classic::tlacVyskytuPismenZoradeny()
      * Tlaè hlavièky s písmenami usporiadanými
      * d¾a ich výskytu zostupne
     */
-    for (descendingDirectory::iterator pos = parVyskytPismeno.begin(); pos != parVyskytPismeno.end(); ++pos)
-    {
-        appendString(TEXT("%*s%c"), pocetMiest - 1, TEXT(""), pos->second);
-    }
+    for (auto par : parVyskytPismeno)
+        appendString(TEXT("%*s%c"), pocetMiest - 1, TEXT(""), par.second);
+
     appendString(TEXT("\n"));
     zobrazCiaru (TEXT('-'));
 
     /*
      * Tlaè výskytu jednotlivých písmen
     */
-    for (descendingDirectory::iterator pos = parVyskytPismeno.begin(); pos != parVyskytPismeno.end(); ++pos)
+    for (auto par : parVyskytPismeno)
     {
-        int pocet  = pos->first ;
+        int pocet  = par.first ;
 
         if (pocet != 0)
             appendString(TEXT("%*d"), pocetMiest, pocet);
@@ -239,12 +238,11 @@ int Classic::spoluVyskytov(int charsType) const
 
 void Classic::tlacVyskytuPismenPodSebou(int charsType)
 {
-    int
-    sucetVyskytov = max(spoluVyskytov(charsType), 1);      // It will be the divisor, so it must not be 0
+    int sucetVyskytov = max(spoluVyskytov(charsType), 1);      // It will be the divisor, so it must not be 0
 
     appendString(TEXT("\n"));
 
-    descendingDirectory::iterator pos = parVyskytPismeno.begin();
+    auto pos = parVyskytPismeno.begin();
     for (int i = 0; i < NumOfCapitalLetters; ++i)
     {
         /*

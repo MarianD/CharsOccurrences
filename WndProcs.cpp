@@ -13,14 +13,13 @@
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND      hwndFrom      = nullptr;
-    NMHDR  *  pNotifyMsgHdr = nullptr;
-    int       cx, cy;
-    RECT      rect, * pRect = &rect;
+    HWND     hwndFrom      = nullptr;
+    NMHDR  * pNotifyMsgHdr = nullptr;
+    int      cx, cy;
+    RECT     rect, * pRect = &rect;
 
     Status * pStatus        = (Status *) GetProp(hwndTabCtrl, PointerToStatus);
     WNDPROC  oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
-
 
     switch (uMsg)
     {
@@ -31,35 +30,11 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
         SetRect(pRect, 0, 0, cx, cy);
         (void)
         TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
-
-        MoveWindow(pStatus->getHwndListViewAlpha(),  pRect->left, pRect->top,
-                   pRect->right  - pRect->left,
-                   pRect->bottom - pRect->top,
-                   TRUE);
-
-        MoveWindow(pStatus->getHwndListViewDigit(),  pRect->left, pRect->top,
-                   pRect->right  - pRect->left,
-                   pRect->bottom - pRect->top,
-                   TRUE);
-
-        MoveWindow(pStatus->getHwndHistogramAlpha(), pRect->left, pRect->top,
-                   pRect->right  - pRect->left,
-                   pRect->bottom - pRect->top,
-                   TRUE);
-
-        MoveWindow(pStatus->getHwndHistogramDigit(), pRect->left, pRect->top,
-                   pRect->right  - pRect->left,
-                   pRect->bottom - pRect->top,
-                   TRUE);
-
-        MoveWindow(pStatus->getHwndRichEdit(),       pRect->left, pRect->top,
-                   pRect->right  - pRect->left,
-                   pRect->bottom - pRect->top,
-                   TRUE);
+        pStatus->moveAllChildWindows(pRect);
         return 0;
     case WM_NOTIFY:
         pNotifyMsgHdr = (NMHDR *) lParam;
-        hwndFrom     = pNotifyMsgHdr->hwndFrom;
+        hwndFrom      = pNotifyMsgHdr->hwndFrom;
 
         switch (pNotifyMsgHdr->code)
         {
@@ -91,13 +66,6 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
              */
             if (column == lastClickedColumn)
                 column *= -1;                   // + means prefered, - means unprefered order
-
-            #ifdef _DEBUG
-                TCHAR oznam[100];
-                _stprintf(oznam, TEXT("Column: %d\nlastClickedColumn: %d"),
-                          column, lastClickedColumn);
-                MessageBox(0, oznam, TEXT("Bla"), 0) ;
-            #endif
 
             (void)
             ListView_SortItems(hwndFrom, cmpFunction, (LPARAM) column);
@@ -137,14 +105,14 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     int         zakladna;                  //  = cxClient / (numChars + 2);
     int         desVysky;                  //  = cyClient / 12;
     int         maxVyska;                  //  = 10 * desVysky;
-    int         maxVyskyt =  1;            // It will be the divisor, so it must not be 0
-    int         base      = -1;
-    int         numChars  = -1;
-    TCHAR       baseChar = TEXT('?');
+    int         maxVyskyt   =  1;          // It will be the divisor, so it must not be 0
+    int         base        = -1;
+    int         numChars    = -1;
+    TCHAR       baseChar    = TEXT('?');
 
-    HWND      hwndTabCtrl   = (HWND)      GetWindowLongPtr(hWnd,  GWLP_HWNDPARENT);
-    Classic * pClassic      = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
-    Status  * pStatus       = (Status  *) GetProp(hwndTabCtrl, PointerToClassic);
+    HWND        hwndTabCtrl = (HWND)      GetWindowLongPtr(hWnd,  GWLP_HWNDPARENT);
+    Classic *   pClassic    = (Classic *) GetProp(hwndTabCtrl, PointerToClassic);
+    Status  *   pStatus     = (Status  *) GetProp(hwndTabCtrl, PointerToClassic);
 
     switch (uMsg)
     {
@@ -170,9 +138,8 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             break;
         }
 
-        hdc = BeginPaint (hWnd, &ps);
-
         vyskytyPismen = pClassic->getVyskytyPismen();
+        hdc           = BeginPaint (hWnd, &ps);
 
         for (int i = 0; i < numChars; i++)
         {
@@ -225,9 +192,6 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             pRect->top    = cyClient - pRect->top;
             pRect->bottom = cyClient - pRect->bottom;
 
-//            SetBkColor(hdc, PALETTEINDEX(COLOR_BACKGROUND));
-//            SetBkColor(hdc, RGB(200, 200, 200));
-//            SetBkColor(hdc, (COLORREF) GetSysColor(COLOR_BACKGROUND));
             DrawText(hdc, &pismeno, 1, pRect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
         }
         return 0 ;
