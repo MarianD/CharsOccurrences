@@ -11,9 +11,11 @@
         const int     MinPocetMiest             =    5;
         const int     StlpcovaMedzera           =   14;
         const
+        TCHAR * const TextText            = TEXT("\nHere will be the raw text - the true contents of the file.");
         TCHAR * const TextAbout           = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n"
                                                   "Author: Marian Denes\n\n\n"
                                                   "This plugin is freeware, created in Code::Blocks IDE.");
+        const size_t  TextLength          = lstrlen(TextText)  + 10;
         const size_t  AboutLength         = lstrlen(TextAbout) + 10;
         const
         TCHAR * const TextHead            = TEXT("\nOccurrences of individual ASCII letters, " \
@@ -39,6 +41,7 @@
 
         enum              // The order here is important, because it will be the order of the tabs in the Tab View
         {
+            TextViewTab,
             ListViewAlphaTab,
             HistogramAlphaTab,
             ListViewDigitTab,

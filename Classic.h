@@ -29,6 +29,7 @@
         TCHAR * const       textHead;
         TCHAR * const       horizontal;
         TCHAR *             vertical;
+        TCHAR * const       text;
         TCHAR * const       about;
         int   * const       vyskytyPismen;
         TCHAR *             spolu;
@@ -41,13 +42,15 @@
         Classic();
        ~Classic();
         const
+        TCHAR * getText() const            {return text;}
+        const
         TCHAR * getAbout() const           {return about;}
         const
         int   * getVyskytyPismen() const   {return vyskytyPismen;}
         const
-        TCHAR * getHorizontal() const      {return horizontal;}
+        TCHAR * getHorizontal   () const   {return horizontal;}
         const
-        TCHAR * getVertical() const        {return vertical;}
+        TCHAR * getVertical     () const   {return vertical;}
         void    spracovanieVstupnehoSuboru (const char * FileToLoad);
         void    naplnListView              (HWND hwndListView, int charsType) const;
     private:

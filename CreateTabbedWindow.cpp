@@ -4,16 +4,16 @@
 #include "CreateTabbedWindow.h"
 #include "Constants.h"
 
-/** \brief  Vytvorenie okna typu Tab Control
+/** @brief  Creating the window of the type Tab Control
  *
- * \param ParentWindow HWND - okno, v ktorom sa m· vytvoriù
- * \param pRect RECT*  - ukazovateæ na obdÂûnik okna Tab Control
- * \return HWND - handle vytvorenÈho okna typu Tab Control
+ *  @param [in] ParentWindow  Handle of the parent window (for the created Tab Control window)
+ *  @param [in] pRect         Pointer to the desired destination of the created Tab Control window
+ *  @return                   Handle of the created Tab Control window
  *
  */
 HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
 {
-	HWND      hwndTabCtrl;
+    HWND      hwndTabCtrl;
     HINSTANCE hinst    =  nullptr;
     HMENU     childID  = (HMENU) 0;
 
@@ -29,6 +29,7 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
     TCITEM tab[cn::NumOfTabs];
 
     // Filling these tabs with individual values
+    tab[cn::TextViewTab]           .pszText = (TCHAR *) TEXT ("Text");
     tab[cn::ListViewAlphaTab]      .pszText = (TCHAR *) TEXT ("Letters");
     tab[cn::HistogramAlphaTab]     .pszText = (TCHAR *) TEXT ("Histogram");
     tab[cn::ListViewDigitTab]      .pszText = (TCHAR *) TEXT ("Digits");

@@ -10,6 +10,7 @@ Classic::Classic()
     // Some initializations are here only for the safety - to have some reasonable values
   : horizontal      ( new TCHAR[cn::MaxCharsHorizAndlVertical] ),
     vertical        ( horizontal ),
+    text            ( new TCHAR[cn::TextLength] ),
     about           ( new TCHAR[cn::AboutLength] ),
     vyskytyPismen   ( new int  [cn::NumOfCapitalLetters + cn::NumOfDigits] ),
     spolu           ( horizontal ),
@@ -19,6 +20,8 @@ Classic::Classic()
     warningWritten  ( false ),
     verticalIsSet   ( false )
 {
+    _sntprintf(text, cn::TextLength, cn::TextText);
+
     _sntprintf(about, cn::AboutLength, cn::TextAbout,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 

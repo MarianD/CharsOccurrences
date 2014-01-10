@@ -9,7 +9,7 @@
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 
-/********************** Pomocne funkcie *************************/
+/********************** Helper functions *************************/
 
 void switchTab(const HWND hwndTabCtrl)
 {
@@ -18,6 +18,10 @@ void switchTab(const HWND hwndTabCtrl)
 
     switch (TabCtrl_GetCurSel(hwndTabCtrl))
     {
+    case cn::TextViewTab:
+        SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getText());
+        BringWindowToTop(pStatus->getHwndRichEdit());
+        break;
     case cn::ListViewAlphaTab:
         BringWindowToTop(pStatus->getHwndListViewAlpha());
             break;
@@ -76,12 +80,12 @@ void getFullIniFilePath(TCHAR * result)
 }
 
 
-/** \brief CallBack funkcia volaná pri poiadavke na zoradenie ListView pod¾a niektorého ståpca
+/** @brief CallBack funkcia volaná pri poiadavke na zoradenie ListView pod¾a niektorého ståpca
  *
- * \param hodnota1 LPARAM - 1. porovnávaná hodnota ako kombinácia poètu vıskytov a por. èísla písmena (0-25)
- * \param hodnota2 LPARAM - 2. porovnávaná hodnota ako kombinácia poètu vıskytov a por. èísla písmena (0-25)
- * \param stlpec LPARAM   - èíslo ståpca, pod¾a ktorého sa má zoznam usporiada; záporné èíslo ståpca znamená poiadavku na zmenu smeru usporiadania
- * \return int CALLBACK   - záporná <, nula pre =, kladná pre >
+ * @param  hodnota1 LPARAM - 1. porovnávaná hodnota ako kombinácia poètu vıskytov a por. èísla písmena (0-25)
+ * @param  hodnota2 LPARAM - 2. porovnávaná hodnota ako kombinácia poètu vıskytov a por. èísla písmena (0-25)
+ * @param  stlpec   LPARAM - èíslo ståpca, pod¾a ktorého sa má zoznam usporiada; záporné èíslo ståpca znamená poiadavku na zmenu smeru usporiadania
+ * @return int CALLBACK - záporná <, nula pre =, kladná pre >
  *
  */
 int CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM plusMinusStlpec)
