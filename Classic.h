@@ -29,7 +29,7 @@
         TCHAR * const       textHead;
         TCHAR * const       horizontal;
         TCHAR *             vertical;
-        TCHAR * const       text;
+        TCHAR *             text;
         TCHAR * const       about;
         int   * const       vyskytyPismen;
         TCHAR *             spolu;

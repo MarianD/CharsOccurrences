@@ -2,6 +2,7 @@
 //
 
 #include <cstdarg>
+#include <sys/stat.h>
 #include "Classic.h"
 #include "Constants.h"
 
@@ -10,7 +11,7 @@ Classic::Classic()
     // Some initializations are here only for the safety - to have some reasonable values
   : horizontal      ( new TCHAR[cn::MaxCharsHorizAndlVertical] ),
     vertical        ( horizontal ),
-    text            ( new TCHAR[cn::TextLength] ),
+    text            ( nullptr ),
     about           ( new TCHAR[cn::AboutLength] ),
     vyskytyPismen   ( new int  [cn::NumOfCapitalLetters + cn::NumOfDigits] ),
     spolu           ( horizontal ),
@@ -20,7 +21,7 @@ Classic::Classic()
     warningWritten  ( false ),
     verticalIsSet   ( false )
 {
-    _sntprintf(text, cn::TextLength, cn::TextText);
+//    _sntprintf(text, cn::TextLength, cn::TextText);
 
     _sntprintf(about, cn::AboutLength, cn::TextAbout,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
@@ -36,6 +37,7 @@ Classic::~Classic()
 {
     delete[] vyskytyPismen;
     delete[] horizontal;
+    delete[] text;
     delete[] about;
 }
 
@@ -324,13 +326,26 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
         return;
     }
 
+    // Getting the size of the file
+    struct stat st;
+    stat(FileToLoad, &st);
+    int sizeOfFile = st.st_size;
+
+    // Initializing the member "text"
+    delete[] text;   // To avoid memory leak
+    text           = new TCHAR[(sizeOfFile + 1) * sizeof(TCHAR)];
+    char *textAnsi = new char[(sizeOfFile + 1)];
+    textAnsi[0]    = 0;
+
     // Clearing the counting containers
     nulujPole(vyskytyPismen, cn::NumOfCapitalLetters + cn::NumOfDigits);
     parVyskytPismeno.clear();
 
+    int i = 0;
     while (!feof(vstup))
     {
-        int znak = fgetc(vstup) & 0xFF;
+        int znak  = fgetc(vstup) & 0xFF;
+        textAnsi[i++] = znak;
 
         if (!feof(vstup))
         {
@@ -350,6 +365,9 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
         }
     }
     fclose(vstup);
+    textAnsi[i-1]   = 0;                               // Overwrite the last readed character, probably EOF
+    MultiByteToWideChar(0, 0, textAnsi, sizeOfFile + 1, text, sizeOfFile + 1);
+    delete[] textAnsi;
     naplnAsociativnePole();
 
     // Filling the string from the beginning
