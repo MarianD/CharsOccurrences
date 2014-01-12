@@ -1,5 +1,3 @@
-/* Contents of file Exports.h */
-
 #ifndef CHARSOCCURRENCES_H
     #define CHARSOCCURRENCES_H
 
@@ -31,7 +29,7 @@
     CHARSOCCURRENCESAPI int   CHARSOCCURRENCESCALL ListLoadNext             (HWND ParentWin, HWND ListWin, char* FileToLoad, int ShowFlags);
     CHARSOCCURRENCESAPI int   CHARSOCCURRENCESCALL ListNotificationReceived (HWND ListWin,   int  Message, WPARAM wParam,    LPARAM lParam);
     CHARSOCCURRENCESAPI void  CHARSOCCURRENCESCALL ListCloseWindow          (HWND ListWin);
-    CHARSOCCURRENCESAPI void  CHARSOCCURRENCESCALL ListGetDetectString      (char* DetectString, int maxlen);
+    CHARSOCCURRENCESAPI void  CHARSOCCURRENCESCALL ListGetDetectString      (char* detectString, int maxlen);
 
     #ifdef __cplusplus
         }

@@ -29,7 +29,8 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1368540698 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1368470066 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+	"winver.h"
 	"windows.h"
 
 1368485981 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
@@ -43,7 +44,7 @@
 	<string>
 	<commctrl.h>
 
-1368540690 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1368209377 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1367594716 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
@@ -142,7 +143,7 @@
 	"Status.h"
 	<wingdi.h>
 
-1367622606 c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.h
+1389478039 c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.h
 	<windows.h>
 	<windowsx.h>
 	<tchar.h>
@@ -169,9 +170,9 @@
 1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\createhistogramwindow.h
 	<windows.h>
 
-1367247077 c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.h
+1367243477 c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.h
 
-1367247077 source:c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.cpp
+1367243477 source:c:\users\marian\documents\codeblocks\charsoccurrences\naplnstrukturuwndclassex.cpp
 	<windows.h>
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"

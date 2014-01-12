@@ -12,17 +12,17 @@
 void CHARSOCCURRENCESCALL
 ListCloseWindow(HWND hwndTabCtrl)
 {
-	TCHAR    strLastChosenTab [3];
-	TCHAR    strlastClColAlpha[3];
-	TCHAR    strlastClColDigit[3];
-	TCHAR    iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
+	TCHAR   strLastChosenTab [3];
+	TCHAR   strlastClColAlpha[3];
+	TCHAR   strlastClColDigit[3];
+	TCHAR * iniFile = new TCHAR[_MAX_PATH + lstrlen(cn::IniFile) + 1];
 
     /*
      *  Removing all items in the property list of the windows
      *  and getting pointers to the instances of the classes
      */
-    Classic * pClassic = (Classic *) RemoveProp(hwndTabCtrl, PointerToClassic);
-    Status  * pStatus  = (Status  *) RemoveProp(hwndTabCtrl, PointerToStatus );
+    Classic * pClassic = (Classic *) RemoveProp(hwndTabCtrl, cn::PointerToClassic);
+    Status  * pStatus  = (Status  *) RemoveProp(hwndTabCtrl, cn::PointerToStatus );
 
     // Restoring the original Tab Control Window Procedure
     SetWindowLongPtr(hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) pStatus->getOldTabCtrlWndProc());
@@ -38,9 +38,9 @@ ListCloseWindow(HWND hwndTabCtrl)
     _stprintf(strlastClColDigit, TEXT("%d"), pStatus->getLastClickedColumnDigit());
 
   	getFullIniFilePath(iniFile);
-    WritePrivateProfileString(IniFileTabsSection, IniFileLastChosenTabKey,  strLastChosenTab,  iniFile);
-    WritePrivateProfileString(IniFileSortSection, IniFileLastClColAlphaKey, strlastClColAlpha, iniFile);
-    WritePrivateProfileString(IniFileSortSection, IniFileLastClColDigitKey, strlastClColDigit, iniFile);
+    WritePrivateProfileString(cn::IniFileTabsSection, cn::IniFileLastChosenTabKey,  strLastChosenTab,  iniFile);
+    WritePrivateProfileString(cn::IniFileSortSection, cn::IniFileLastClColAlphaKey, strlastClColAlpha, iniFile);
+    WritePrivateProfileString(cn::IniFileSortSection, cn::IniFileLastClColDigitKey, strlastClColDigit, iniFile);
 
-    //asm("int3");
+    delete[] iniFile;
 }

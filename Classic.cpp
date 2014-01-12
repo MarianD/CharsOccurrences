@@ -2,28 +2,32 @@
 //
 
 #include <cstdarg>
+#include <sys/stat.h>
 #include "Classic.h"
 #include "Constants.h"
 
 
 Classic::Classic()
     // Some initializations are here only for the safety - to have some reasonable values
-  : horizontal      ( new TCHAR[MaxCharsHorizAndlVertical] ),
+  : horizontal      ( new TCHAR[cn::MaxCharsHorizAndlVertical] ),
     vertical        ( horizontal ),
-    about           ( new TCHAR[AboutLength] ),
-    vyskytyPismen   ( new int  [NumOfCapitalLetters + NumOfDigits] ),
+    text            ( nullptr ),
+    about           ( new TCHAR[cn::AboutLength] ),
+    vyskytyPismen   ( new int  [cn::NumOfCapitalLetters + cn::NumOfDigits] ),
     spolu           ( horizontal ),
     parVyskytPismeno(),
-    pocetMiest      (MinPocetMiest),
-    restChars       (MaxCharsHorizAndlVertical - 1),
-    warningWritten  (false),
-    verticalIsSet   (false)
+    pocetMiest      ( cn::MinPocetMiest ),
+    restChars       ( cn::MaxCharsHorizAndlVertical - 1 ),
+    warningWritten  ( false ),
+    verticalIsSet   ( false )
 {
-    _sntprintf(about, AboutLength, TextAbout,
+//    _sntprintf(text, cn::TextLength, cn::TextText);
+
+    _sntprintf(about, cn::AboutLength, cn::TextAbout,
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // Initializations only for the safety
-    restChars      = MaxCharsHorizAndlVertical - 1;
+    restChars      = cn::MaxCharsHorizAndlVertical - 1;
     warningWritten = false;
     verticalIsSet  = false;
 }
@@ -33,6 +37,7 @@ Classic::~Classic()
 {
     delete[] vyskytyPismen;
     delete[] horizontal;
+    delete[] text;
     delete[] about;
 }
 
@@ -42,11 +47,12 @@ void Classic::naplnListView(HWND hwndListView, int charsType) const
     int
     sucetVyskytov   = max(spoluVyskytov(charsType), 1);         // It will be the divisor, so it must not be 0
 
-    int    base     = (charsType == CharsTypeAlpha) ? 0                   : 0 + NumOfCapitalLetters;
-    int    numChars = (charsType == CharsTypeAlpha) ? NumOfCapitalLetters : NumOfDigits;
-    TCHAR  baseChar = (charsType == CharsTypeAlpha) ? TEXT('A')           : TEXT('0');
+    int    base     = (charsType == cn::CharsTypeAlpha) ? 0                       : 0 + cn::NumOfCapitalLetters;
+    int    numChars = (charsType == cn::CharsTypeAlpha) ? cn::NumOfCapitalLetters : cn::NumOfDigits;
+    TCHAR  baseChar = (charsType == cn::CharsTypeAlpha) ? TEXT('A')               : TEXT('0');
     LVITEM lvI;
 
+    (void)
     ListView_DeleteAllItems(hwndListView);
 
     for (int riadok = 0; riadok < numChars; riadok++)
@@ -65,16 +71,19 @@ void Classic::naplnListView(HWND hwndListView, int charsType) const
         lvI.iItem    = riadok;
         lvI.iSubItem = 0;
         lvI.pszText  = pismeno;
-        lvI.lParam   = (LPARAM) (NumOfCapitalLetters * occur + riadok); // For sorting by columns; don't use numChars!
+        lvI.lParam   = (LPARAM) (cn::NumOfCapitalLetters * occur + riadok); // For sorting by columns; don't use numChars!
+        (void)
         ListView_InsertItem(hwndListView, &lvI);
 
         lvI.mask     = LVIF_TEXT;
         lvI.iSubItem = 1;
         lvI.pszText  = chOccur;
+        (void)
         ListView_SetItem(hwndListView, &lvI);
 
         lvI.iSubItem = 2;
         lvI.pszText  = chPercent;
+        (void)
         ListView_SetItem(hwndListView, &lvI);
     }
 }
@@ -136,20 +145,20 @@ void Classic::appendString(const TCHAR * formatString, ...)
 void Classic::naplnAsociativnePole()
 {
     int maximum = 1;                              // We will get logarithm of it, so it must not be 0
-    for (int i = 0; i < NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < cn::NumOfCapitalLetters; ++i)
     {
         int pocet = vyskytyPismen[i];
         parVyskytPismeno.insert(make_pair(pocet, TEXT('A') + i));
         maximum = max(maximum, pocet);
     }
     pocetMiest = floor(log10(maximum)) + 2;       // Poèet miest najväèšieho èísla + 1 = poèet miest pre _stprintf()
-    pocetMiest = max(pocetMiest, MinPocetMiest);
+    pocetMiest = max(pocetMiest, cn::MinPocetMiest);
 }
 
 
 void Classic::zobrazCiaru(TCHAR znak)
 {
-    for (int i = 0; i < pocetMiest * NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < pocetMiest * cn::NumOfCapitalLetters; ++i)
     {
         appendString(TEXT("%c"), znak);
     }
@@ -161,7 +170,7 @@ void Classic::tlacHlavicky()
 {
     zobrazCiaru(TEXT('-'));
 
-    for (int i = 0; i < NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < cn::NumOfCapitalLetters; ++i)
     {
         appendString(TEXT("%*s%c"), pocetMiest - 1, "", (TCHAR) ('A' + i));
     }
@@ -172,7 +181,7 @@ void Classic::tlacHlavicky()
 
 void Classic::tlacVyskytuPismen()
 {
-    for (int i = 0; i < NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < cn::NumOfCapitalLetters; ++i)
     {
         int pocet = vyskytyPismen[i];
 
@@ -193,19 +202,18 @@ void Classic::tlacVyskytuPismenZoradeny()
      * Tlaè hlavièky s písmenami usporiadanými
      * d¾a ich výskytu zostupne
     */
-    for (descendingDirectory::iterator pos = parVyskytPismeno.begin(); pos != parVyskytPismeno.end(); ++pos)
-    {
-        appendString(TEXT("%*s%c"), pocetMiest - 1, TEXT(""), pos->second);
-    }
+    for (auto par : parVyskytPismeno)
+        appendString(TEXT("%*s%c"), pocetMiest - 1, TEXT(""), par.second);
+
     appendString(TEXT("\n"));
     zobrazCiaru (TEXT('-'));
 
     /*
      * Tlaè výskytu jednotlivých písmen
     */
-    for (descendingDirectory::iterator pos = parVyskytPismeno.begin(); pos != parVyskytPismeno.end(); ++pos)
+    for (auto par : parVyskytPismeno)
     {
-        int pocet  = pos->first ;
+        int pocet  = par.first ;
 
         if (pocet != 0)
             appendString(TEXT("%*d"), pocetMiest, pocet);
@@ -219,8 +227,8 @@ void Classic::tlacVyskytuPismenZoradeny()
 
 int Classic::spoluVyskytov(int charsType) const
 {
-    int numChars = (charsType == CharsTypeAlpha) ? NumOfCapitalLetters : NumOfDigits;
-    int base     = (charsType == CharsTypeAlpha) ? 0                   : 0 + NumOfCapitalLetters;
+    int numChars = (charsType == cn::CharsTypeAlpha) ? cn::NumOfCapitalLetters : cn::NumOfDigits;
+    int base     = (charsType == cn::CharsTypeAlpha) ? 0                       : 0 + cn::NumOfCapitalLetters;
 
     /*
      *  Sèítanie všetkých výskytov jednotlivých znakov
@@ -235,13 +243,12 @@ int Classic::spoluVyskytov(int charsType) const
 
 void Classic::tlacVyskytuPismenPodSebou(int charsType)
 {
-    int
-    sucetVyskytov = max(spoluVyskytov(charsType), 1);      // It will be the divisor, so it must not be 0
+    int sucetVyskytov = max(spoluVyskytov(charsType), 1);      // It will be the divisor, so it must not be 0
 
     appendString(TEXT("\n"));
 
-    descendingDirectory::iterator pos = parVyskytPismeno.begin();
-    for (int i = 0; i < NumOfCapitalLetters; ++i)
+    auto pos = parVyskytPismeno.begin();
+    for (size_t i = 0; i < cn::NumOfCapitalLetters; ++i)
     {
         /*
          *  Najprv ich vytlaèíme abecedne
@@ -261,7 +268,7 @@ void Classic::tlacVyskytuPismenPodSebou(int charsType)
         /*
          *  Teraz ich vytlaèíme pod¾a výskytov
          */
-        appendString(TEXT("%*c: "), StlpcovaMedzera + 1, pos->second);
+        appendString(TEXT("%*c: "), cn::StlpcovaMedzera + 1, pos->second);
 
         pocet   = pos->first ;
         percent = (double) pocet / sucetVyskytov * 100.;
@@ -279,10 +286,10 @@ void Classic::tlacVyskytuPismenPodSebou(int charsType)
 
 void Classic::tlacSuctovehoRiadka(int sucetVyskytov)
 {
-    const TCHAR znak           = TEXT('-');
-    int  sirkaStlpcaVyskytov   = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
-    int  dlzkaRiadka           = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + StlpcovaMedzera;
-    TCHAR ciara[dlzkaRiadka + 1];
+    const TCHAR znak         = TEXT('-');
+    int  sirkaStlpcaVyskytov = (int) (lstrlen(TEXT("A: ")) + pocetMiest);
+    int  dlzkaRiadka         = 2 * (sirkaStlpcaVyskytov + lstrlen(TEXT("  (99.99 % )"))) + cn::StlpcovaMedzera;
+    TCHAR * ciara            = new TCHAR[dlzkaRiadka + 1];
 
     for (int i = 0; i < dlzkaRiadka; ++i)
         *(ciara + i) = znak;
@@ -296,7 +303,9 @@ void Classic::tlacSuctovehoRiadka(int sucetVyskytov)
                     TEXT("%*d (100.00 %% )%*d (100.00 %% )\n");
     appendString(formatString,
                  sirkaStlpcaVyskytov, sucetVyskytov,
-                 StlpcovaMedzera + sirkaStlpcaVyskytov, sucetVyskytov);
+                 cn::StlpcovaMedzera + sirkaStlpcaVyskytov, sucetVyskytov);
+
+    delete[] ciara;
 }
 
 
@@ -305,25 +314,38 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     spolu          = horizontal;                    // Reset of the member variable
     *spolu         = TEXT('\0');                    // To have the zero length (for safety only)
     verticalIsSet  = false;                         // For testing whether vertical part already began
-    restChars      = MaxCharsHorizAndlVertical - 1;
+    restChars      = cn::MaxCharsHorizAndlVertical - 1;
     warningWritten = false;
 
-    FILE   * vstup = 0;
+    FILE   * vstup = nullptr;
 
-    if ((vstup = fopen(FileToLoad, "rb")) == 0)
+    if ((vstup = fopen(FileToLoad, "rb")) == nullptr)
     {
         appendString(TEXT("\nOpening of the file\n\n  \"%S\"\n\nfailed ")
                      TEXT("(probably it is the folder).\n\n"), FileToLoad);
         return;
     }
 
+    // Getting the size of the file
+    struct stat st;
+    stat(FileToLoad, &st);
+    int sizeOfFile = st.st_size;
+
+    // Initializing the member "text"
+    delete[] text;   // To avoid memory leak
+    text           = new TCHAR[(sizeOfFile + 1) * sizeof(TCHAR)];
+    char *textAnsi = new char[(sizeOfFile + 1)];
+    textAnsi[0]    = 0;
+
     // Clearing the counting containers
-    nulujPole(vyskytyPismen, NumOfCapitalLetters + NumOfDigits);
+    nulujPole(vyskytyPismen, cn::NumOfCapitalLetters + cn::NumOfDigits);
     parVyskytPismeno.clear();
 
+    int i = 0;
     while (!feof(vstup))
     {
-        int znak = fgetc(vstup) & 0xFF;
+        int znak  = fgetc(vstup) & 0xFF;
+        textAnsi[i++] = znak;
 
         if (!feof(vstup))
         {
@@ -331,22 +353,25 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
 
             if (jeVelkePismeno(znak))
             {
-                int index = znak - 'A';         // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
-                vyskytyPismen[index]++;
+                int index = znak - 'A';            // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
+                ++vyskytyPismen[index];
             }
             else if (isdigit(znak))
             {
                 int index = znak - '0';
-                index += NumOfCapitalLetters;  // Occurrences of digits are just after occurences of letters
+                index += cn::NumOfCapitalLetters;  // Occurrences of digits are just after occurences of letters
                 ++vyskytyPismen[index];
             }
         }
     }
     fclose(vstup);
+    textAnsi[i-1]   = 0;                               // Overwrite the last readed character, probably EOF
+    MultiByteToWideChar(0, 0, textAnsi, sizeOfFile + 1, text, sizeOfFile + 1);
+    delete[] textAnsi;
     naplnAsociativnePole();
 
     // Filling the string from the beginning
-    appendString(TextHead);
+    appendString(cn::TextHead);
 
     tlacHlavicky();
     tlacVyskytuPismen();
@@ -359,11 +384,11 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
         *spolu        = TEXT('\0');                                         // Setting of zero length, only for the safety
 
         // Filling the second part of the string from the beginning, again
-        appendString(TextHead);
+        appendString(cn::TextHead);
 
-        tlacVyskytuPismenPodSebou(CharsTypeAlpha);
+        tlacVyskytuPismenPodSebou(cn::CharsTypeAlpha);
 
-        int sucetVyskytov = spoluVyskytov(CharsTypeAlpha);
+        int sucetVyskytov = spoluVyskytov(cn::CharsTypeAlpha);
         tlacSuctovehoRiadka(sucetVyskytov);
     }
 }

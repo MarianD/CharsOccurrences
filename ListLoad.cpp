@@ -27,8 +27,8 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     // Creating instance of the classes and saving the pointer to it in the property of the TabCtrl Window
     Classic * pClassic = new Classic();
     Status  * pStatus  = new Status();
-    SetProp(hwndTabCtrl, PointerToClassic, (HANDLE) pClassic);
-    SetProp(hwndTabCtrl, PointerToStatus,  (HANDLE) pStatus);
+    SetProp(hwndTabCtrl, cn::PointerToClassic, (HANDLE) pClassic);
+    SetProp(hwndTabCtrl, cn::PointerToStatus,  (HANDLE) pStatus);
 
     // Subclassing of this window and saving the pointer of the old WindowProc to the instance of the class Status
     WNDPROC oldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
@@ -36,14 +36,15 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     GetClientRect(hwndTabCtrl, &rect);
+    (void)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Creating child windows in the display area of the Tab Control
-    HWND hwndListViewAlpha  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewAlphaId);
-    HWND hwndListViewDigit  = CreateListViewWindow (hwndTabCtrl, &rect, ListViewDigitId);
-    HWND hwndHistogramAlpha = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramAlphaId);
-    HWND hwndHistogramDigit = CreateHistogramWindow(hwndTabCtrl, &rect, HistogramDigitId);
-    HWND hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect, RichEditId);
+    HWND hwndListViewAlpha  = CreateListViewWindow (hwndTabCtrl, &rect, cn::ListViewAlphaId);
+    HWND hwndListViewDigit  = CreateListViewWindow (hwndTabCtrl, &rect, cn::ListViewDigitId);
+    HWND hwndHistogramAlpha = CreateHistogramWindow(hwndTabCtrl, &rect, cn::HistogramAlphaId);
+    HWND hwndHistogramDigit = CreateHistogramWindow(hwndTabCtrl, &rect, cn::HistogramDigitId);
+    HWND hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect, cn::RichEditId);
 
 	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndHistogramDigit)
     {
@@ -55,8 +56,8 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         pStatus->setHwndRichEdit      (hwndRichEdit);
 
         pClassic->spracovanieVstupnehoSuboru(FileToLoad);
-        pClassic->naplnListView(hwndListViewAlpha, CharsTypeAlpha);
-        pClassic->naplnListView(hwndListViewDigit, CharsTypeDigit);
+        pClassic->naplnListView(hwndListViewAlpha, cn::CharsTypeAlpha);
+        pClassic->naplnListView(hwndListViewDigit, cn::CharsTypeDigit);
 
         /*
          *  Restore the last values from the INI file and store it
@@ -67,15 +68,16 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
          *  the column 2 ("Count") to don't confuse the user by no reaction after
          *  clicking alternately to the headers of the column 2 and column 3.
          */
-        TCHAR iniFile[_MAX_PATH + lstrlen(INI_FILE) + 1];
+        TCHAR * iniFile = new TCHAR[_MAX_PATH + lstrlen(cn::IniFile) + 1];
         getFullIniFilePath(iniFile);
 
-        int lastChosenTab          = GetPrivateProfileInt(IniFileTabsSection,
-                                                      IniFileLastChosenTabKey,  0, iniFile);
-        int lastClickedColumnAlpha = GetPrivateProfileInt(IniFileSortSection,
-                                                      IniFileLastClColAlphaKey, 1, iniFile);
-        int lastClickedColumnDigit = GetPrivateProfileInt(IniFileSortSection,
-                                                      IniFileLastClColDigitKey, 1, iniFile);
+        int lastChosenTab          = GetPrivateProfileInt(cn::IniFileTabsSection,
+                                                          cn::IniFileLastChosenTabKey,  0, iniFile);
+        int lastClickedColumnAlpha = GetPrivateProfileInt(cn::IniFileSortSection,
+                                                          cn::IniFileLastClColAlphaKey, 1, iniFile);
+        int lastClickedColumnDigit = GetPrivateProfileInt(cn::IniFileSortSection,
+                                                          cn::IniFileLastClColDigitKey, 1, iniFile);
+        delete[] iniFile;
 
         pStatus->setLastChosenTab         (lastChosenTab);
         pStatus->setLastClickedColumnAlpha(lastClickedColumnAlpha);
@@ -85,11 +87,13 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         HWND hwndListViewAlpha      = pStatus->getHwndListViewAlpha();
         HWND hwndListViewDigit      = pStatus->getHwndListViewDigit();
 
+        (void)
         ListView_SortItems(hwndListViewAlpha, cmpFunction, lastClickedColumnAlpha);
+        (void)
         ListView_SortItems(hwndListViewDigit, cmpFunction, lastClickedColumnDigit);
         setHeadersArrows  (hwndListViewAlpha, lastClickedColumnAlpha);
         setHeadersArrows  (hwndListViewDigit, lastClickedColumnDigit);
-
+        (void)
         TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
         switchTab(hwndTabCtrl);
 

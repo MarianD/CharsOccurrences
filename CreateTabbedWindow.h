@@ -1,5 +1,3 @@
-/* Contents of file CreateTabbedWindow.h */
-
 #ifndef CREATETABBEDWINDOW_H
     #define CREATETABBEDWINDOW_H
 
@@ -9,4 +7,3 @@
     HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect);
 
 #endif // ndef
-

@@ -1,5 +1,3 @@
-/* Contents of file ListNotificationReceived.h */
-
 #ifndef LISTNOTIFICATIONRECEIVED_H
     #define LISTNOTIFICATIONRECEIVED_H
 

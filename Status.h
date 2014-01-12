@@ -1,5 +1,3 @@
-/* Contents of file Status.h */
-
 #ifndef STATUS_H
     #define STATUS_H
 
@@ -8,16 +6,16 @@
     class Status
     {
     private:
-        HWND                hwndListViewAlpha;
-        HWND                hwndListViewDigit;
-        HWND                hwndHistogramAlpha;
-        HWND                hwndHistogramDigit;
-        HWND                hwndRichEdit;
-        WNDPROC             oldTabCtrlWndProc;
-        LPARAM              histgClientWidthHight;
-        int                 lastChosenTab;
-        int                 lastClickedColumnAlpha;
-        int                 lastClickedColumnDigit;
+        HWND    hwndListViewAlpha;
+        HWND    hwndListViewDigit;
+        HWND    hwndHistogramAlpha;
+        HWND    hwndHistogramDigit;
+        HWND    hwndRichEdit;
+        WNDPROC oldTabCtrlWndProc;
+        LPARAM  histgClientWidthHight;
+        int     lastChosenTab;
+        int     lastClickedColumnAlpha;
+        int     lastClickedColumnDigit;
     public:
         Status();
        ~Status();
@@ -41,6 +39,7 @@
         void    setLastClickedColumnAlpha (int col)     {lastClickedColumnAlpha = col;}
         int     getLastClickedColumnDigit () const      {return lastClickedColumnDigit;}
         void    setLastClickedColumnDigit (int col)     {lastClickedColumnDigit = col;}
+        void    moveAllChildWindows       (const PRECT pRect);
     private:
         Status             (const Status&);     // Declarations only to prevent not wanted
         Status& operator=  (const Status&);     //  public compiler-generated functions

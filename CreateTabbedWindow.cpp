@@ -4,17 +4,17 @@
 #include "CreateTabbedWindow.h"
 #include "Constants.h"
 
-/** \brief  Vytvorenie okna typu Tab Control
+/** @brief  Creating the window of the type Tab Control
  *
- * \param ParentWindow HWND - okno, v ktorom sa má vytvori
- * \param pRect RECT*  - ukazovate¾ na obdåžnik okna Tab Control
- * \return HWND - handle vytvoreného okna typu Tab Control
+ *  @param [in] ParentWindow  Handle of the parent window (for the created Tab Control window)
+ *  @param [in] pRect         Pointer to the desired destination of the created Tab Control window
+ *  @return                   Handle of the created Tab Control window
  *
  */
 HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
 {
-	HWND      hwndTabCtrl;
-    HINSTANCE hinst    =  0;
+    HWND      hwndTabCtrl;
+    HINSTANCE hinst    =  nullptr;
     HMENU     childID  = (HMENU) 0;
 
     hwndTabCtrl = CreateWindowEx(0, WC_TABCONTROL, TEXT(""),
@@ -23,29 +23,32 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
                                 pRect->left, pRect->top,
                                 pRect->right  - pRect->left,
                                 pRect->bottom - pRect->top,
-                                ParentWindow, childID, hinst, NULL);
+                                ParentWindow, childID, hinst, nullptr);
 
     // Creating new tabs
-    TCITEM tab[NumOfTabs];
+    TCITEM tab[cn::NumOfTabs];
 
     // Filling these tabs with individual values
-    tab[ListViewAlphaTab]      .pszText = (TCHAR *) TEXT ("Letters");
-    tab[HistogramAlphaTab]     .pszText = (TCHAR *) TEXT ("Histogram");
-    tab[ListViewDigitTab]      .pszText = (TCHAR *) TEXT ("Digits");
-    tab[HistogramDigitTab]     .pszText = (TCHAR *) TEXT ("Histogram");
-    tab[VerticalRichEditTab]   .pszText = (TCHAR *) TEXT ("Vertical");
-    tab[HorizontalRichEditATab].pszText = (TCHAR *) TEXT ("Horizontal");
-    tab[AboutRichEditTab]      .pszText = (TCHAR *) TEXT ("About");
+    tab[cn::TextViewTab]           .pszText = (TCHAR *) TEXT ("Text");
+    tab[cn::ListViewAlphaTab]      .pszText = (TCHAR *) TEXT ("Letters");
+    tab[cn::HistogramAlphaTab]     .pszText = (TCHAR *) TEXT ("Histogram");
+    tab[cn::ListViewDigitTab]      .pszText = (TCHAR *) TEXT ("Digits");
+    tab[cn::HistogramDigitTab]     .pszText = (TCHAR *) TEXT ("Histogram");
+    tab[cn::VerticalRichEditTab]   .pszText = (TCHAR *) TEXT ("Vertical");
+    tab[cn::HorizontalRichEditATab].pszText = (TCHAR *) TEXT ("Horizontal");
+    tab[cn::AboutRichEditTab]      .pszText = (TCHAR *) TEXT ("About");
 
     // Filling these tabs with common values and adding them to the Tab View
-    for (int i = 0; i < NumOfTabs; ++i)
+    for (int i = 0; i < cn::NumOfTabs; ++i)
     {
         tab[i].mask       = TCIF_TEXT;
         tab[i].cchTextMax = 20;
+        (void)
         TabCtrl_InsertItem(hwndTabCtrl, i, tab + i);
     }
 
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
+    (void)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
     return hwndTabCtrl;

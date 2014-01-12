@@ -1,5 +1,3 @@
-/* Contents of file Classic.h */
-
 #ifndef CLASSIC_H
     #define CLASSIC_H
 
@@ -31,6 +29,7 @@
         TCHAR * const       textHead;
         TCHAR * const       horizontal;
         TCHAR *             vertical;
+        TCHAR *             text;
         TCHAR * const       about;
         int   * const       vyskytyPismen;
         TCHAR *             spolu;
@@ -43,35 +42,37 @@
         Classic();
        ~Classic();
         const
-        TCHAR * getAbout() const                    {return about;}
+        TCHAR * getText() const            {return text;}
         const
-        int   * getVyskytyPismen() const            {return vyskytyPismen;}
+        TCHAR * getAbout() const           {return about;}
         const
-        TCHAR * getHorizontal() const               {return horizontal;}
+        int   * getVyskytyPismen() const   {return vyskytyPismen;}
         const
-        TCHAR * getVertical() const                 {return vertical;}
-        void    spracovanieVstupnehoSuboru    (const char * FileToLoad);
-        void    naplnListView                 (HWND hwndListView, int charsType) const;
+        TCHAR * getHorizontal   () const   {return horizontal;}
+        const
+        TCHAR * getVertical     () const   {return vertical;}
+        void    spracovanieVstupnehoSuboru (const char * FileToLoad);
+        void    naplnListView              (HWND hwndListView, int charsType) const;
     private:
-        Classic                               (const Classic&);     // Declarations only to prevent not wanted
-        Classic& operator=                    (const Classic&);     //  public compiler-generated functions
+        Classic                            (const Classic&);     // Declarations only to prevent not wanted
+        Classic& operator=                 (const Classic&);     //  public compiler-generated functions
         static
-        void    nulujPole                     (int * pole, int pocetPrvkov);
+        void    nulujPole                  (int * pole, int pocetPrvkov);
         static
-        bool    jeVelkePismeno                (int znak) {return znak >= 'A' && znak <= 'Z';}
+        bool    jeVelkePismeno             (int znak) {return znak >= 'A' && znak <= 'Z';}
         static
-        bool    jeMalePismeno                 (int znak) {return znak >= 'a' && znak <= 'z';}
+        bool    jeMalePismeno              (int znak) {return znak >= 'a' && znak <= 'z';}
         static
-        int     zmenMaleNaVelke               (int pismeno);
-        void    appendString                  (const TCHAR * formatString, ...);
-        int     spoluVyskytov                 (int charsType) const;
-        void    naplnAsociativnePole          ();
-        void    zobrazCiaru                   (TCHAR znak);
-        void    tlacHlavicky                  ();
-        void    tlacVyskytuPismen             ();
-        void    tlacVyskytuPismenZoradeny     ();
-        void    tlacVyskytuPismenPodSebou     (int charsType);
-        void    tlacSuctovehoRiadka           (int sucetVyskytov);
+        int     zmenMaleNaVelke            (int pismeno);
+        void    appendString               (const TCHAR * formatString, ...);
+        int     spoluVyskytov              (int charsType) const;
+        void    naplnAsociativnePole       ();
+        void    zobrazCiaru                (TCHAR znak);
+        void    tlacHlavicky               ();
+        void    tlacVyskytuPismen          ();
+        void    tlacVyskytuPismenZoradeny  ();
+        void    tlacVyskytuPismenPodSebou  (int charsType);
+        void    tlacSuctovehoRiadka        (int sucetVyskytov);
     };
 
 #endif // ndef

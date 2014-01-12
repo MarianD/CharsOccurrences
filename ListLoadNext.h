@@ -1,5 +1,3 @@
-/* Contents of file ListLoadNext.h */
-
 #ifndef LISTLOADNEXT_H
     #define LISTLOADNEXT_H
 

@@ -1,5 +1,3 @@
-/* Contents of file CreateRichEditWindow.h */
-
 #ifndef CREATERICHEDITWINDOW_H
     #define CREATERICHEDITWINDOW_H
 
@@ -23,4 +21,3 @@
     HWND CreateRichEditWindow(HWND ParrentWindow, RECT * pRect, int id);
 
 #endif // ndef
-
