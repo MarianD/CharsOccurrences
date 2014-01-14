@@ -1,3 +1,9 @@
+14 January 2014
+   released version 1.6.1 of CharsOccurrences
+
+     Change log:
+        -Fixed: Navigation arrows for the tabs didn't display / hide appropriately and automatically
+
 12 January 2014
    released version 1.6.0 of CharsOccurrences
 

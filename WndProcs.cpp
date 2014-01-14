@@ -24,6 +24,8 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg)
     {
     case WM_SIZE:
+        oldTabCtrlProc(hwndTabCtrl, uMsg, wParam, lParam);       // Particularly for displaying arrows for short tabs row
+
         // Computing of the new rectangle for the child windows
         cx = GET_X_LPARAM(lParam);
         cy = GET_Y_LPARAM(lParam);

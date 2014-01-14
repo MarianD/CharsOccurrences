@@ -1,5 +1,5 @@
-CharsOccurrences v 1.6 - plugin for Total Commander 5.51 and newer.
--------------------------------------------------------------------
+CharsOccurrences v 1.6.1 - plugin for Total Commander 5.51 and newer.
+---------------------------------------------------------------------
 This plugin is freeware.
 
 
