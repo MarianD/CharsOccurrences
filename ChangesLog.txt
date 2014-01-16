@@ -1,3 +1,9 @@
+16 January 2014
+   released version 1.6.2 of CharsOccurrences
+
+     Change log:
+        -Changed: Narrowed the tabs with the short text
+
 14 January 2014
    released version 1.6.1 of CharsOccurrences
 

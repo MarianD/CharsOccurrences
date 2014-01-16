@@ -25,6 +25,9 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
                                 pRect->bottom - pRect->top,
                                 ParentWindow, childID, hinst, nullptr);
 
+    // Setting the minimal width of tabs
+    TabCtrl_SetMinTabWidth(hwndTabCtrl, 5);
+
     // Creating new tabs
     TCITEM tab[cn::NumOfTabs];
 

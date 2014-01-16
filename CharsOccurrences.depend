@@ -29,7 +29,7 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1389479098 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1389670554 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	"windows.h"
 
 1389310914 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
@@ -43,7 +43,7 @@
 	<string>
 	<commctrl.h>
 
-1389670497 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1389865494 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1368747354 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
@@ -90,7 +90,7 @@
 	<windows.h>
 	<commctrl.h>
 
-1389669449 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
+1389863268 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
 	"CreateTabbedWindow.h"
 	"Constants.h"
 
@@ -133,7 +133,7 @@
 1368633322 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1368832072 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1389673868 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
