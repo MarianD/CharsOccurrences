@@ -2,9 +2,12 @@
 //
 
 #include <cstdarg>
+#include <fstream>
 #include <sys/stat.h>
 #include "Classic.h"
 #include "Constants.h"
+
+
 
 
 Classic::Classic()
@@ -317,55 +320,55 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     restChars      = cn::MaxCharsHorizAndlVertical - 1;
     warningWritten = false;
 
-    FILE   * vstup = nullptr;
-
-    if ((vstup = fopen(FileToLoad, "rb")) == nullptr)
-    {
-        appendString(TEXT("\nOpening of the file\n\n  \"%S\"\n\nfailed ")
-                     TEXT("(probably it is the folder).\n\n"), FileToLoad);
-        return;
-    }
-
     // Getting the size of the file
     struct stat st;
     stat(FileToLoad, &st);
     int sizeOfFile = st.st_size;
 
+    char *textAnsi = new char[(sizeOfFile + 1)];
+
+    ifstream in;
+
+    in.open(FileToLoad, ios::in | ios::binary);
+
+    if(in)
+        in.read(textAnsi, sizeOfFile);
+    else
+    {
+        appendString(TEXT("\nOpening of the file\n\n  \"%S\"\n\nfailed ")
+                     TEXT("(probably it is the folder).\n\n"), FileToLoad);
+        in.close();
+        return;
+    }
+    in.close();
+
     // Initializing the member "text"
     delete[] text;   // To avoid memory leak
-    text           = new TCHAR[(sizeOfFile + 1) * sizeof(TCHAR)];
-    char *textAnsi = new char[(sizeOfFile + 1)];
-    textAnsi[0]    = 0;
+    text = new TCHAR[(sizeOfFile + 1) * sizeof(TCHAR)];
 
     // Clearing the counting containers
     nulujPole(vyskytyPismen, cn::NumOfCapitalLetters + cn::NumOfDigits);
     parVyskytPismeno.clear();
 
-    int i = 0;
-    while (!feof(vstup))
+    textAnsi[sizeOfFile - 1]   = 0;                // Overwrite the last readed character, probably EOF
+    for (int i = 0; i < sizeOfFile; ++i)
     {
-        int znak  = fgetc(vstup) & 0xFF;
-        textAnsi[i++] = znak;
+        int znak  = textAnsi[i] & 0xFF;
 
-        if (!feof(vstup))
+        znak = zmenMaleNaVelke(znak);
+
+        if (jeVelkePismeno(znak))
         {
-            znak = zmenMaleNaVelke(znak);
-
-            if (jeVelkePismeno(znak))
-            {
-                int index = znak - 'A';            // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
-                ++vyskytyPismen[index];
-            }
-            else if (isdigit(znak))
-            {
-                int index = znak - '0';
-                index += cn::NumOfCapitalLetters;  // Occurrences of digits are just after occurences of letters
-                ++vyskytyPismen[index];
-            }
+            int index = znak - 'A';            // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
+            ++vyskytyPismen[index];
+        }
+        else if (isdigit(znak))
+        {
+            int index = znak - '0';
+            index += cn::NumOfCapitalLetters;  // Occurrences of digits are just after occurences of letters
+            ++vyskytyPismen[index];
         }
     }
-    fclose(vstup);
-    textAnsi[i-1]   = 0;                               // Overwrite the last readed character, probably EOF
     MultiByteToWideChar(0, 0, textAnsi, sizeOfFile + 1, text, sizeOfFile + 1);
     delete[] textAnsi;
     naplnAsociativnePole();
