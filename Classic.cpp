@@ -342,6 +342,8 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     }
     in.close();
 
+    textAnsi[sizeOfFile - 1] = 0;             // Overwrite the last readed character, probably EOF
+
     // Initializing the member "text"
     delete[] text;   // To avoid memory leak
     text = new TCHAR[(sizeOfFile + 1) * sizeof(TCHAR)];
@@ -350,27 +352,39 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     nulujPole(vyskytyPismen, cn::NumOfCapitalLetters + cn::NumOfDigits);
     parVyskytPismeno.clear();
 
-    textAnsi[sizeOfFile - 1]   = 0;                // Overwrite the last readed character, probably EOF
+
+    // Non-ANSI text may contain 0 - let skip it
+    char *temp = new char[(sizeOfFile + 1)];
+
+    int j = 0;
     for (int i = 0; i < sizeOfFile; ++i)
     {
-        int znak  = textAnsi[i] & 0xFF;
+        if (textAnsi[i] != 0)
+            temp[j++] = textAnsi[i];
+    }
+    temp[j]  = 0;
+    delete[] textAnsi;
+    textAnsi = temp;
+    sizeOfFile = strlen(textAnsi);
 
-        znak = zmenMaleNaVelke(znak);
+    for (int i = 0; i < sizeOfFile; ++i)
+    {
+        int znak  = textAnsi[i];
 
         if (jeVelkePismeno(znak))
         {
-            int index = znak - 'A';            // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
+            int index = znak - 'A';             // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
             ++vyskytyPismen[index];
         }
         else if (isdigit(znak))
         {
             int index = znak - '0';
-            index += cn::NumOfCapitalLetters;  // Occurrences of digits are just after occurences of letters
+            index += cn::NumOfCapitalLetters;   // Occurrences of digits are just after occurences of letters
             ++vyskytyPismen[index];
         }
     }
     MultiByteToWideChar(0, 0, textAnsi, sizeOfFile + 1, text, sizeOfFile + 1);
-    delete[] textAnsi;
+    delete[] temp;
     naplnAsociativnePole();
 
     // Filling the string from the beginning

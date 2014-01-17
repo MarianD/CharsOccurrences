@@ -29,7 +29,7 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1389865503 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1389944542 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	"windows.h"
 
 1389310914 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
@@ -43,7 +43,7 @@
 	<string>
 	<commctrl.h>
 
-1389865494 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1389942390 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1368747354 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
@@ -177,7 +177,7 @@
 	"NaplnStrukturuWndClassEx.h"
 	"WndProcs.h"
 
-1389935608 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
+1389949700 source:c:\users\marian\documents\codeblocks\charsoccurrences\classic.cpp
 	<cstdarg>
 	<fstream>
 	<sys/stat.h>

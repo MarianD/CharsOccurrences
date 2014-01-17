@@ -1,7 +1,7 @@
 #include "windows.h"
 
-#define VER_FILEVERSION                 1, 6, 2, 1199
-#define VER_FILEVERSION_STR             "1.6.2 Revision 1199\0"
+#define VER_FILEVERSION                 1, 6, 2, 1272
+#define VER_FILEVERSION_STR             "1.6.2 Revision 1272\0"
 #define VER_PRODUCTVERSION              VER_FILEVERSION
 #define VER_PRODUCTVERSION_STR          VER_FILEVERSION_STR
 
