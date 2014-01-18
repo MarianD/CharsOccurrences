@@ -325,14 +325,14 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     stat(FileToLoad, &st);
     int sizeOfFile = st.st_size;
 
-    char *textAnsi = new char[(sizeOfFile + 1)];
+    char *readedText = new char[(sizeOfFile + 1)];
 
     ifstream in;
 
     in.open(FileToLoad, ios::in | ios::binary);
 
     if(in)
-        in.read(textAnsi, sizeOfFile);
+        in.read(readedText, sizeOfFile);
     else
     {
         appendString(TEXT("\nOpening of the file\n\n  \"%S\"\n\nfailed ")
@@ -342,6 +342,29 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     }
     in.close();
 
+    unsigned char * textAnsi = (unsigned char *) readedText;
+
+    // Brief test of the file content
+    bool IsUCS16      = false;              // TODO: Use this flag for UCS-16 files
+    bool notAnsi      = false;
+    const
+    int  patternBytes = 20;
+
+    if ((textAnsi[0] == 0xFF && textAnsi[1] == 0xFE) ||
+        (textAnsi[0] == 0xFE && textAnsi[1] == 0xFF))
+        IsUCS16 = notAnsi = true;
+
+    if (!IsUCS16)
+        for (int i = 0; i < min(patternBytes, sizeOfFile); ++i)
+        {
+            char znak = textAnsi[i];
+            if (znak < ' ' && znak != '\n' && znak != '\r')
+            {
+                notAnsi = true;
+                break;
+            }
+        }
+
     // Initializing the member "text"
     delete[] text;   // To avoid memory leak
     text = new TCHAR[(sizeOfFile + 1) * sizeof(TCHAR)];
@@ -350,27 +373,36 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     nulujPole(vyskytyPismen, cn::NumOfCapitalLetters + cn::NumOfDigits);
     parVyskytPismeno.clear();
 
-    textAnsi[sizeOfFile - 1]   = 0;                // Overwrite the last readed character, probably EOF
-    for (int i = 0; i < sizeOfFile; ++i)
+    for (int i = 0; i < sizeOfFile + 1; ++i)
     {
-        int znak  = textAnsi[i] & 0xFF;
+        int znak = textAnsi[i];
+
+        if (notAnsi && znak <  ' '  && znak != '\n' && znak != '\r')
+            textAnsi[i] = ' ';                  // Non-ANSI text may contain control codes
 
         znak = zmenMaleNaVelke(znak);
 
         if (jeVelkePismeno(znak))
         {
-            int index = znak - 'A';            // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
+            int index = znak - 'A';             // Ordinal number of the letter: A = 0, B = 1, C = 2, ...
             ++vyskytyPismen[index];
         }
         else if (isdigit(znak))
         {
             int index = znak - '0';
-            index += cn::NumOfCapitalLetters;  // Occurrences of digits are just after occurences of letters
+            index += cn::NumOfCapitalLetters;   // Occurrences of digits are just after occurences of letters
             ++vyskytyPismen[index];
         }
     }
-    MultiByteToWideChar(0, 0, textAnsi, sizeOfFile + 1, text, sizeOfFile + 1);
-    delete[] textAnsi;
+
+    textAnsi[sizeOfFile] = 0;                   // End of string
+//    if (!IsUCS16)
+        MultiByteToWideChar(0, 0, readedText, -1, text, sizeOfFile + 1);
+//    else
+//        text = (TCHAR *) readedText;
+
+    text[sizeOfFile] = 0;                       // End of string
+    delete[] readedText;
     naplnAsociativnePole();
 
     // Filling the string from the beginning

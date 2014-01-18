@@ -1,3 +1,8 @@
+Version 1.6.2  -  Released on 18.01.2014
+    [Improvement]: More plausible display of Non-ANSI files in the Text tab
+    [Improvement]: Large files are now processed much faster
+    [Change]: Narrowed the tabs with the short text ("Text" and "About")
+
 Version 1.6.1  -  Released on 14.01.2014
     [Fix]: Navigation arrows for the tabs didn't display / hide appropriately and automaticaly
 
