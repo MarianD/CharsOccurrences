@@ -7,21 +7,26 @@
     {
         //**************************  Constants  **************************/
 
-        const size_t  MaxCharsHorizAndlVertical = 4000;
-        const int     MinPocetMiest             =    5;
-        const int     StlpcovaMedzera           =   14;
         const
-        TCHAR * const TextAbout           = TEXT("\nCharsOccurrences (Lister plugin), version %ld.%ld.%ld %S\n\n"
-                                                  "Author: Marian Denes\n\n\n"
-                                                  "This plugin is freeware, created in Code::Blocks IDE.");
-
-        const size_t  AboutLength         = lstrlen(TextAbout) + 10;
+        size_t    MaxCharsHorizAndVert = 4000;
+        const int MinPocetMiest        =    5;
+        const int StlpcovaMedzera      =   14;
         const
-        TCHAR * const TextHead            = TEXT("\nOccurrences of individual ASCII letters, " \
-                                               "case insensitive:\n\n");
+        TCHAR * const TextAbout        = TEXT("\n"
+                                              "CharsOccurrences (Lister plugin for TC),\n"
+                                              "version %ld.%ld.%ld\n\n"
+                                              "Author: Marian Denes\n\n\n"
+                                              "This plugin is freeware and open source,\n"
+                                              "created in Code::Blocks IDE.");
 
-        const size_t  NumOfDigits         =  10;
-        const size_t  NumOfCapitalLetters = ('Z' - 'A' + 1);
+        const size_t  AboutLength      = lstrlen(TextAbout) + 10;
+        const
+        TCHAR * const TextHead         = TEXT("\n"
+                                              "Occurrences of individual ASCII letters, "
+                                              "case insensitive:\n\n");
+
+        const size_t  NumOfDigits      =  10;
+        const size_t  NumOfCapLetters  = ('Z' - 'A' + 1);
 
         enum
         {
@@ -48,7 +53,7 @@
             VerticalRichEditTab,
             HorizontalRichEditATab,
             AboutRichEditTab,
-            NumOfTabs               // This must be the last item, because it is not a tab for adding into Tab View
+            NumOfTabs              // This must be the last item, because it is not a tab for adding into Tab View
         };
 
         enum

@@ -1,3 +1,10 @@
+25 January 2014
+   released version 1.6.3 of CharsOccurrences
+
+     Change log:
+        -Changed: If In Quick View was selected the tab "About", it will automatically switch to the tab "Text" after choosing other file
+        -Fixed: In Quick View in the "Text" tab after switching to other file it retained the position of the previous (if it content was scrolled), so the other file was not displayed from the beginning.
+
 16 January 2014
    released version 1.6.2 of CharsOccurrences
 

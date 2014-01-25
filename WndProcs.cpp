@@ -128,10 +128,10 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case cn::HistogramAlphaId:
             base     = 0;
             baseChar = TEXT('A');
-            numChars = cn::NumOfCapitalLetters;
+            numChars = cn::NumOfCapLetters;
             break;
         case cn::HistogramDigitId:
-            base     = 0 + cn::NumOfCapitalLetters;
+            base     = 0 + cn::NumOfCapLetters;
             baseChar = TEXT('0');
             numChars = cn::NumOfDigits;
             break;

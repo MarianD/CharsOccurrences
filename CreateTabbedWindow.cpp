@@ -26,6 +26,7 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
                                 ParentWindow, childID, hinst, nullptr);
 
     // Setting the minimal width of tabs
+    (void)
     TabCtrl_SetMinTabWidth(hwndTabCtrl, 5);
 
     // Creating new tabs

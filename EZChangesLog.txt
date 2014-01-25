@@ -1,3 +1,7 @@
+Version 1.6.3  -  Released on 25.01.2014
+	[Change]: If In Quick View was selected the tab "About", it will automatically switch to the tab "Text" after choosing other file
+	[Fix]: In Quick View in the "Text" tab after switching to other file it retained the position of the previous (if it content was scrolled), so the other file was not displayed from the beginning.
+	
 Version 1.6.2  -  Released on 18.01.2014
     [Improvement]: More plausible display of Non-ANSI files in the Text tab
     [Improvement]: Large files are now processed much faster

@@ -95,7 +95,7 @@ int CALLBACK cmpFunction(LPARAM hodnota1, LPARAM hodnota2, LPARAM plusMinusStlpe
     int result;
 
     if (stlpec == 1)
-        result = (int) hodnota1 % cn::NumOfCapitalLetters - (int) hodnota2 % cn::NumOfCapitalLetters;
+        result = (int) hodnota1 % cn::NumOfCapLetters - (int) hodnota2 % cn::NumOfCapLetters;
     else
         result = (int) hodnota2 - (int) hodnota1;
     return signum * result;

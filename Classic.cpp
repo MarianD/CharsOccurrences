@@ -12,15 +12,15 @@
 
 Classic::Classic()
     // Some initializations are here only for the safety - to have some reasonable values
-  : horizontal      ( new TCHAR[cn::MaxCharsHorizAndlVertical] ),
+  : horizontal      ( new TCHAR[cn::MaxCharsHorizAndVert] ),
     vertical        ( horizontal ),
     text            ( nullptr ),
     about           ( new TCHAR[cn::AboutLength] ),
-    vyskytyPismen   ( new int  [cn::NumOfCapitalLetters + cn::NumOfDigits] ),
+    vyskytyPismen   ( new int  [cn::NumOfCapLetters + cn::NumOfDigits] ),
     spolu           ( horizontal ),
     parVyskytPismeno(),
     pocetMiest      ( cn::MinPocetMiest ),
-    restChars       ( cn::MaxCharsHorizAndlVertical - 1 ),
+    restChars       ( cn::MaxCharsHorizAndVert - 1 ),
     warningWritten  ( false ),
     verticalIsSet   ( false )
 {
@@ -30,7 +30,7 @@ Classic::Classic()
         AutoVersion::MAJOR, AutoVersion::MINOR, AutoVersion::BUILD, AutoVersion::STATUS);
 
     // Initializations only for the safety
-    restChars      = cn::MaxCharsHorizAndlVertical - 1;
+    restChars      = cn::MaxCharsHorizAndVert - 1;
     warningWritten = false;
     verticalIsSet  = false;
 }
@@ -50,8 +50,8 @@ void Classic::naplnListView(HWND hwndListView, int charsType) const
     int
     sucetVyskytov   = max(spoluVyskytov(charsType), 1);         // It will be the divisor, so it must not be 0
 
-    int    base     = (charsType == cn::CharsTypeAlpha) ? 0                       : 0 + cn::NumOfCapitalLetters;
-    int    numChars = (charsType == cn::CharsTypeAlpha) ? cn::NumOfCapitalLetters : cn::NumOfDigits;
+    int    base     = (charsType == cn::CharsTypeAlpha) ? 0                       : 0 + cn::NumOfCapLetters;
+    int    numChars = (charsType == cn::CharsTypeAlpha) ? cn::NumOfCapLetters : cn::NumOfDigits;
     TCHAR  baseChar = (charsType == cn::CharsTypeAlpha) ? TEXT('A')               : TEXT('0');
     LVITEM lvI;
 
@@ -74,7 +74,7 @@ void Classic::naplnListView(HWND hwndListView, int charsType) const
         lvI.iItem    = riadok;
         lvI.iSubItem = 0;
         lvI.pszText  = pismeno;
-        lvI.lParam   = (LPARAM) (cn::NumOfCapitalLetters * occur + riadok); // For sorting by columns; don't use numChars!
+        lvI.lParam   = (LPARAM) (cn::NumOfCapLetters * occur + riadok); // For sorting by columns; don't use numChars!
         (void)
         ListView_InsertItem(hwndListView, &lvI);
 
@@ -148,7 +148,7 @@ void Classic::appendString(const TCHAR * formatString, ...)
 void Classic::naplnAsociativnePole()
 {
     int maximum = 1;                              // We will get logarithm of it, so it must not be 0
-    for (size_t i = 0; i < cn::NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < cn::NumOfCapLetters; ++i)
     {
         int pocet = vyskytyPismen[i];
         parVyskytPismeno.insert(make_pair(pocet, TEXT('A') + i));
@@ -161,7 +161,7 @@ void Classic::naplnAsociativnePole()
 
 void Classic::zobrazCiaru(TCHAR znak)
 {
-    for (size_t i = 0; i < pocetMiest * cn::NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < pocetMiest * cn::NumOfCapLetters; ++i)
     {
         appendString(TEXT("%c"), znak);
     }
@@ -173,7 +173,7 @@ void Classic::tlacHlavicky()
 {
     zobrazCiaru(TEXT('-'));
 
-    for (size_t i = 0; i < cn::NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < cn::NumOfCapLetters; ++i)
     {
         appendString(TEXT("%*s%c"), pocetMiest - 1, "", (TCHAR) ('A' + i));
     }
@@ -184,7 +184,7 @@ void Classic::tlacHlavicky()
 
 void Classic::tlacVyskytuPismen()
 {
-    for (size_t i = 0; i < cn::NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < cn::NumOfCapLetters; ++i)
     {
         int pocet = vyskytyPismen[i];
 
@@ -230,8 +230,8 @@ void Classic::tlacVyskytuPismenZoradeny()
 
 int Classic::spoluVyskytov(int charsType) const
 {
-    int numChars = (charsType == cn::CharsTypeAlpha) ? cn::NumOfCapitalLetters : cn::NumOfDigits;
-    int base     = (charsType == cn::CharsTypeAlpha) ? 0                       : 0 + cn::NumOfCapitalLetters;
+    int numChars = (charsType == cn::CharsTypeAlpha) ? cn::NumOfCapLetters : cn::NumOfDigits;
+    int base     = (charsType == cn::CharsTypeAlpha) ? 0                       : 0 + cn::NumOfCapLetters;
 
     /*
      *  Sèítanie všetkých výskytov jednotlivých znakov
@@ -251,7 +251,7 @@ void Classic::tlacVyskytuPismenPodSebou(int charsType)
     appendString(TEXT("\n"));
 
     auto pos = parVyskytPismeno.begin();
-    for (size_t i = 0; i < cn::NumOfCapitalLetters; ++i)
+    for (size_t i = 0; i < cn::NumOfCapLetters; ++i)
     {
         /*
          *  Najprv ich vytlaèíme abecedne
@@ -317,7 +317,7 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     spolu          = horizontal;                    // Reset of the member variable
     *spolu         = TEXT('\0');                    // To have the zero length (for safety only)
     verticalIsSet  = false;                         // For testing whether vertical part already began
-    restChars      = cn::MaxCharsHorizAndlVertical - 1;
+    restChars      = cn::MaxCharsHorizAndVert - 1;
     warningWritten = false;
 
     // Getting the size of the file
@@ -370,7 +370,7 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
     text = new TCHAR[(sizeOfFile + 1) * sizeof(TCHAR)];
 
     // Clearing the counting containers
-    nulujPole(vyskytyPismen, cn::NumOfCapitalLetters + cn::NumOfDigits);
+    nulujPole(vyskytyPismen, cn::NumOfCapLetters + cn::NumOfDigits);
     parVyskytPismeno.clear();
 
     for (int i = 0; i < sizeOfFile + 1; ++i)
@@ -390,7 +390,7 @@ void Classic::spracovanieVstupnehoSuboru(const char * FileToLoad)
         else if (isdigit(znak))
         {
             int index = znak - '0';
-            index += cn::NumOfCapitalLetters;   // Occurrences of digits are just after occurences of letters
+            index += cn::NumOfCapLetters;   // Occurrences of digits are just after occurences of letters
             ++vyskytyPismen[index];
         }
     }
