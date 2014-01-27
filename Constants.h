@@ -8,25 +8,28 @@
         //**************************  Constants  **************************/
 
         const
-        size_t    MaxCharsHorizAndVert = 4000;
-        const int MinPocetMiest        =    5;
-        const int StlpcovaMedzera      =   14;
-        const
-        TCHAR * const TextAbout        = TEXT("\n"
-                                              "CharsOccurrences (Lister plugin for TC),\n"
-                                              "version %ld.%ld.%ld\n\n"
-                                              "Author: Marian Denes\n\n\n"
-                                              "This plugin is freeware and open source,\n"
-                                              "created in Code::Blocks IDE.");
+        size_t     MaxCharsHorizAndVert = 4000;
+        const int  MinPocetMiest        =    5;
+        const int  StlpcovaMedzera      =   14;
+        const long FontSize             =   12;     // In points; 1 point = 1/72 of inch
+        const long TwipsInInch          = 1440;
+        const long PointsInInch         =   72;
 
-        const size_t  AboutLength      = lstrlen(TextAbout) + 10;
-        const
-        TCHAR * const TextHead         = TEXT("\n"
-                                              "Occurrences of individual ASCII letters, "
-                                              "case insensitive:\n\n");
+        TCHAR * const TextAbout         = TEXT("\n"
+                                               "CharsOccurrences (Lister plugin for TC),\n"
+                                               "version %ld.%ld.%ld\n\n"
+                                               "Author: Marian Denes\n\n\n"
+                                               "This plugin is freeware and open source,\n"
+                                               "created in Code::Blocks IDE.");
 
-        const size_t  NumOfDigits      =  10;
-        const size_t  NumOfCapLetters  = ('Z' - 'A' + 1);
+        const size_t  AboutLength       = lstrlen(TextAbout) + 10;
+        const
+        TCHAR * const TextHead          = TEXT("\n"
+                                               "Occurrences of individual ASCII letters, "
+                                               "case insensitive:\n\n");
+
+        const size_t  NumOfDigits       =  10;
+        const size_t  NumOfCapLetters   = ('Z' - 'A' + 1);
 
         enum
         {
