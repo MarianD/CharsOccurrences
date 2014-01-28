@@ -17,7 +17,8 @@ Status::Status()
     histgClientWidthHight(0),
     lastChosenTab(0),
     lastClickedColumnAlpha (1),
-    lastClickedColumnDigit (1)
+    lastClickedColumnDigit (1),
+    fontSize (cn::defaultFontSize)
 {
 }
 

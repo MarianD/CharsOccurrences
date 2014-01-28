@@ -34,6 +34,33 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     WNDPROC oldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
     pStatus->setOldTabCtrlWndProc(oldTabCtrlProc);
 
+        /*
+         *  Restore the last values from the INI file and store it
+         *  into the instance of the Status class
+         *
+         *  Note:
+         *  Sorting by the column 3 ("Percent") is the same as the sorting by
+         *  the column 2 ("Count") to don't confuse the user by no reaction after
+         *  clicking alternately to the headers of the column 2 and column 3.
+         */
+        TCHAR * iniFile = new TCHAR[_MAX_PATH + lstrlen(cn::IniFile) + 1];
+        getFullIniFilePath(iniFile);
+
+        int lastChosenTab          = GetPrivateProfileInt(cn::IniFileTabsSection,
+                                                          cn::IniFileLastChosenTabKey,  0, iniFile);
+        int lastClickedColumnAlpha = GetPrivateProfileInt(cn::IniFileSortSection,
+                                                          cn::IniFileLastClColAlphaKey, 1, iniFile);
+        int lastClickedColumnDigit = GetPrivateProfileInt(cn::IniFileSortSection,
+                                                          cn::IniFileLastClColDigitKey, 1, iniFile);
+        int fontSize               = GetPrivateProfileInt(cn::IniFileFontSection,
+                                                          cn::IniFileFontSize, cn::defaultFontSize, iniFile);
+        delete[] iniFile;
+
+        pStatus->setLastChosenTab         (lastChosenTab);
+        pStatus->setLastClickedColumnAlpha(lastClickedColumnAlpha);
+        pStatus->setLastClickedColumnDigit(lastClickedColumnDigit);
+        pStatus->setFontSize              (fontSize);
+
     // Získanie obdåžnika pre zobrazovaciu èas Tab Control
     GetClientRect(hwndTabCtrl, &rect);
     (void)
@@ -58,30 +85,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         pClassic->spracovanieVstupnehoSuboru(FileToLoad);
         pClassic->naplnListView(hwndListViewAlpha, cn::CharsTypeAlpha);
         pClassic->naplnListView(hwndListViewDigit, cn::CharsTypeDigit);
-
-        /*
-         *  Restore the last values from the INI file and store it
-         *  into the instance of the Status class
-         *
-         *  Note:
-         *  Sorting by the column 3 ("Percent") is the same as the sorting by
-         *  the column 2 ("Count") to don't confuse the user by no reaction after
-         *  clicking alternately to the headers of the column 2 and column 3.
-         */
-        TCHAR * iniFile = new TCHAR[_MAX_PATH + lstrlen(cn::IniFile) + 1];
-        getFullIniFilePath(iniFile);
-
-        int lastChosenTab          = GetPrivateProfileInt(cn::IniFileTabsSection,
-                                                          cn::IniFileLastChosenTabKey,  0, iniFile);
-        int lastClickedColumnAlpha = GetPrivateProfileInt(cn::IniFileSortSection,
-                                                          cn::IniFileLastClColAlphaKey, 1, iniFile);
-        int lastClickedColumnDigit = GetPrivateProfileInt(cn::IniFileSortSection,
-                                                          cn::IniFileLastClColDigitKey, 1, iniFile);
-        delete[] iniFile;
-
-        pStatus->setLastChosenTab         (lastChosenTab);
-        pStatus->setLastClickedColumnAlpha(lastClickedColumnAlpha);
-        pStatus->setLastClickedColumnDigit(lastClickedColumnDigit);
 
         // Let show items in the ListViews in the last used order
         HWND hwndListViewAlpha      = pStatus->getHwndListViewAlpha();

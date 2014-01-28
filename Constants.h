@@ -11,7 +11,7 @@
         size_t     MaxCharsHorizAndVert = 4000;
         const int  MinPocetMiest        =    5;
         const int  StlpcovaMedzera      =   14;
-        const long FontSize             =   12;     // In points; 1 point = 1/72 of inch
+        const long defaultFontSize      =   12;     // In points; 1 point = 1/72 of inch
         const long TwipsInInch          = 1440;
         const long PointsInInch         =   72;
 
@@ -86,6 +86,8 @@
         const TCHAR * const IniFileSortSection       = TEXT("Sort");
         const TCHAR * const IniFileLastClColAlphaKey = TEXT("LettersTab");
         const TCHAR * const IniFileLastClColDigitKey = TEXT("DigitsTab");
+        const TCHAR * const IniFileFontSection       = TEXT("Font");
+        const TCHAR * const IniFileFontSize          = TEXT("FontSize");
     }
 
 #endif // ndef

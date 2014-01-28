@@ -16,6 +16,7 @@
         int     lastChosenTab;
         int     lastClickedColumnAlpha;
         int     lastClickedColumnDigit;
+        int     fontSize;                 // In points; 1 point = 1/72 of inch
     public:
         Status();
        ~Status();
@@ -39,6 +40,8 @@
         void    setLastClickedColumnAlpha (int col)     {lastClickedColumnAlpha = col;}
         int     getLastClickedColumnDigit () const      {return lastClickedColumnDigit;}
         void    setLastClickedColumnDigit (int col)     {lastClickedColumnDigit = col;}
+        int     getFontSize               () const      {return fontSize;}
+        void    setFontSize               (int fSize)   {fontSize = fSize;}
         void    moveAllChildWindows       (const PRECT pRect);
     private:
         Status             (const Status&);     // Declarations only to prevent not wanted

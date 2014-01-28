@@ -2,13 +2,17 @@
 
 #include "CreateRichEditWindow.h"
 #include "Constants.h"
+#include "Status.h"
 
 HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect, int id)
 {
 	HWND       hwndRichEdit;
-    HINSTANCE  hinst   = nullptr;
-    HMENU      childID = (HMENU) (INT64) id;
-    CHARFORMAT charFormat, *pcharFormat = &charFormat;
+	HWND       hwndTabCtrl = ParentWindow;
+    HINSTANCE  hinst       = nullptr;
+    HMENU      childID     = (HMENU) (INT64) id;
+    Status   * pStatus     = (Status *)  GetProp(hwndTabCtrl, cn::PointerToStatus );
+    CHARFORMAT charFormat,
+              *pcharFormat = &charFormat;
 
     /*
      *  Font settings
@@ -16,7 +20,7 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect, int id)
     pcharFormat->cbSize    = sizeof(charFormat);
     pcharFormat->dwMask    = CFM_BOLD | CFM_FACE | CFM_SIZE;
     pcharFormat->dwEffects = CFE_BOLD;
-    pcharFormat->yHeight   = cn::FontSize * cn::TwipsInInch / cn::PointsInInch;     // yHeight is in twips
+    pcharFormat->yHeight   = pStatus->getFontSize() * cn::TwipsInInch / cn::PointsInInch;     // yHeight is in twips
     _tcscpy(pcharFormat->szFaceName, TEXT("Courier New"));
 
     hwndRichEdit = CreateWindowEx(0, RICHEDIT_CLASS, TEXT(""),
