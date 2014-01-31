@@ -17,6 +17,8 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
     NMHDR  * pNotifyMsgHdr = nullptr;
     int      cx, cy;
     RECT     rect, * pRect = &rect;
+    LPNMLVCUSTOMDRAW  lplvcd = nullptr;
+    LPNMLISTVIEW  pnm  = nullptr;
 
     Status * pStatus        = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
     WNDPROC  oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
@@ -37,6 +39,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_NOTIFY:
         pNotifyMsgHdr = (NMHDR *) lParam;
         hwndFrom      = pNotifyMsgHdr->hwndFrom;
+        pnm  = (LPNMLISTVIEW)lParam;
 
         switch (pNotifyMsgHdr->code)
         {
@@ -79,6 +82,71 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 pStatus->setLastClickedColumnDigit(column);
 
             return 0;       // The return value is ignored
+
+
+        case NM_CUSTOMDRAW:
+
+            lplvcd = (LPNMLVCUSTOMDRAW)lParam;
+
+            switch(lplvcd->nmcd.dwDrawStage)
+            {
+
+            case CDDS_PREPAINT :
+                return CDRF_NOTIFYITEMDRAW;
+
+            case CDDS_ITEMPREPAINT:
+                SelectObject(lplvcd->nmcd.hdc, CreateFont(
+                                               -16,                           // nHeight,
+                                                0,                            // nWidth,
+                                                0,                            // nEscapement,
+                                                0,                            // nOrientation,
+                                                FW_BOLD,                      // fnWeight,
+                                                0,                            // fdwItalic,
+                                                0,                            // fdwUnderline,
+                                                0,                            // fdwStrikeOut,
+                                                DEFAULT_CHARSET,              // fdwCharSet,
+                                                OUT_DEFAULT_PRECIS,           // fdwOutputPrecision
+                                                CLIP_DEFAULT_PRECIS,          // fdwClipPrecision,
+                                                DEFAULT_QUALITY,              // fdwQuality,
+                                                FF_DONTCARE | DEFAULT_PITCH,  // fdwPitchAndFamily,
+                                                TEXT("Courier New")           // lpszFace
+                                                ));
+//                             GetFontForItem(lplvcd->nmcd.dwItemSpec,
+//                                            lplvcd->nmcd.lItemlParam) );
+//                lplvcd->clrText = GetColorForItem(lplvcd->nmcd.dwItemSpec,
+//                                                  lplvcd->nmcd.lItemlParam);
+//                lplvcd->clrTextBk = GetBkColorForItem(lplvcd->nmcd.dwItemSpec,
+//                                                      lplvcd->nmcd.lItemlParam);
+
+                /* At this point, you can change the background colors for the item
+                and any subitems and return CDRF_NEWFONT. If the list-view control
+                is in report mode, you can simply return CDRF_NOTIFYSUBITEMDRAW
+                to customize the item's subitems individually
+                        ...*/
+
+                return CDRF_NEWFONT;
+            //  or return CDRF_NOTIFYSUBITEMDRAW;
+
+//            case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+//                SelectObject(lplvcd->nmcd.hdc,
+//                             GetFontForSubItem(lplvcd->nmcd.dwItemSpec,
+//                                               lplvcd->nmcd.lItemlParam,
+//                                               lplvcd->iSubItem));
+//                lplvcd->clrText = GetColorForSubItem(lplvcd->nmcd.dwItemSpec,
+//                                                     lplvcd->nmcd.lItemlParam,
+//                                                     lplvcd->iSubItem));
+//                lplvcd->clrTextBk = GetBkColorForSubItem(lplvcd->nmcd.dwItemSpec,
+//                                                         lplvcd->nmcd.lItemlParam,
+//                                                         lplvcd->iSubItem));
+//
+//                /* This notification is received only if you are in report mode and
+//                returned CDRF_NOTIFYSUBITEMDRAW in the previous step. At
+//                this point, you can change the background colors for the
+//                subitem and return CDRF_NEWFONT.
+//                        ...*/
+//                return CDRF_NEWFONT;
+            }
+
         default:
             break;
         }

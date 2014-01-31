@@ -28,7 +28,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
 
         // Preparation for adding columns to the List-View control
         TCHAR     colHeader[4][10] = {TEXT(""), TEXT("???"), TEXT("Count"), TEXT("Percent")};
-        const int colWidth [4]     = {0,        50 + 20,     53 + 20,       60 + 20};
+        const int colWidth [4]     = {0,        50 + 20,     53 + 20,       60 + 40};
 
         lstrcpy(colHeader[1], (id == cn::ListViewAlphaId) ? TEXT("Letter") : TEXT("Digit"));
 
