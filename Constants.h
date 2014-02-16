@@ -15,6 +15,7 @@
         const long TwipsInInch          = 1440;
         const long PointsInInch         =   72;
 
+        const
         TCHAR * const TextAbout         = TEXT("\n"
                                                "CharsOccurrences (Lister plugin for TC),\n"
                                                "version %ld.%ld.%ld\n\n"

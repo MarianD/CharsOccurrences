@@ -13,15 +13,17 @@
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND     hwndFrom      = nullptr;
-    NMHDR  * pNotifyMsgHdr = nullptr;
-    int      cx, cy;
-    RECT     rect, * pRect = &rect;
-    LPNMLVCUSTOMDRAW  lplvcd = nullptr;
-    LPNMLISTVIEW  pnm  = nullptr;
-
-    Status * pStatus        = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
-    WNDPROC  oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
+    HWND                hwndFrom      = nullptr;
+    NMHDR             * pNotifyMsgHdr = nullptr;
+    int                 cx, cy;
+    RECT                rect, * pRect = &rect;
+    LPNMLVCUSTOMDRAW    lplvcd        = nullptr;
+    MEASUREITEMSTRUCT * pMis          = nullptr;
+    DRAWITEMSTRUCT    * pDIS          = nullptr;
+    LVITEM  lvi;
+    WINDOWPOS WindowPos;
+    Status * pStatus                  = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    WNDPROC  oldTabCtrlProc           = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
 
     switch (uMsg)
     {
@@ -35,21 +37,55 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
         (void)
         TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
         pStatus->moveAllChildWindows(pRect);
+        SendMessage(hwndTabCtrl, WM_WINDOWPOSCHANGED, 0, (LPARAM) &WindowPos);  // Aby sa poslala WM_MEASUREITEM
         return 0;
+
+    case WM_DRAWITEM:       // Táto správa sa generuje len pri nastavenom štýle okna LVS_OWNERDRAWFIXED
+        MessageBoxA(0, "Prijatá správa WM_DRAWITEM", "WM_DRAWITEM", MB_OK);
+        pDIS = (DRAWITEMSTRUCT *) lParam;
+        hwndFrom = pDIS->CtlID == cn::ListViewAlphaId ? pStatus->getHwndListViewAlpha()
+                                                      : pStatus->getHwndListViewDigit();
+//        pDIS->rcItem.top    += 20L;
+//        pDIS->rcItem.bottom += 85L;
+        TCHAR itemText[30];
+        lvi.iItem      = pDIS->itemID;
+        lvi.iSubItem   = 0;
+        lvi.pszText    = itemText;
+        lvi.cchTextMax = 30;
+        lvi.mask       = LVIF_TEXT;
+
+//        **** Toto mi zhadzuje program, keï zmením ve¾kos okna PRED kliknutím na iné usporiadanie, dokonca aj keï to ****
+//        **** sem vôbec nemá ís (keï sa správa VM_DRAWITEM neposiela, pretože v štýle NIE JE LVS_OWNERDRAWFIXED) ****
+//        ListView_GetItem(hwndFrom, &lvi);       //TODO: Zisti, preèo mi toto pri zmene ve¾kosti okna zhadzuje program
+//        SendMessage(hwndFrom, LVM_GETITEM, 0, (LPARAM) &lvi); // Aj keï použijem toto namiesto makra ListView_GetItem()
+//
+////        TextOut(pDIS->hDC, pDIS->rcItem.left, pDIS->rcItem.top, lpBuff, len);
+//        DrawText(pDIS->hDC, itemText, -1, &pDIS->rcItem, DT_BOTTOM  /*DT_SINGLELINE | DT_VCENTER*/);
+        return TRUE;
+
+    case WM_MEASUREITEM:                      // Táto správa sa posiela len pri zapnutom štýle okna LVS_OWNERDRAWFIXED
+        pMis = (MEASUREITEMSTRUCT *) lParam;
+        if (pMis->CtlType == ODT_LISTVIEW)
+        {
+            pMis->itemHeight = 20L;     //Funguje až po zmene ve¾kosti okna, a len v režime Custom Draw
+//            MessageBoxA(0, "Prijatá správa VM_MEASUREITEM", "WM_MEASUREITEM", MB_OK);
+            return TRUE;
+        }
+        break;
+
     case WM_NOTIFY:
         pNotifyMsgHdr = (NMHDR *) lParam;
         hwndFrom      = pNotifyMsgHdr->hwndFrom;
-        pnm  = (LPNMLISTVIEW)lParam;
 
         switch (pNotifyMsgHdr->code)
         {
         case LVN_COLUMNCLICK:
-            LPNMLISTVIEW pnmv;
+            LPNMLISTVIEW pNmLv;
             int          column;
             int          lastClickedColumn;     // It is increased by 1 to have oportunity to save it with + or -
 
-            pnmv     = (LPNMLISTVIEW) lParam;
-            column   = pnmv->iSubItem;          // Numbered from 0, in spite of deleting the original column zero
+            pNmLv   = (LPNMLISTVIEW) lParam;
+            column  = pNmLv->iSubItem;          // Numbered from 0, in spite of deleting the original column zero
             ++column;                           // Now numbered from 1
 
             /*
@@ -70,7 +106,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
              *  the click on the column's header sorted in the prefered order
              */
             if (column == lastClickedColumn)
-                column *= -1;                   // + means prefered, - means unprefered order
+                column *= -1;                   // + means preferred, - means unpreferred order
 
             (void)
             ListView_SortItems(hwndFrom, cmpFunction, (LPARAM) column);
@@ -83,7 +119,6 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
             return 0;       // The return value is ignored
 
-
         case NM_CUSTOMDRAW:
 
             lplvcd = (LPNMLVCUSTOMDRAW)lParam;
@@ -95,24 +130,26 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 return CDRF_NOTIFYITEMDRAW;
 
             case CDDS_ITEMPREPAINT:
-                SelectObject(lplvcd->nmcd.hdc, CreateFont(
-                                               -16,                           // nHeight,
-                                                0,                            // nWidth,
-                                                0,                            // nEscapement,
-                                                0,                            // nOrientation,
-                                                FW_BOLD,                      // fnWeight,
-                                                0,                            // fdwItalic,
-                                                0,                            // fdwUnderline,
-                                                0,                            // fdwStrikeOut,
-                                                DEFAULT_CHARSET,              // fdwCharSet,
-                                                OUT_DEFAULT_PRECIS,           // fdwOutputPrecision
-                                                CLIP_DEFAULT_PRECIS,          // fdwClipPrecision,
-                                                DEFAULT_QUALITY,              // fdwQuality,
-                                                FF_DONTCARE | DEFAULT_PITCH,  // fdwPitchAndFamily,
-                                                TEXT("Courier New")           // lpszFace
-                                                ));
-//                             GetFontForItem(lplvcd->nmcd.dwItemSpec,
-//                                            lplvcd->nmcd.lItemlParam) );
+                SelectObject(lplvcd->nmcd.hdc,
+                             CreateFont
+                             (
+                               -16,                           // nHeight,
+                                0,                            // nWidth,
+                                0,                            // nEscapement,
+                                0,                            // nOrientation,
+                                FW_BOLD,                      // fnWeight,
+                                0,                            // fdwItalic,
+                                0,                            // fdwUnderline,
+                                0,                            // fdwStrikeOut,
+                                DEFAULT_CHARSET,              // fdwCharSet,
+                                OUT_DEFAULT_PRECIS,           // fdwOutputPrecision
+                                CLIP_DEFAULT_PRECIS,          // fdwClipPrecision,
+                                DEFAULT_QUALITY,              // fdwQuality,
+                                FF_DONTCARE | DEFAULT_PITCH,  // fdwPitchAndFamily,
+                                TEXT("Courier New")           // lpszFace
+                             ));
+//                GetFontForItem(lplvcd->nmcd.dwItemSpec,
+//                               lplvcd->nmcd.lItemlParam) );
 //                lplvcd->clrText = GetColorForItem(lplvcd->nmcd.dwItemSpec,
 //                                                  lplvcd->nmcd.lItemlParam);
 //                lplvcd->clrTextBk = GetBkColorForItem(lplvcd->nmcd.dwItemSpec,
@@ -123,7 +160,6 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 is in report mode, you can simply return CDRF_NOTIFYSUBITEMDRAW
                 to customize the item's subitems individually
                         ...*/
-
                 return CDRF_NEWFONT;
             //  or return CDRF_NOTIFYSUBITEMDRAW;
 

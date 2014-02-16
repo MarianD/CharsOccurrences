@@ -12,7 +12,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
 
     hwndListView = CreateWindowEx(0,                            // Lots of extended attributes are not functional here
                                   WC_LISTVIEW, TEXT(""),
-                                  WS_CHILD   | LVS_REPORT |
+                                  WS_CHILD   | LVS_REPORT | /*LVS_OWNERDRAWFIXED |*/
                                   WS_HSCROLL | WS_VSCROLL | WS_CLIPSIBLINGS,
                                   pRect->left,    pRect->top,
                                   pRect->right  - pRect->left,
