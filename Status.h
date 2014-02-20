@@ -11,6 +11,7 @@
         HWND    hwndHistogramAlpha;
         HWND    hwndHistogramDigit;
         HWND    hwndRichEdit;
+        HWND    hwndSettings;
         WNDPROC oldTabCtrlWndProc;
         LPARAM  histgClientWidthHight;
         int     lastChosenTab;
@@ -30,6 +31,8 @@
         void    setHwndHistogramDigit     (HWND h)      {hwndHistogramDigit = h;}
         HWND    getHwndRichEdit           () const      {return hwndRichEdit;}
         void    setHwndRichEdit           (HWND h)      {hwndRichEdit = h;}
+        HWND    getHwndSettings           () const      {return hwndSettings;}
+        void    setHwndSettings           (HWND h)      {hwndSettings = h;}
         WNDPROC getOldTabCtrlWndProc      () const      {return oldTabCtrlWndProc;}
         void    setOldTabCtrlWndProc      (WNDPROC otwp){oldTabCtrlWndProc = otwp;}
         int     getHistgClientWidthHight  () const      {return histgClientWidthHight;}

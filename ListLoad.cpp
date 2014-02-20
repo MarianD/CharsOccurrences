@@ -13,6 +13,7 @@
 #include "WndProcs.h"
 #include "version.h"
 #include "Constants.h"
+#include "resource.h"
 
 
 HWND CHARSOCCURRENCESCALL
@@ -72,8 +73,16 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     HWND hwndHistogramAlpha = CreateHistogramWindow(hwndTabCtrl, &rect, cn::HistogramAlphaId);
     HWND hwndHistogramDigit = CreateHistogramWindow(hwndTabCtrl, &rect, cn::HistogramDigitId);
     HWND hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect, cn::RichEditId);
+    TCHAR chyba[20];
+    HMODULE hModule         = GetModuleHandle(TEXT("CharsOccurrences.wlx"));
+    _stprintf(chyba,   TEXT("Chyba cislo %d"),   GetLastError());
+    MessageBox(0, chyba, TEXT("Chyba cislo"), MB_OK);
+    HWND hwndSettings       = CreateDialog(hModule, MAKEINTRESOURCE(SETTINGS), hwndTabCtrl, (DLGPROC) NewTabCtrlProc);
+    _stprintf(chyba,   TEXT("Chyba cislo %d"),   GetLastError());
+    MessageBox(0, chyba, TEXT("Chyba cislo"), MB_OK);
 
-	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndHistogramDigit)
+	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndHistogramDigit /*&&
+        hwndSettings*/)
     {
         // Saving the windows handles
         pStatus->setHwndListViewAlpha (hwndListViewAlpha);
@@ -81,6 +90,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         pStatus->setHwndHistogramAlpha(hwndHistogramAlpha);
         pStatus->setHwndHistogramDigit(hwndHistogramDigit);
         pStatus->setHwndRichEdit      (hwndRichEdit);
+        pStatus->setHwndSettings      (hwndSettings);
 
         pClassic->spracovanieVstupnehoSuboru(FileToLoad);
         pClassic->naplnListView(hwndListViewAlpha, cn::CharsTypeAlpha);
@@ -105,6 +115,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         ShowWindow(hwndHistogramAlpha, SW_SHOW);
         ShowWindow(hwndHistogramDigit, SW_SHOW);
         ShowWindow(hwndRichEdit,       SW_SHOW);
+        ShowWindow(hwndSettings,       SW_SHOW);
     }
 
     return hwndTabCtrl;             // The function ListLoadNext() will use it

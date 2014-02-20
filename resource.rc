@@ -1,9 +1,5 @@
+#include "resource.h"
 #include "windows.h"
-
-#define VER_FILEVERSION                 1, 6, 5, 1322
-#define VER_FILEVERSION_STR             "1.6.5 Revision 1322\0"
-#define VER_PRODUCTVERSION              VER_FILEVERSION
-#define VER_PRODUCTVERSION_STR          VER_FILEVERSION_STR
 
 1 ICON "Blank.ico"
 2 ICON "UpArrow.ico"
@@ -17,23 +13,38 @@ VS_VERSION_INFO VERSIONINFO
   FILEOS 0x4L
   FILETYPE 0x2L
   FILESUBTYPE 0x0L
-BEGIN
-  BLOCK "StringFileInfo" BEGIN
-    BLOCK "040904B0" BEGIN
-      VALUE "OriginalFilename", "CharsOccurrences.wlx"
-      VALUE "LegalCopyright", "\xA9 Marian Denes, 2013-2014"
-      VALUE "ProductVersion", VER_PRODUCTVERSION_STR
-      VALUE "ProductName", "TC Lister Plugin for Displaying Character's and Digit's Occurrences"
-      VALUE "InternalName", "CharsOccurrences Lister Plugin"
-      VALUE "CompanyName", "Marian Denes"
-      VALUE "Comments", "Lister Plugin for Total Commander"
-      VALUE "FileVersion", VER_FILEVERSION_STR
-      VALUE "FileDescription", "TC lister plugin for displaying occurrences of characters and digits"
+  BEGIN
+    BLOCK "StringFileInfo" BEGIN
+      BLOCK "040904B0" BEGIN
+        VALUE "OriginalFilename", "CharsOccurrences.wlx"
+        VALUE "LegalCopyright", "\xA9 Marian Denes, 2013-2014"
+        VALUE "ProductVersion", VER_PRODUCTVERSION_STR
+        VALUE "ProductName", "TC Lister Plugin for Displaying Character's and Digit's Occurrences"
+        VALUE "InternalName", "CharsOccurrences Lister Plugin"
+        VALUE "CompanyName", "Marian Denes"
+        VALUE "Comments", "Lister Plugin for Total Commander"
+        VALUE "FileVersion", VER_FILEVERSION_STR
+        VALUE "FileDescription", "TC lister plugin for displaying occurrences of characters and digits"
+      END
+    END
+    BLOCK "VarFileInfo" BEGIN
+      VALUE "Translation", 0x0409, 1200 // Angliètina (USA)
     END
   END
-  BLOCK "VarFileInfo" BEGIN
-    VALUE "Translation", 0x0409, 1200 // Angliètina (USA)
-  END
-END
+
+SETTINGS DIALOGEX DISCARDABLE 6, 18, 210, 142
+STYLE /*DS_SHELLFONT|*/WS_CHILD/*|DS_MODALFRAME|DS_CONTEXTHELP|DS_3DLOOK|WS_SYSMENU|WS_VISIBLE*/
+FONT 8, "Tahoma", 0, 0, 1
+{
+  CONTROL "OK", IDOK, "Button", WS_TABSTOP, 160, 5, 45, 15
+  CONTROL "Cancel", IDCANCEL, "Button", WS_TABSTOP, 160, 23, 45, 15
+  CONTROL "Font size", 4001, "Button", BS_GROUPBOX, 8, 12, 108, 104
+  CONTROL "8", 4002, "Button", BS_AUTORADIOBUTTON, 24, 28, 56, 10
+  CONTROL "9", 4003, "Button", BS_AUTORADIOBUTTON, 24, 44, 56, 10
+  CONTROL "10", 4004, "Button", BS_AUTORADIOBUTTON, 24, 60, 56, 10
+  CONTROL "12", 4005, "Button", BS_AUTORADIOBUTTON, 24, 76, 56, 10
+  CONTROL "14", 4006, "Button", BS_AUTORADIOBUTTON, 24, 92, 56, 10
+}
+
 
 

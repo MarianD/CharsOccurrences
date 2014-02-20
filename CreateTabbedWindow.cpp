@@ -39,7 +39,8 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
     tab[cn::ListViewDigitTab]      .pszText = (TCHAR *) TEXT ("Digits");
     tab[cn::HistogramDigitTab]     .pszText = (TCHAR *) TEXT ("Histogram");
     tab[cn::VerticalRichEditTab]   .pszText = (TCHAR *) TEXT ("Vertical");
-    tab[cn::HorizontalRichEditATab].pszText = (TCHAR *) TEXT ("Horizontal");
+    tab[cn::HorizontalRichEditTab] .pszText = (TCHAR *) TEXT ("Horizontal");
+    tab[cn::SettingsTab]           .pszText = (TCHAR *) TEXT ("Settings");
     tab[cn::AboutRichEditTab]      .pszText = (TCHAR *) TEXT ("About");
 
     // Filling these tabs with common values and adding them to the Tab View

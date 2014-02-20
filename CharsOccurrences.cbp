@@ -127,6 +127,7 @@
 		<Unit filename="Status.h" />
 		<Unit filename="WndProcs.cpp" />
 		<Unit filename="WndProcs.h" />
+		<Unit filename="resource.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>

@@ -40,13 +40,16 @@ void switchTab(const HWND hwndTabCtrl)
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getVertical());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
-    case cn::HorizontalRichEditATab:
+    case cn::HorizontalRichEditTab:
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getHorizontal());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     case cn::AboutRichEditTab:
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getAbout());
         BringWindowToTop(pStatus->getHwndRichEdit());
+        break;
+    case cn::SettingsTab:
+        BringWindowToTop(pStatus->getHwndSettings());
         break;
     default:
         break;

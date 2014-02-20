@@ -13,17 +13,17 @@
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND                hwndFrom      = nullptr;
-    NMHDR             * pNotifyMsgHdr = nullptr;
+    HWND                hwndFrom       = nullptr;
+    NMHDR             * pNotifyMsgHdr  = nullptr;
     int                 cx, cy;
-    RECT                rect, * pRect = &rect;
-    LPNMLVCUSTOMDRAW    lplvcd        = nullptr;
-    MEASUREITEMSTRUCT * pMis          = nullptr;
-    DRAWITEMSTRUCT    * pDIS          = nullptr;
-    LVITEM  lvi;
-    WINDOWPOS WindowPos;
-    Status * pStatus                  = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
-    WNDPROC  oldTabCtrlProc           = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
+    RECT                rect, * pRect  = &rect;
+    LPNMLVCUSTOMDRAW    lplvcd         = nullptr;
+    MEASUREITEMSTRUCT * pMis           = nullptr;
+    DRAWITEMSTRUCT    * pDIS           = nullptr;
+    LVITEM              lvi;
+    WINDOWPOS           WindowPos;
+    Status            * pStatus        = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    WNDPROC             oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
 
     switch (uMsg)
     {
@@ -43,8 +43,8 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_DRAWITEM:       // Táto správa sa generuje len pri nastavenom štýle okna LVS_OWNERDRAWFIXED
         MessageBoxA(0, "Prijatá správa WM_DRAWITEM", "WM_DRAWITEM", MB_OK);
         pDIS = (DRAWITEMSTRUCT *) lParam;
-        hwndFrom = pDIS->CtlID == cn::ListViewAlphaId ? pStatus->getHwndListViewAlpha()
-                                                      : pStatus->getHwndListViewDigit();
+        hwndFrom = (pDIS->CtlID == cn::ListViewAlphaId) ? pStatus->getHwndListViewAlpha()
+                                                        : pStatus->getHwndListViewDigit();
 //        pDIS->rcItem.top    += 20L;
 //        pDIS->rcItem.bottom += 85L;
         TCHAR itemText[30];
@@ -60,7 +60,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 //        SendMessage(hwndFrom, LVM_GETITEM, 0, (LPARAM) &lvi); // Aj keï použijem toto namiesto makra ListView_GetItem()
 //
 ////        TextOut(pDIS->hDC, pDIS->rcItem.left, pDIS->rcItem.top, lpBuff, len);
-//        DrawText(pDIS->hDC, itemText, -1, &pDIS->rcItem, DT_BOTTOM  /*DT_SINGLELINE | DT_VCENTER*/);
+//        DrawText(pDIS->hDC, lvi.pszText, -1, &pDIS->rcItem, DT_BOTTOM  /*DT_SINGLELINE | DT_VCENTER*/);
         return TRUE;
 
     case WM_MEASUREITEM:                      // Táto správa sa posiela len pri zapnutom štýle okna LVS_OWNERDRAWFIXED
@@ -126,7 +126,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
             switch(lplvcd->nmcd.dwDrawStage)
             {
 
-            case CDDS_PREPAINT :
+            case CDDS_PREPAINT:
                 return CDRF_NOTIFYITEMDRAW;
 
             case CDDS_ITEMPREPAINT:

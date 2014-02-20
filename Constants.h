@@ -55,7 +55,8 @@
             ListViewDigitTab,
             HistogramDigitTab,
             VerticalRichEditTab,
-            HorizontalRichEditATab,
+            HorizontalRichEditTab,
+            SettingsTab,
             AboutRichEditTab,
             NumOfTabs              // This must be the last item, because it is not a tab for adding into Tab View
         };
