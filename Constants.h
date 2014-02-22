@@ -7,6 +7,13 @@
     {
         //**************************  Constants  **************************/
 
+        const TCHAR * const thisDLL =
+        #ifdef FOR_32_BIT
+            TEXT("CharsOccurrences.wlx");
+        #else
+            TEXT("CharsOccurrences.wlx64");
+        #endif
+
         const
         size_t     MaxCharsHorizAndVert = 4000;
         const int  MinPocetMiest        =    5;

@@ -9,69 +9,40 @@
 #include "Status.h"
 #include <wingdi.h>
 
+//
+//  Process WM_SIZE message for window/dialog: TabCtrl
+//
+void TabCtrl_OnSize(HWND hwnd, UINT state, int cx, int cy)
+{
+    RECT     rect, * pRect  = &rect;
+    Status * pStatus        = (Status *) GetProp(hwnd, cn::PointerToStatus);
+    WNDPROC  oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
+
+    FORWARD_WM_SIZE(hwnd, state, cx, cy, oldTabCtrlProc);  // Particularly for displaying arrows for short tabs row
+
+    // Computing of the new rectangle for the child windows
+    SetRect(pRect, 0, 0, cx, cy);
+    (void)
+    TabCtrl_AdjustRect(hwnd, FALSE, pRect);
+    pStatus->moveAllChildWindows(pRect);
+}
+
+
 
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     HWND                hwndFrom       = nullptr;
     NMHDR             * pNotifyMsgHdr  = nullptr;
-    int                 cx, cy;
-    RECT                rect, * pRect  = &rect;
     LPNMLVCUSTOMDRAW    lplvcd         = nullptr;
     MEASUREITEMSTRUCT * pMis           = nullptr;
     DRAWITEMSTRUCT    * pDIS           = nullptr;
-    LVITEM              lvi;
-    WINDOWPOS           WindowPos;
     Status            * pStatus        = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
     WNDPROC             oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
 
     switch (uMsg)
     {
-    case WM_SIZE:
-        oldTabCtrlProc(hwndTabCtrl, uMsg, wParam, lParam);       // Particularly for displaying arrows for short tabs row
-
-        // Computing of the new rectangle for the child windows
-        cx = GET_X_LPARAM(lParam);
-        cy = GET_Y_LPARAM(lParam);
-        SetRect(pRect, 0, 0, cx, cy);
-        (void)
-        TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
-        pStatus->moveAllChildWindows(pRect);
-        SendMessage(hwndTabCtrl, WM_WINDOWPOSCHANGED, 0, (LPARAM) &WindowPos);  // Aby sa poslala WM_MEASUREITEM
-        return 0;
-
-    case WM_DRAWITEM:       // Táto správa sa generuje len pri nastavenom štýle okna LVS_OWNERDRAWFIXED
-        MessageBoxA(0, "Prijatá správa WM_DRAWITEM", "WM_DRAWITEM", MB_OK);
-        pDIS = (DRAWITEMSTRUCT *) lParam;
-        hwndFrom = (pDIS->CtlID == cn::ListViewAlphaId) ? pStatus->getHwndListViewAlpha()
-                                                        : pStatus->getHwndListViewDigit();
-//        pDIS->rcItem.top    += 20L;
-//        pDIS->rcItem.bottom += 85L;
-        TCHAR itemText[30];
-        lvi.iItem      = pDIS->itemID;
-        lvi.iSubItem   = 0;
-        lvi.pszText    = itemText;
-        lvi.cchTextMax = 30;
-        lvi.mask       = LVIF_TEXT;
-
-//        **** Toto mi zhadzuje program, keï zmením ve¾kos okna PRED kliknutím na iné usporiadanie, dokonca aj keï to ****
-//        **** sem vôbec nemá ís (keï sa správa VM_DRAWITEM neposiela, pretože v štýle NIE JE LVS_OWNERDRAWFIXED) ****
-//        ListView_GetItem(hwndFrom, &lvi);       //TODO: Zisti, preèo mi toto pri zmene ve¾kosti okna zhadzuje program
-//        SendMessage(hwndFrom, LVM_GETITEM, 0, (LPARAM) &lvi); // Aj keï použijem toto namiesto makra ListView_GetItem()
-//
-////        TextOut(pDIS->hDC, pDIS->rcItem.left, pDIS->rcItem.top, lpBuff, len);
-//        DrawText(pDIS->hDC, lvi.pszText, -1, &pDIS->rcItem, DT_BOTTOM  /*DT_SINGLELINE | DT_VCENTER*/);
-        return TRUE;
-
-    case WM_MEASUREITEM:                      // Táto správa sa posiela len pri zapnutom štýle okna LVS_OWNERDRAWFIXED
-        pMis = (MEASUREITEMSTRUCT *) lParam;
-        if (pMis->CtlType == ODT_LISTVIEW)
-        {
-            pMis->itemHeight = 20L;     //Funguje až po zmene ve¾kosti okna, a len v režime Custom Draw
-//            MessageBoxA(0, "Prijatá správa VM_MEASUREITEM", "WM_MEASUREITEM", MB_OK);
-            return TRUE;
-        }
-        break;
+         HANDLE_MSG (hwndTabCtrl, WM_SIZE, TabCtrl_OnSize);
 
     case WM_NOTIFY:
         pNotifyMsgHdr = (NMHDR *) lParam;
@@ -148,39 +119,7 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
                                 FF_DONTCARE | DEFAULT_PITCH,  // fdwPitchAndFamily,
                                 TEXT("Courier New")           // lpszFace
                              ));
-//                GetFontForItem(lplvcd->nmcd.dwItemSpec,
-//                               lplvcd->nmcd.lItemlParam) );
-//                lplvcd->clrText = GetColorForItem(lplvcd->nmcd.dwItemSpec,
-//                                                  lplvcd->nmcd.lItemlParam);
-//                lplvcd->clrTextBk = GetBkColorForItem(lplvcd->nmcd.dwItemSpec,
-//                                                      lplvcd->nmcd.lItemlParam);
-
-                /* At this point, you can change the background colors for the item
-                and any subitems and return CDRF_NEWFONT. If the list-view control
-                is in report mode, you can simply return CDRF_NOTIFYSUBITEMDRAW
-                to customize the item's subitems individually
-                        ...*/
                 return CDRF_NEWFONT;
-            //  or return CDRF_NOTIFYSUBITEMDRAW;
-
-//            case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
-//                SelectObject(lplvcd->nmcd.hdc,
-//                             GetFontForSubItem(lplvcd->nmcd.dwItemSpec,
-//                                               lplvcd->nmcd.lItemlParam,
-//                                               lplvcd->iSubItem));
-//                lplvcd->clrText = GetColorForSubItem(lplvcd->nmcd.dwItemSpec,
-//                                                     lplvcd->nmcd.lItemlParam,
-//                                                     lplvcd->iSubItem));
-//                lplvcd->clrTextBk = GetBkColorForSubItem(lplvcd->nmcd.dwItemSpec,
-//                                                         lplvcd->nmcd.lItemlParam,
-//                                                         lplvcd->iSubItem));
-//
-//                /* This notification is received only if you are in report mode and
-//                returned CDRF_NOTIFYSUBITEMDRAW in the previous step. At
-//                this point, you can change the background colors for the
-//                subitem and return CDRF_NEWFONT.
-//                        ...*/
-//                return CDRF_NEWFONT;
             }
 
         default:

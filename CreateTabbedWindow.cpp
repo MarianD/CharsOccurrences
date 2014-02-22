@@ -53,8 +53,8 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
     }
 
     // ZÌskanie obdÂûnika pre zobrazovaciu Ëasù Tab Control
-    (void)
-    TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
+//    (void)
+//    TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
     return hwndTabCtrl;
 }

@@ -19,38 +19,47 @@ void switchTab(const HWND hwndTabCtrl)
     switch (TabCtrl_GetCurSel(hwndTabCtrl))
     {
     case cn::TextViewTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getText());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     case cn::ListViewAlphaTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
         BringWindowToTop(pStatus->getHwndListViewAlpha());
-            break;
+        break;
     case cn::HistogramAlphaTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
         BringWindowToTop(pStatus->getHwndHistogramAlpha());
         UpdateWindow    (pStatus->getHwndHistogramAlpha());
         break;
     case cn::ListViewDigitTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
         BringWindowToTop(pStatus->getHwndListViewDigit());
-            break;
+        break;
     case cn::HistogramDigitTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
         BringWindowToTop(pStatus->getHwndHistogramDigit());
         UpdateWindow    (pStatus->getHwndHistogramDigit());
         break;
     case cn::VerticalRichEditTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getVertical());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     case cn::HorizontalRichEditTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getHorizontal());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     case cn::AboutRichEditTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
         SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getAbout());
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     case cn::SettingsTab:
         ShowWindow(pStatus->getHwndSettings(), SW_SHOW);
         BringWindowToTop(pStatus->getHwndSettings());
+//        UpdateWindow    (pStatus->getHwndSettings());
         break;
     default:
         break;

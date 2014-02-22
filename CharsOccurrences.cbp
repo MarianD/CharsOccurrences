@@ -23,6 +23,7 @@
 					<Add option="-fexceptions" />
 					<Add option="-m32" />
 					<Add option="-D_DEBUG" />
+					<Add option="-DFOR_32_BIT" />
 				</Compiler>
 				<Linker>
 					<Add option="-m32" />
@@ -45,6 +46,7 @@
 					<Add option="-fexceptions" />
 					<Add option="-m32" />
 					<Add option="-DNDEBUG" />
+					<Add option="-DFOR_32_BIT" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

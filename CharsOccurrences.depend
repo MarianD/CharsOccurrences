@@ -29,11 +29,11 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1392889495 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1393010314 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	"resource.h"
 	"windows.h"
 
-1393005837 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1393098948 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 	"Classic.h"
@@ -52,7 +52,7 @@
 1368633432 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1393009856 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1393099168 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -92,7 +92,7 @@
 	<windows.h>
 	<commctrl.h>
 
-1392882833 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
+1393098338 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
 	"CreateTabbedWindow.h"
 	"Constants.h"
 
@@ -121,7 +121,7 @@
 	<commctrl.h>
 	<richedit.h>
 
-1392983845 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
+1393078797 c:\users\marian\documents\codeblocks\charsoccurrences\constants.h
 	<windows.h>
 
 1391006864 source:c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.cpp
@@ -136,7 +136,7 @@
 1368633322 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1392747437 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1393095968 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"CreateTabbedWindow.h"
 	"Constants.h"
@@ -197,7 +197,7 @@
 	<commctrl.h>
 	"version.h"
 
-1391006864 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
+1393098044 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
 	<cstdarg>
 	"Status.h"
 	"Constants.h"

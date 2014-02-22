@@ -13,6 +13,7 @@ Status::Status()
     hwndHistogramAlpha(0),
     hwndHistogramDigit(0),
     hwndRichEdit(0),
+    hwndSettings(0),
     oldTabCtrlWndProc(0),
     histgClientWidthHight(0),
     lastChosenTab(0),
@@ -41,4 +42,6 @@ Status::moveAllChildWindows(PRECT pRect)
     MoveWindow(hwndHistogramAlpha, left, top, width, height, TRUE);
     MoveWindow(hwndHistogramDigit, left, top, width, height, TRUE);
     MoveWindow(hwndRichEdit,       left, top, width, height, TRUE);
+    MoveWindow(hwndSettings,       left, top, width, height, TRUE);
+//    SetWindowPos(hwndSettings, 0,  SWP_NOZORDER);
 }
