@@ -68,21 +68,43 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     TabCtrl_AdjustRect(hwndTabCtrl, FALSE, &rect);
 
     // Creating child windows in the display area of the Tab Control
+    TCHAR chyba[20];
     HWND hwndListViewAlpha  = CreateListViewWindow (hwndTabCtrl, &rect, cn::ListViewAlphaId);
     HWND hwndListViewDigit  = CreateListViewWindow (hwndTabCtrl, &rect, cn::ListViewDigitId);
     HWND hwndHistogramAlpha = CreateHistogramWindow(hwndTabCtrl, &rect, cn::HistogramAlphaId);
     HWND hwndHistogramDigit = CreateHistogramWindow(hwndTabCtrl, &rect, cn::HistogramDigitId);
-    HWND hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect, cn::RichEditId);
-    TCHAR chyba[20];
-    HMODULE hModule         = GetModuleHandle(TEXT("CharsOccurrences.wlx"));
-    _stprintf(chyba,   TEXT("Chyba cislo %d"),   GetLastError());
-    MessageBox(0, chyba, TEXT("Chyba cislo"), MB_OK);
-    HWND hwndSettings       = CreateDialog(hModule, MAKEINTRESOURCE(SETTINGS), hwndTabCtrl, (DLGPROC) NewTabCtrlProc);
-    _stprintf(chyba,   TEXT("Chyba cislo %d"),   GetLastError());
-    MessageBox(0, chyba, TEXT("Chyba cislo"), MB_OK);
 
-	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndHistogramDigit /*&&
-        hwndSettings*/)
+    INITCOMMONCONTROLSEX iCC = {sizeof(INITCOMMONCONTROLSEX), ICC_STANDARD_CLASSES};
+    if (!InitCommonControlsEx(&iCC))
+    {
+//        _stprintf(chyba,   TEXT("0. chyba cislo %d"),   GetLastError());
+//        MessageBox(0, chyba, TEXT("Chyba cislo"), MB_OK);
+    }
+
+    HWND hwndRichEdit       = CreateRichEditWindow (hwndTabCtrl, &rect, cn::RichEditId);
+    if (!hwndRichEdit)
+    {
+        _stprintf(chyba,   TEXT("1. chyba cislo %d"),   GetLastError());
+        MessageBox(0, chyba, TEXT("Chyba cislo"), MB_OK);
+    }
+
+    HMODULE hMod            = GetModuleHandle(TEXT("CharsOccurrences.wlx"));
+//    if (hMod == NULL)
+//    {
+//        _stprintf(chyba,   TEXT("2. chyba cislo %d"),   GetLastError());
+//        MessageBox(0, chyba, TEXT("Chyba cislo"), MB_OK);
+//    }
+    HWND hwndSettings = CreateDialog((HINSTANCE) hMod, MAKEINTRESOURCE(SETTINGS), hwndTabCtrl, (DLGPROC) nullptr);
+//    if (!hwndSettings)
+//    {
+//        _stprintf(chyba,   TEXT("3. chyba cislo %d"),   GetLastError());
+//        MessageBox(0, chyba, TEXT("Chyba cislo"), MB_OK);
+//    }
+//    if (GetParent(hwndSettings) == hwndTabCtrl)
+//        MessageBox(0, TEXT("hwndSetting JE dcerskym oknom hwndTabCtrl!"), TEXT("OK"), MB_OK);
+
+	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit && hwndHistogramDigit &&
+        hwndSettings)
     {
         // Saving the windows handles
         pStatus->setHwndListViewAlpha (hwndListViewAlpha);
@@ -115,7 +137,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         ShowWindow(hwndHistogramAlpha, SW_SHOW);
         ShowWindow(hwndHistogramDigit, SW_SHOW);
         ShowWindow(hwndRichEdit,       SW_SHOW);
-        ShowWindow(hwndSettings,       SW_SHOW);
+//        ShowWindow(hwndSettings,       SW_SHOW);
     }
 
     return hwndTabCtrl;             // The function ListLoadNext() will use it

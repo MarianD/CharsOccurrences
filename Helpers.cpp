@@ -49,6 +49,7 @@ void switchTab(const HWND hwndTabCtrl)
         BringWindowToTop(pStatus->getHwndRichEdit());
         break;
     case cn::SettingsTab:
+        ShowWindow(pStatus->getHwndSettings(), SW_SHOW);
         BringWindowToTop(pStatus->getHwndSettings());
         break;
     default:

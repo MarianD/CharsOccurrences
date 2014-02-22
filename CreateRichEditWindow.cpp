@@ -8,7 +8,7 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect, int id)
 {
 	HWND       hwndRichEdit;
 	HWND       hwndTabCtrl = ParentWindow;
-    HINSTANCE  hinst       = nullptr;
+    HINSTANCE  hinst       = GetModuleHandle(nullptr);
     HMENU      childID     = (HMENU) (INT64) id;
     Status   * pStatus     = (Status *)  GetProp(hwndTabCtrl, cn::PointerToStatus );
     CHARFORMAT charFormat,
