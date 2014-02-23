@@ -52,7 +52,7 @@
 1368633432 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1393099168 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1393112073 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -67,13 +67,14 @@
 	"Constants.h"
 	"resource.h"
 
-1368633392 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
+1393111872 c:\users\marian\documents\codeblocks\charsoccurrences\listload.h
 	<windows.h>
+	<windowsx.h>
 
 1368834540 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1390661704 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1393110549 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -197,12 +198,12 @@
 	<commctrl.h>
 	"version.h"
 
-1393098044 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
+1393182565 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
 	<cstdarg>
 	"Status.h"
 	"Constants.h"
 
-1392886039 c:\users\marian\documents\codeblocks\charsoccurrences\status.h
+1393182534 c:\users\marian\documents\codeblocks\charsoccurrences\status.h
 	<windows.h>
 
 1368469902 c:\users\marian\documents\codeblocks\charsoccurrences\winver.h
