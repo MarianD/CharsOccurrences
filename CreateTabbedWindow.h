@@ -6,4 +6,4 @@
 
     HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect);
 
-#endif // ndef
+#endif // CREATETABBEDWINDOW_H

@@ -123,6 +123,8 @@
 		<Unit filename="ListNotificationReceived.h" />
 		<Unit filename="Main.cpp" />
 		<Unit filename="Main.h" />
+		<Unit filename="MsgHandlers.cpp" />
+		<Unit filename="MsgHandlers.h" />
 		<Unit filename="NaplnStrukturuWndClassEx.cpp" />
 		<Unit filename="NaplnStrukturuWndClassEx.h" />
 		<Unit filename="Status.cpp" />

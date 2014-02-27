@@ -4,7 +4,6 @@
     #include <windows.h>
     #include <windowsx.h>
     #include <commctrl.h>   // For WM_NOTIFY message crackers
-    #include <tchar.h>
 
     LRESULT CALLBACK
     NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam);
