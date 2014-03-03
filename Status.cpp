@@ -16,6 +16,8 @@ Status::Status()
     hwndSettings(0),
     oldTabCtrlWndProc(0),
     histgClientWidthHight(0),
+    histgClientWidth(0),
+    histgClientHight(0),
     lastChosenTab(0),
     lastClickedColumnAlpha (1),
     lastClickedColumnDigit (1),
