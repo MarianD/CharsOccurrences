@@ -32,7 +32,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     SetProp(hwndTabCtrl, cn::PointerToStatus,  (HANDLE) pStatus);
 
     // Subclassing of this window and saving the pointer of the old WindowProc to the instance of the class Status
-    WNDPROC oldTabCtrlProc = (WNDPROC) SetWindowLongPtr (hwndTabCtrl, GWLP_WNDPROC, (LONG_PTR) NewTabCtrlProc);
+    WNDPROC oldTabCtrlProc = SubclassWindow(hwndTabCtrl, NewTabCtrlProc);    // Macro defined in windowsx.h
     pStatus->setOldTabCtrlWndProc(oldTabCtrlProc);
 
         /*
