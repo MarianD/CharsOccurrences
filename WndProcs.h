@@ -3,6 +3,7 @@
 
     #include <windows.h>
     #include <windowsx.h>
+    #include <commctrl.h>   // For WM_NOTIFY message crackers
     #include <tchar.h>
 
     LRESULT CALLBACK

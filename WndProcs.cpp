@@ -9,6 +9,99 @@
 #include "Status.h"
 #include <wingdi.h>
 
+
+//
+//  Process WM_NOTIFY message for window/dialog: TabCtrl
+//
+static BOOL TabCtrl_OnNotify(HWND hwndTabCtrl, INT id, LPNMHDR pnm)
+{
+
+    HWND               hwndFrom = pnm->hwndFrom;
+    LPNMLVCUSTOMDRAW   lplvcd   = nullptr;
+    Status           * pStatus  = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+
+    switch (pnm->code)
+    {
+    case LVN_COLUMNCLICK:
+        LPNMLISTVIEW pNmLv;
+        int          column;
+        int          lastClickedColumn;    // It is increased by 1 to have oportunity to save it with + or -
+
+        pNmLv  = (LPNMLISTVIEW) pnm;
+        column = pNmLv->iSubItem;          // Numbered from 0, in spite of deleting the original column zero
+        ++column;                          // Now numbered from 1
+
+        /*
+         *  Let the sorting by the column 3 ("Percent") is the same as the sorting by
+         *  the column 2 ("Count") to don't confuse the user by no reaction after
+         *  clicking alternately to the headers of the column 2 and column 3 -
+         *  now both of them will behave as one unit (changing the sorting direction)
+         */
+        if (column == 3)
+            column = 2;
+
+        lastClickedColumn = (id == cn::ListViewAlphaId) ?
+                             pStatus->getLastClickedColumnAlpha() :
+                             pStatus->getLastClickedColumnDigit();
+
+        /*
+         *  Changing the direction of the ordering to unprefered if it was
+         *  the click on the column's header sorted in the prefered order
+         */
+        if (column == lastClickedColumn)
+            column *= -1;                   // + means preferred, - means unpreferred order
+
+        (void)
+        ListView_SortItems(hwndFrom, cmpFunction, (LPARAM) column);
+        setHeadersArrows(hwndFrom, column);
+
+       if (id == cn::ListViewAlphaId)
+            pStatus->setLastClickedColumnAlpha(column);
+        else
+            pStatus->setLastClickedColumnDigit(column);
+
+        return 0;       // The return value is ignored
+
+    case NM_CUSTOMDRAW:
+
+        lplvcd = (LPNMLVCUSTOMDRAW) pnm;
+
+        switch(lplvcd->nmcd.dwDrawStage)
+        {
+
+        case CDDS_PREPAINT:
+            return CDRF_NOTIFYITEMDRAW;
+
+        case CDDS_ITEMPREPAINT:
+            SelectFont(lplvcd->nmcd.hdc,
+                         CreateFont
+                         (
+                           -16,                           // nHeight,
+                            0,                            // nWidth,
+                            0,                            // nEscapement,
+                            0,                            // nOrientation,
+                            FW_BOLD,                      // fnWeight,
+                            0,                            // fdwItalic,
+                            0,                            // fdwUnderline,
+                            0,                            // fdwStrikeOut,
+                            DEFAULT_CHARSET,              // fdwCharSet,
+                            OUT_DEFAULT_PRECIS,           // fdwOutputPrecision
+                            CLIP_DEFAULT_PRECIS,          // fdwClipPrecision,
+                            DEFAULT_QUALITY,              // fdwQuality,
+                            FF_DONTCARE | DEFAULT_PITCH,  // fdwPitchAndFamily,
+                            TEXT("Courier New")           // lpszFace
+                         ));
+            return CDRF_NEWFONT;
+        default:
+            break;
+        }
+    default:
+        break;
+    }
+    return TRUE;    // In this case the return value is ignored
+}
+
+
 //
 //  Process WM_SIZE message for window/dialog: TabCtrl
 //
@@ -28,107 +121,19 @@ void TabCtrl_OnSize(HWND hwnd, UINT state, int cx, int cy)
 }
 
 
-
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND                hwndFrom       = nullptr;
-    NMHDR             * pNotifyMsgHdr  = nullptr;
-    LPNMLVCUSTOMDRAW    lplvcd         = nullptr;
-    MEASUREITEMSTRUCT * pMis           = nullptr;
-    DRAWITEMSTRUCT    * pDIS           = nullptr;
     Status            * pStatus        = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
     WNDPROC             oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
 
     switch (uMsg)
     {
-         HANDLE_MSG (hwndTabCtrl, WM_SIZE, TabCtrl_OnSize);
-
-    case WM_NOTIFY:
-        pNotifyMsgHdr = (NMHDR *) lParam;
-        hwndFrom      = pNotifyMsgHdr->hwndFrom;
-
-        switch (pNotifyMsgHdr->code)
-        {
-        case LVN_COLUMNCLICK:
-            LPNMLISTVIEW pNmLv;
-            int          column;
-            int          lastClickedColumn;     // It is increased by 1 to have oportunity to save it with + or -
-
-            pNmLv   = (LPNMLISTVIEW) lParam;
-            column  = pNmLv->iSubItem;          // Numbered from 0, in spite of deleting the original column zero
-            ++column;                           // Now numbered from 1
-
-            /*
-             *  Let the sorting by the column 3 ("Percent") is the same as the sorting by
-             *  the column 2 ("Count") to don't confuse the user by no reaction after
-             *  clicking alternately to the headers of the column 2 and column 3 -
-             *  now both of them will behave as one unit (changing the sorting direction)
-             */
-            if (column == 3)
-                column = 2;
-
-            lastClickedColumn = (hwndFrom == pStatus->getHwndListViewAlpha()) ?
-                                 pStatus->getLastClickedColumnAlpha() :
-                                 pStatus->getLastClickedColumnDigit();
-
-            /*
-             *  Changing the direction of the ordering to unprefered if it was
-             *  the click on the column's header sorted in the prefered order
-             */
-            if (column == lastClickedColumn)
-                column *= -1;                   // + means preferred, - means unpreferred order
-
-            (void)
-            ListView_SortItems(hwndFrom, cmpFunction, (LPARAM) column);
-            setHeadersArrows(hwndFrom, column);
-
-            if (hwndFrom == pStatus->getHwndListViewAlpha())
-                pStatus->setLastClickedColumnAlpha(column);
-            else
-                pStatus->setLastClickedColumnDigit(column);
-
-            return 0;       // The return value is ignored
-
-        case NM_CUSTOMDRAW:
-
-            lplvcd = (LPNMLVCUSTOMDRAW)lParam;
-
-            switch(lplvcd->nmcd.dwDrawStage)
-            {
-
-            case CDDS_PREPAINT:
-                return CDRF_NOTIFYITEMDRAW;
-
-            case CDDS_ITEMPREPAINT:
-                SelectObject(lplvcd->nmcd.hdc,
-                             CreateFont
-                             (
-                               -16,                           // nHeight,
-                                0,                            // nWidth,
-                                0,                            // nEscapement,
-                                0,                            // nOrientation,
-                                FW_BOLD,                      // fnWeight,
-                                0,                            // fdwItalic,
-                                0,                            // fdwUnderline,
-                                0,                            // fdwStrikeOut,
-                                DEFAULT_CHARSET,              // fdwCharSet,
-                                OUT_DEFAULT_PRECIS,           // fdwOutputPrecision
-                                CLIP_DEFAULT_PRECIS,          // fdwClipPrecision,
-                                DEFAULT_QUALITY,              // fdwQuality,
-                                FF_DONTCARE | DEFAULT_PITCH,  // fdwPitchAndFamily,
-                                TEXT("Courier New")           // lpszFace
-                             ));
-                return CDRF_NEWFONT;
-            }
-
-        default:
-            break;
-        }
+        HANDLE_MSG (hwndTabCtrl, WM_SIZE,   TabCtrl_OnSize);
+        HANDLE_MSG (hwndTabCtrl, WM_NOTIFY, TabCtrl_OnNotify);
     default:
-        break;
+        return CallWindowProc(oldTabCtrlProc, hwndTabCtrl, uMsg, wParam, lParam);
     }
-    return CallWindowProc(oldTabCtrlProc, hwndTabCtrl, uMsg, wParam, lParam);
 }
 
 
@@ -178,7 +183,6 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             baseChar = TEXT('0');
             numChars = cn::NumOfDigits;
             break;
-
         default:
             break;
         }
@@ -193,7 +197,7 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         }
 
         // Getting dimension of the client area of histogram window - both of them must have the same dimensions
-        lParam = pStatus->getHistgClientWidthHight();
+        lParam   = pStatus->getHistgClientWidthHight();
         cxClient = GET_X_LPARAM (lParam);
         cyClient = GET_Y_LPARAM (lParam);
 

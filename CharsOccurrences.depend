@@ -146,9 +146,10 @@
 	"Status.h"
 	<wingdi.h>
 
-1393786869 c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.h
+1393920092 c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.h
 	<windows.h>
 	<windowsx.h>
+	<commctrl.h>
 	<tchar.h>
 
 1368834736 source:c:\users\marian\documents\codeblocks\charsoccurrences\listgetdetectstring.cpp
@@ -198,7 +199,7 @@
 	<commctrl.h>
 	"version.h"
 
-1393786869 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
+1393859526 source:c:\users\marian\documents\codeblocks\charsoccurrences\status.cpp
 	<cstdarg>
 	"Status.h"
 	"Constants.h"
