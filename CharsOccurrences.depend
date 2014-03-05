@@ -33,7 +33,7 @@
 	"resource.h"
 	"windows.h"
 
-1394030197 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1394038914 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 	"Classic.h"
@@ -52,7 +52,7 @@
 1368633432 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1394030197 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1394039555 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -74,7 +74,7 @@
 1368834540 c:\users\marian\documents\codeblocks\charsoccurrences\exports.h
 	<windows.h>
 
-1394030197 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
+1394030824 source:c:\users\marian\documents\codeblocks\charsoccurrences\listloadnext.cpp
 	"ListLoadNext.h"
 	"CreateRichEditWindow.h"
 	"Helpers.h"
@@ -247,7 +247,7 @@
 
 1394030197 c:\users\marian\documents\codeblocks\charsoccurrences\resource.h
 
-1394030537 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
+1394030864 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
 	"MsgHandlers.h"
 	"Constants.h"
 	"Helpers.h"

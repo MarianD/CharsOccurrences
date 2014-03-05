@@ -11,59 +11,65 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 /********************** Helper functions *************************/
 
+void hideAllChildren(const HWND hwndTabCtrl)
+{
+    Status  * pStatus  = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+
+    ShowWindow(pStatus->getHwndRichEdit(),       SW_HIDE);
+    ShowWindow(pStatus->getHwndHistogramAlpha(), SW_HIDE);
+    ShowWindow(pStatus->getHwndHistogramDigit(), SW_HIDE);
+    ShowWindow(pStatus->getHwndSettings(),       SW_HIDE);
+}
+
+
 void switchTab(const HWND hwndTabCtrl)
 {
-    Classic * pClassic = (Classic *) GetProp(hwndTabCtrl, cn::PointerToClassic);
-    Status  * pStatus  = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    Classic * pClassic    = (Classic *) GetProp(hwndTabCtrl, cn::PointerToClassic);
+    Status  * pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    HWND      hwndCurrent = nullptr;
+
+    hideAllChildren(hwndTabCtrl);
 
     switch (TabCtrl_GetCurSel(hwndTabCtrl))
     {
     case cn::TextViewTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
-        SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getText());
-        BringWindowToTop(pStatus->getHwndRichEdit());
+        hwndCurrent = pStatus->getHwndRichEdit();
+        SetWindowText(hwndCurrent, pClassic->getText());
         break;
     case cn::ListViewAlphaTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
-        BringWindowToTop(pStatus->getHwndListViewAlpha());
+        hwndCurrent = pStatus->getHwndListViewAlpha();
         break;
     case cn::HistogramAlphaTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
-        BringWindowToTop(pStatus->getHwndHistogramAlpha());
-        UpdateWindow    (pStatus->getHwndHistogramAlpha());
+        hwndCurrent = pStatus->getHwndHistogramAlpha();
         break;
     case cn::ListViewDigitTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
-        BringWindowToTop(pStatus->getHwndListViewDigit());
+        hwndCurrent = pStatus->getHwndListViewDigit();
         break;
     case cn::HistogramDigitTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
-        BringWindowToTop(pStatus->getHwndHistogramDigit());
-        UpdateWindow    (pStatus->getHwndHistogramDigit());
+        hwndCurrent = pStatus->getHwndHistogramDigit();
         break;
     case cn::VerticalRichEditTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
-        SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getVertical());
-        BringWindowToTop(pStatus->getHwndRichEdit());
+        hwndCurrent = pStatus->getHwndRichEdit();
+        SetWindowText(pStatus->getHwndRichEdit(), pClassic->getVertical());
         break;
     case cn::HorizontalRichEditTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
-        SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getHorizontal());
-        BringWindowToTop(pStatus->getHwndRichEdit());
-        break;
-    case cn::AboutRichEditTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_HIDE);
-        SetWindowText   (pStatus->getHwndRichEdit(), pClassic->getAbout());
-        BringWindowToTop(pStatus->getHwndRichEdit());
+        hwndCurrent = pStatus->getHwndRichEdit();
+        SetWindowText(pStatus->getHwndRichEdit(), pClassic->getHorizontal());
         break;
     case cn::SettingsTab:
-        ShowWindow(pStatus->getHwndSettings(), SW_SHOW);
-        BringWindowToTop(pStatus->getHwndSettings());
-//        UpdateWindow    (pStatus->getHwndSettings());
+        hwndCurrent = pStatus->getHwndSettings();
+        break;
+    case cn::AboutRichEditTab:
+        hwndCurrent = pStatus->getHwndRichEdit();
+        SetWindowText(pStatus->getHwndRichEdit(), pClassic->getAbout());
         break;
     default:
         break;
     }
+
+//    UpdateWindow    (hwndCurrent);    // This made bad things in ListViews in 32-bit version
+    BringWindowToTop(hwndCurrent);
+    ShowWindow      (hwndCurrent, SW_SHOW);
 }
 
 

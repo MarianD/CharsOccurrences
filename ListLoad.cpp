@@ -109,8 +109,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
 
         ShowWindow(hwndListViewAlpha,  SW_SHOW);
         ShowWindow(hwndListViewDigit,  SW_SHOW);
-        ShowWindow(hwndHistogramAlpha, SW_SHOW);
-        ShowWindow(hwndHistogramDigit, SW_SHOW);
         ShowWindow(hwndRichEdit,       SW_SHOW);
         ShowWindow(hwndSettings,       SW_HIDE);
         MoveWindow(hwndSettings,       rect.left, rect.top,
