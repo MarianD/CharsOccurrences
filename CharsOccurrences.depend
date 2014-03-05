@@ -33,7 +33,7 @@
 	"resource.h"
 	"windows.h"
 
-1394038914 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1394049557 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 	"Classic.h"
@@ -52,7 +52,7 @@
 1368633432 c:\users\marian\documents\codeblocks\charsoccurrences\main.h
 	<windows.h>
 
-1394039555 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
+1394050611 source:c:\users\marian\documents\codeblocks\charsoccurrences\listload.cpp
 	"ListLoad.h"
 	"CreateTabbedWindow.h"
 	"CreateHistogramWindow.h"
@@ -93,7 +93,7 @@
 	<windows.h>
 	<commctrl.h>
 
-1394030196 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
+1394049949 source:c:\users\marian\documents\codeblocks\charsoccurrences\createtabbedwindow.cpp
 	"CreateTabbedWindow.h"
 	"Constants.h"
 

@@ -13,17 +13,16 @@
  */
 HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
 {
-    HWND      hwndTabCtrl;
-    HINSTANCE hinst    =  nullptr;
-    HMENU     childID  = (HMENU) 0;
+    HINSTANCE hinst   =  nullptr;
+    HMENU     childID = (HMENU) 0;
 
-    hwndTabCtrl = CreateWindowEx(0, WC_TABCONTROL, TEXT(""),
-                                WS_CHILD    | WS_VISIBLE      | WS_CLIPCHILDREN |
-                                TCS_BUTTONS | TCS_FLATBUTTONS | TCS_HOTTRACK,
-                                pRect->left, pRect->top,
-                                pRect->right  - pRect->left,
-                                pRect->bottom - pRect->top,
-                                ParentWindow, childID, hinst, nullptr);
+    HWND hwndTabCtrl  = CreateWindowEx(0, WC_TABCONTROL, TEXT(""),
+                                       WS_CHILD    | WS_VISIBLE      | WS_CLIPCHILDREN |
+                                       TCS_BUTTONS | TCS_FLATBUTTONS | TCS_HOTTRACK,
+                                       pRect->left, pRect->top,
+                                       pRect->right  - pRect->left,
+                                       pRect->bottom - pRect->top,
+                                       ParentWindow, childID, hinst, nullptr);
 
     // Setting the minimal width of tabs
     (void)
@@ -51,10 +50,6 @@ HWND CreateTabbedWindow(HWND ParentWindow, RECT * pRect)
         (void)
         TabCtrl_InsertItem(hwndTabCtrl, i, tab + i);
     }
-
-    // ZÌskanie obdÂûnika pre zobrazovaciu Ëasù Tab Control
-//    (void)
-//    TabCtrl_AdjustRect(hwndTabCtrl, FALSE, pRect);
 
     return hwndTabCtrl;
 }

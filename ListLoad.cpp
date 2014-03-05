@@ -96,9 +96,6 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         pClassic->naplnListView(hwndListViewDigit, cn::CharsTypeDigit);
 
         // Let show items in the ListViews in the last used order
-        HWND hwndListViewAlpha      = pStatus->getHwndListViewAlpha();
-        HWND hwndListViewDigit      = pStatus->getHwndListViewDigit();
-
         (void)
         ListView_SortItems(hwndListViewAlpha, cmpFunction, lastClickedColumnAlpha);
         (void)
@@ -107,17 +104,15 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         setHeadersArrows  (hwndListViewAlpha, lastClickedColumnAlpha);
         setHeadersArrows  (hwndListViewDigit, lastClickedColumnDigit);
 
-        ShowWindow(hwndListViewAlpha,  SW_SHOW);
-        ShowWindow(hwndListViewDigit,  SW_SHOW);
-        ShowWindow(hwndRichEdit,       SW_SHOW);
-        ShowWindow(hwndSettings,       SW_HIDE);
-        MoveWindow(hwndSettings,       rect.left, rect.top,
-                                       rect.right  - rect.left,
-                                       rect.bottom - rect.top, FALSE);
+        MoveWindow(hwndSettings, rect.left, rect.top,
+                                 rect.right  - rect.left,
+                                 rect.bottom - rect.top, FALSE);
         (void)
         TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
         switchTab(hwndTabCtrl);
-
+        (void)
+        TabCtrl_SetCurSel(hwndTabCtrl, lastChosenTab);
+        switchTab(hwndTabCtrl);
     }
 
     return hwndTabCtrl;             // The function ListLoadNext() will use it
