@@ -100,8 +100,6 @@ int TabCtrl_OnCustomDraw(LPNMLVCUSTOMDRAW lplvcd)
 //
 BOOL TabCtrl_OnNotify(HWND hwndTabCtrl, INT id, LPNMHDR pnm)
 {
-
-    HWND               hwndFrom = pnm->hwndFrom;
     LPNMLVCUSTOMDRAW   lplvcd   = nullptr;
     Status           * pStatus  = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
 
@@ -113,10 +111,9 @@ BOOL TabCtrl_OnNotify(HWND hwndTabCtrl, INT id, LPNMHDR pnm)
         lplvcd = (LPNMLVCUSTOMDRAW) pnm;
         return TabCtrl_OnCustomDraw(lplvcd);
     default:
-        break;
+        WNDPROC oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
+        return FORWARD_WM_NOTIFY(hwndTabCtrl, id, pnm, oldTabCtrlProc);  // Particularly for displaying arrows for short tabs row
     }
-    WNDPROC oldTabCtrlProc = (WNDPROC) (pStatus->getOldTabCtrlWndProc());
-    FORWARD_WM_NOTIFY(hwndTabCtrl, id, pnm, oldTabCtrlProc);  // Particularly for displaying arrows for short tabs row
 }
 
 

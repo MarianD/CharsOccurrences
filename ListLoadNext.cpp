@@ -57,6 +57,7 @@ ListLoadNext(HWND /*ParentWin*/, HWND ListWin, char* FileToLoad, int /*ShowFlags
     if (TabCtrl_GetCurSel(hwndTabCtrl) == cn::AboutRichEditTab ||   // The tab "About" is not interesting,
         TabCtrl_GetCurSel(hwndTabCtrl) == cn::SettingsTab )         // nor the tab "Settings",
     {
+        (void)
         TabCtrl_SetCurSel(hwndTabCtrl, cn::TextViewTab);            // so let it switch to the "Text" tab
         pStatus->setLastChosenTab(cn::TextViewTab);                 // and save it (for latter saving to .ini file)
     }
