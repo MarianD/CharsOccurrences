@@ -134,3 +134,18 @@ void TabCtrl_OnSize(HWND hwnd, UINT state, int cx, int cy)
     TabCtrl_AdjustRect(hwnd, FALSE, pRect);
     pStatus->moveAllChildWindows(pRect);
 }
+
+
+//
+//  Process WM_SIZE message for window/dialog: HistogramAlpha & HistogramDigit
+//
+void Histg_OnSize(HWND hwndHistogram, UINT /*state*/, int cx, int cy)
+{
+    HWND     hwndTabCtrl = GetParent(hwndHistogram);
+    Status * pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+
+	// Saving dimensions of client area of histogram window (the same as of histogram window itself)
+	pStatus->setHistgClientWidth(cx);
+	pStatus->setHistgClientHight(cy);
+	pStatus->setHistgClientWidthHight(MAKELPARAM(cx,cy));
+}

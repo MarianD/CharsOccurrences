@@ -53,14 +53,11 @@ HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
     HWND        hwndTabCtrl = (HWND)      GetWindowLongPtr(hWnd,  GWLP_HWNDPARENT);
     Classic *   pClassic    = (Classic *) GetProp(hwndTabCtrl, cn::PointerToClassic);
-    Status  *   pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToClassic);
+    Status  *   pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
 
     switch (uMsg)
     {
-    case WM_SIZE:
-        // Saving dimension of the client area of histogram window - both of them must have the same dimensions
-        pStatus->setHistgClientWidthHight(lParam);
-        return 0;
+        HANDLE_MSG (hWnd, WM_SIZE,  Histg_OnSize);
     case WM_PAINT:
         switch (GetWindowLong(hWnd, GWL_ID))
         {

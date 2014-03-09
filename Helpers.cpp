@@ -67,7 +67,6 @@ void switchTab(const HWND hwndTabCtrl)
         break;
     }
 
-//    UpdateWindow    (hwndCurrent);    // This made bad things in ListViews in 32-bit version
     BringWindowToTop(hwndCurrent);
     ShowWindow      (hwndCurrent, SW_SHOW);
 }
