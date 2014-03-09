@@ -15,7 +15,6 @@ Status::Status()
     hwndRichEdit(0),
     hwndSettings(0),
     oldTabCtrlWndProc(0),
-    histgClientWidthHight(0),
     histgClientWidth(0),
     histgClientHight(0),
     lastChosenTab(0),
