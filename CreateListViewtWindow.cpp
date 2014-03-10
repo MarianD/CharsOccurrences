@@ -28,7 +28,7 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
 
         // Preparation for adding columns to the List-View control
         TCHAR     colHeader[4][10] = {TEXT(""), TEXT("???"), TEXT("Count"), TEXT("Percent")};
-        const int colWidth [4]     = {0,        50 + 20,     53 + 20,       60 + 40};
+//        const int colWidth [4]     = {0,        50 + 20,     53 + 20,       60 + 40};
 
         lstrcpy(colHeader[1], (id == cn::ListViewAlphaId) ? TEXT("Letter") : TEXT("Digit"));
 
@@ -45,8 +45,8 @@ HWND CreateListViewWindow(HWND ParentWindow, RECT * pRect, int id)
         for (int column = 0; column < 4; ++column)
         {
             lvc.iSubItem = column;
-            lvc.pszText  = colHeader[column];
-            lvc.cx       = colWidth [column];
+            lvc.pszText  = colHeader   [column];
+            lvc.cx       = cn::colWidth[column];
             lvc.fmt      = (column == 1) ? LVCFMT_CENTER : LVCFMT_RIGHT;
 //          lvc.fmt     |= LVCFMT_BITMAP_ON_RIGHT;                          // It was not good for the alignment
             lvc.iImage   = -1;  // No image

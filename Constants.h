@@ -21,6 +21,12 @@
         const long defaultFontSize      =   12;     // In points; 1 point = 1/72 of inch
         const long TwipsInInch          = 1440;
         const long PointsInInch         =   72;
+        const int colWidth[4]           =
+                                            #ifdef FOR_32_BIT
+                                                {0, 100, 90, 110};
+                                            #else
+                                                {0,  70, 73, 100};
+                                            #endif
 
         const
         TCHAR * const TextAbout         = TEXT("\n"
