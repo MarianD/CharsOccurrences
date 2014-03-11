@@ -7,4 +7,5 @@
     #define VER_PRODUCTVERSION_STR          VER_FILEVERSION_STR
     #define SETTINGS                        1001
 
+    #define SELECT_FONT                     4007
 #endif // RESOURCE_H_INCLUDED

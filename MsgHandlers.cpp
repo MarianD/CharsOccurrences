@@ -6,6 +6,7 @@
 #include "Helpers.h"
 #include "Classic.h"
 #include "Status.h"
+#include "resource.h"
 #include <wingdi.h>
 
 
@@ -257,7 +258,7 @@ void Histg_OnPaint(HWND hwndHistogram)
 //
 //  Process WM_INITDIALOG message for dialog: Settings
 //
-BOOL Settings_OnInitDialog(HWND hwndSettings, HWND hwndFocus, LPARAM lParam)
+BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lParam*/)
 {
 //    hwndRadioButton8 = GetDlgItem(hwndSettings, 4002);
 
@@ -274,14 +275,14 @@ BOOL Settings_OnInitDialog(HWND hwndSettings, HWND hwndFocus, LPARAM lParam)
 }
 
 
-void Settings_OnCommand(HWND hwndSettings, int id, HWND hwndCtl, UINT codeNotify)
+void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*codeNotify*/)
 {
 	switch (id)
 	{
-    case 4007:
+    case SELECT_FONT:
 //        cmdClick1_Click (hwnd);
         static LOGFONT logfont ;
-        static HFONT hFont ;
+//        static HFONT hFont ;
         CHOOSEFONT cf ;
         cf.lStructSize = sizeof (CHOOSEFONT) ;
         cf.hwndOwner = hwndSettings ;

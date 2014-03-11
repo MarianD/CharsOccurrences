@@ -44,7 +44,7 @@ FONT 10, "Tahoma", 0, 0, 1
   CONTROL "10", 4004, "Button", BS_AUTORADIOBUTTON,     24, 60, 36,  10
   CONTROL "12", 4005, "Button", BS_AUTORADIOBUTTON,     24, 76, 36,  10
   CONTROL "14", 4006, "Button", BS_AUTORADIOBUTTON,     24, 92, 36,  10
-  CONTROL "Select font...", 4007, "Button", WS_TABSTOP, 74, 52, 50,  14
+  CONTROL "Select font...", SELECT_FONT, "Button", WS_TABSTOP, 74, 52, 50,  14
 }
 
 
