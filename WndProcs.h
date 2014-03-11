@@ -12,4 +12,7 @@
     LRESULT CALLBACK
     HistogramProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+    LRESULT CALLBACK
+    SettingsProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
 #endif // WNDPROCS_H

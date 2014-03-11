@@ -18,8 +18,16 @@
     BOOL
     TabCtrl_OnNotify(HWND hwndTabCtrl, INT id, LPNMHDR pnm);
 
-    void Histg_OnSize(HWND hwndHistogram, UINT /*state*/, int cx, int cy);
+    void
+    Histg_OnSize(HWND hwndHistogram, UINT /*state*/, int cx, int cy);
 
-    void Histg_OnPaint(HWND hwndHistogram);
+    void
+    Histg_OnPaint(HWND hwndHistogram);
+
+    BOOL
+    Settings_OnInitDialog(HWND hwndSettings, HWND hwndFocus, LPARAM lParam);
+
+    void
+    Settings_OnCommand(HWND hwndSettings, int id, HWND hwndCtl, UINT codeNotify);
 
 #endif // MSGHANDLERS_H_INCLUDED

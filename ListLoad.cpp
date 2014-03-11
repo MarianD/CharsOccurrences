@@ -78,7 +78,7 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
     HWND hwndHistogramDigit  = CreateHistogramWindow(hwndTabCtrl, &rect, cn::HistogramDigitId);
     HWND hwndRichEdit        = CreateRichEditWindow (hwndTabCtrl, &rect, cn::RichEditId);
     HWND hwndSettings        = CreateDialog((HINSTANCE) hMod, MAKEINTRESOURCE(SETTINGS), hwndTabCtrl,
-                                            (DLGPROC) nullptr);
+                                            (DLGPROC) SettingsProc);
 
 	if (hwndListViewAlpha && hwndListViewDigit && hwndHistogramAlpha && hwndHistogramDigit &&
         hwndRichEdit      && hwndSettings)

@@ -252,3 +252,56 @@ void Histg_OnPaint(HWND hwndHistogram)
         DrawText(hdc, &pismeno, 1, pRect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
     }
 }
+
+
+//
+//  Process WM_INITDIALOG message for dialog: Settings
+//
+BOOL Settings_OnInitDialog(HWND hwndSettings, HWND hwndFocus, LPARAM lParam)
+{
+//    hwndRadioButton8 = GetDlgItem(hwndSettings, 4002);
+
+
+    CheckRadioButton(hwndSettings, 4002, 4006, 4002);
+
+//    CheckRadioButton(
+//        HWND hDlg,	// handle to dialog box
+//        int nIDFirstButton,	// identifier of first radio button in group
+//        int nIDLastButton,	// identifier of last radio button in group
+//        int nIDCheckButton	// identifier of radio button to select
+//    );
+   return 0;
+}
+
+
+void Settings_OnCommand(HWND hwndSettings, int id, HWND hwndCtl, UINT codeNotify)
+{
+	switch (id)
+	{
+    case 4007:
+//        cmdClick1_Click (hwnd);
+        static LOGFONT logfont ;
+        static HFONT hFont ;
+        CHOOSEFONT cf ;
+        cf.lStructSize = sizeof (CHOOSEFONT) ;
+        cf.hwndOwner = hwndSettings ;
+        cf.hDC = NULL ;
+        cf.lpLogFont = &logfont ;
+        cf.iPointSize = 0 ;
+        cf.Flags = CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS | CF_EFFECTS ;
+        cf.rgbColors = 0 ;
+        cf.lCustData = 0 ;
+        cf.lpfnHook = NULL ;
+        cf.lpTemplateName = NULL ;
+        cf.hInstance = NULL ;
+        cf.lpszStyle = NULL ;
+        cf.nFontType = 0 ; // Returned from ChooseFont
+        cf.nSizeMin = 0 ;
+        cf.nSizeMax = 0 ;
+        (void) //return
+        ChooseFont (&cf) ;
+        break;
+    default:
+        break;
+    }
+}
