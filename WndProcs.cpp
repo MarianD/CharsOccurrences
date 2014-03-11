@@ -48,8 +48,8 @@ SettingsProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg)
     {
 //		HANDLE_MSG (hWnd, WM_CLOSE, Settings_OnClose);
-		HANDLE_MSG (hWnd, WM_COMMAND, Settings_OnCommand);
 		HANDLE_MSG (hWnd, WM_INITDIALOG, Settings_OnInitDialog);
+		HANDLE_MSG (hWnd, WM_COMMAND, Settings_OnCommand);
 //		HANDLE_MSG (hWnd, WM_SIZE, Settings_OnSize);
 //		HANDLE_MSG (hWnd, WM_GETMINMAXINFO, Settings_OnGetMinMaxInfo);
 //		HANDLE_MSG (hWnd, WM_NOTIFY, Settings_OnNotify);

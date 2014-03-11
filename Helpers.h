@@ -28,5 +28,8 @@
     InitListViewImageLists(HWND hWndListView);
 
     void
+    paintHistogram(HWND hwndHistogram, HDC hdc, int base, TCHAR baseChar, int numChars);
+
+    void
     setHeadersArrows(HWND hwndListView, int lastClickedColumn);
 #endif // ndef
