@@ -210,27 +210,7 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
 	switch (id)
 	{
     case SELECT_FONT:
-//        cmdClick1_Click (hwnd);
-        static LOGFONT logfont ;
-//        static HFONT hFont ;
-        CHOOSEFONT cf ;
-        cf.lStructSize = sizeof (CHOOSEFONT) ;
-        cf.hwndOwner = hwndSettings ;
-        cf.hDC = NULL ;
-        cf.lpLogFont = &logfont ;
-        cf.iPointSize = 0 ;
-        cf.Flags = CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS | CF_EFFECTS ;
-        cf.rgbColors = 0 ;
-        cf.lCustData = 0 ;
-        cf.lpfnHook = NULL ;
-        cf.lpTemplateName = NULL ;
-        cf.hInstance = NULL ;
-        cf.lpszStyle = NULL ;
-        cf.nFontType = 0 ; // Returned from ChooseFont
-        cf.nSizeMin = 0 ;
-        cf.nSizeMax = 0 ;
-        (void) //return
-        ChooseFont (&cf) ;
+        selectFont(hwndSettings);
         break;
     default:
         break;

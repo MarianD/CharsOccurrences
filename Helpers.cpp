@@ -175,6 +175,30 @@ void paintHistogram(HWND hwndHistogram, HDC hdc, int base, TCHAR baseChar, int n
     }
 }
 
+void selectFont(HWND hwndSettings)
+{
+        static LOGFONT logfont ;
+        CHOOSEFONT cf ;
+        cf.lStructSize = sizeof (CHOOSEFONT) ;
+        cf.hwndOwner = hwndSettings ;
+        cf.hDC = NULL ;
+        cf.lpLogFont = &logfont ;
+        cf.iPointSize = 0 ;
+        cf.Flags = CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS | CF_EFFECTS ;
+        cf.rgbColors = 0 ;
+        cf.lCustData = 0 ;
+        cf.lpfnHook = NULL ;
+        cf.lpTemplateName = NULL ;
+        cf.hInstance = NULL ;
+        cf.lpszStyle = NULL ;
+        cf.nFontType = 0 ; // Returned from ChooseFont
+        cf.nSizeMin = 0 ;
+        cf.nSizeMax = 0 ;
+        (void) //return
+        ChooseFont (&cf) ;
+}
+
+
 /** @brief CallBack funkcia volaná pri požiadavke na zoradenie ListView pod¾a niektorého ståpca
  *
  * @param  hodnota1 LPARAM - 1. porovnávaná hodnota ako kombinácia poètu výskytov a por. èísla písmena (0-25)

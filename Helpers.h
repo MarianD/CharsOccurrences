@@ -31,5 +31,8 @@
     paintHistogram(HWND hwndHistogram, HDC hdc, int base, TCHAR baseChar, int numChars);
 
     void
+    selectFont(HWND hwndSettings);
+
+    void
     setHeadersArrows(HWND hwndListView, int lastClickedColumn);
 #endif // ndef
