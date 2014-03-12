@@ -178,7 +178,7 @@ void Histg_OnPaint(HWND hwndHistogram)
         break;
     }
 
-    hdc          = BeginPaint(hwndHistogram, &ps);
+    hdc = BeginPaint(hwndHistogram, &ps);
     paintHistogram(hwndHistogram, hdc, base, baseChar, numChars);
     (void)
     EndPaint(hwndHistogram, &ps);
@@ -190,13 +190,33 @@ void Histg_OnPaint(HWND hwndHistogram)
 //
 BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lParam*/)
 {
-//    hwndRadioButton8 = GetDlgItem(hwndSettings, 4002);
+    HWND     hwndTabCtrl = GetParent(hwndSettings);
+    Status * pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    int      fontSize    = pStatus->getFontSize();
 
-
-    CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_12, IDC_SIZE_08);
+    switch (fontSize)
+    {
+    case  8:
+        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_08);
+        break;
+    case  9:
+        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_09);
+        break;
+    case 10:
+        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_10);
+        break;
+    case 12:
+        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_12);
+        break;
+    case 14:
+        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_14);
+        break;
+    default:
+        break;
+    }
 
 //    CheckRadioButton(
-//        HWND hDlg,	// handle to dialog box
+//        HWND hDlg,	        // handle to dialog box
 //        int nIDFirstButton,	// identifier of first radio button in group
 //        int nIDLastButton,	// identifier of last radio button in group
 //        int nIDCheckButton	// identifier of radio button to select
@@ -209,6 +229,21 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
 {
 	switch (id)
 	{
+    case IDC_SIZE_08:
+        setFontSize(hwndSettings,  8);
+        break;
+    case IDC_SIZE_09:
+        setFontSize(hwndSettings,  9);
+        break;
+    case IDC_SIZE_10:
+        setFontSize(hwndSettings, 10);
+        break;
+    case IDC_SIZE_12:
+        setFontSize(hwndSettings, 12);
+        break;
+    case IDC_SIZE_14:
+        setFontSize(hwndSettings, 14);
+        break;
     case IDC_SELECT_FONT:
         selectFont(hwndSettings);
         break;

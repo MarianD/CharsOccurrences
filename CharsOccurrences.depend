@@ -29,17 +29,17 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1394557643 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1394653477 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	"resource.h"
 	"windows.h"
 
-1394635453 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1394652794 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 	"Classic.h"
 	"Status.h"
 
-1394635453 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
+1394652794 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
 	<windows.h>
 	<string>
 	<commctrl.h>
@@ -245,9 +245,9 @@
 	<mcx.h>
 	<imm.h>
 
-1394649948 c:\users\marian\documents\codeblocks\charsoccurrences\resource.h
+1394653403 c:\users\marian\documents\codeblocks\charsoccurrences\resource.h
 
-1394649948 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
+1394653513 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
 	"MsgHandlers.h"
 	"Constants.h"
 	"Helpers.h"

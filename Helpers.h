@@ -31,6 +31,9 @@
     paintHistogram(HWND hwndHistogram, HDC hdc, int base, TCHAR baseChar, int numChars);
 
     void
+    setFontSize(HWND hwndSettings, int size);
+
+    void
     selectFont(HWND hwndSettings);
 
     void

@@ -175,6 +175,12 @@ void paintHistogram(HWND hwndHistogram, HDC hdc, int base, TCHAR baseChar, int n
     }
 }
 
+
+void setFontSize(HWND hwndSettings, int size)
+{
+
+}
+
 void selectFont(HWND hwndSettings)
 {
         static LOGFONT logfont ;
