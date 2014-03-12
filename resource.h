@@ -7,5 +7,10 @@
     #define VER_PRODUCTVERSION_STR          VER_FILEVERSION_STR
     #define SETTINGS                        1001
 
-    #define SELECT_FONT                     4007
+    #define IDC_SIZE_08                     4008
+    #define IDC_SIZE_09                     4009
+    #define IDC_SIZE_10                     4010
+    #define IDC_SIZE_11                     4011
+    #define IDC_SIZE_12                     4012
+    #define IDC_SELECT_FONT                 4007
 #endif // RESOURCE_H_INCLUDED

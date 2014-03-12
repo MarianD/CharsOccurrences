@@ -193,7 +193,7 @@ BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lPara
 //    hwndRadioButton8 = GetDlgItem(hwndSettings, 4002);
 
 
-    CheckRadioButton(hwndSettings, 4002, 4006, 4002);
+    CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_12, IDC_SIZE_08);
 
 //    CheckRadioButton(
 //        HWND hDlg,	// handle to dialog box
@@ -209,7 +209,7 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
 {
 	switch (id)
 	{
-    case SELECT_FONT:
+    case IDC_SELECT_FONT:
         selectFont(hwndSettings);
         break;
     default:
