@@ -36,15 +36,15 @@ SETTINGS DIALOGEX DISCARDABLE 6, 18, 210, 142
 STYLE DS_SHELLFONT|WS_CHILD/*|DS_MODALFRAME|DS_CONTEXTHELP|DS_3DLOOK|WS_SYSMENU|WS_VISIBLE*/
 FONT 10, "Tahoma", 0, 0, 1
 {
-  CONTROL "OK",             IDOK,            "Button", WS_TABSTOP,         74, 16, 45,  15
-  CONTROL "Cancel",         IDCANCEL,        "Button", WS_TABSTOP,         74, 34, 45,  15
+//CONTROL "OK",             IDOK,            "Button", WS_TABSTOP,         74, 16, 45,  15
+//CONTROL "Cancel",         IDCANCEL,        "Button", WS_TABSTOP,         74, 34, 45,  15
   CONTROL "Font size",      IDC_FONT_GROUP,  "Button", BS_GROUPBOX,         8, 12, 54, 104
   CONTROL "8",              IDC_SIZE_08,     "Button", BS_AUTORADIOBUTTON, 24, 28, 36,  10
   CONTROL "9",              IDC_SIZE_09,     "Button", BS_AUTORADIOBUTTON, 24, 44, 36,  10
   CONTROL "10",             IDC_SIZE_10,     "Button", BS_AUTORADIOBUTTON, 24, 60, 36,  10
   CONTROL "12",             IDC_SIZE_12,     "Button", BS_AUTORADIOBUTTON, 24, 76, 36,  10
   CONTROL "14",             IDC_SIZE_14,     "Button", BS_AUTORADIOBUTTON, 24, 92, 36,  10
-  CONTROL "Select font...", IDC_SELECT_FONT, "Button", WS_TABSTOP,         74, 52, 50,  14
+//CONTROL "Select font...", IDC_SELECT_FONT, "Button", WS_TABSTOP,         74, 52, 50,  14
 }
 
 

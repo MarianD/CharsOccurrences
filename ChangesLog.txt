@@ -1,3 +1,11 @@
+12 March 2014
+   released version 1.7.0 of CharsOccurrences
+
+     Change log:
+        -Updated: Changing the font in the List Views to 12pt
+        -Updated: Larger default widths of the columns for 32-bit version due to larger font in the column headers
+        -Added: New tab "Settings" - it enables to change the font size for the tabs with Rich Edit window
+
 29 January 2014
    released version 1.6.4 of CharsOccurrences
 

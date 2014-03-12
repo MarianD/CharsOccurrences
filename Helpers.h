@@ -4,6 +4,7 @@
     #include <windows.h>
     #include <string>
     #include <commctrl.h>
+    #include <richedit.h>
 
     namespace std
     {

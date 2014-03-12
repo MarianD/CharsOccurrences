@@ -178,7 +178,24 @@ void paintHistogram(HWND hwndHistogram, HDC hdc, int base, TCHAR baseChar, int n
 
 void setFontSize(HWND hwndSettings, int size)
 {
+    HWND       hwndTabCtrl = GetParent(hwndSettings);
+    Status   * pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    CHARFORMAT charFormat,
+              *pcharFormat = &charFormat;
 
+    /*
+     *  Font settings
+     */
+    pcharFormat->cbSize    = sizeof(charFormat);
+    pcharFormat->dwMask    = CFM_BOLD | CFM_FACE | CFM_SIZE;
+    pcharFormat->dwEffects = CFE_BOLD;
+    pcharFormat->yHeight   = size * cn::TwipsInInch / cn::PointsInInch;     // yHeight is in twips
+    _tcscpy(pcharFormat->szFaceName, TEXT("Courier New"));
+
+    HWND hwndRichEdit      = pStatus->getHwndRichEdit();
+    SendMessage(hwndRichEdit, EM_SETCHARFORMAT, SCF_ALL, (LPARAM) pcharFormat);
+
+    pStatus->setFontSize(size);
 }
 
 void selectFont(HWND hwndSettings)
