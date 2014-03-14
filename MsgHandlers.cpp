@@ -193,26 +193,21 @@ BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lPara
     HWND     hwndTabCtrl = GetParent(hwndSettings);
     Status * pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
     int      fontSize    = pStatus->getFontSize();
+    int      offset      = fontSize - 8;
 
     switch (fontSize)
     {
     case  8:
-        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_08);
-        break;
     case  9:
-        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_09);
-        break;
     case 10:
-        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_10);
-        break;
+    case 11:
     case 12:
-        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_12);
-        break;
+    case 13:
     case 14:
-        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_14);
+        CheckRadioButton(hwndSettings, IDC_SIZE_08, IDC_SIZE_14, IDC_SIZE_08 + offset);
         break;
     default:
-        break;
+        break;      // Don't select anything
     }
 
 //    CheckRadioButton(
@@ -230,19 +225,13 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
 	switch (id)
 	{
     case IDC_SIZE_08:
-        setFontSize(hwndSettings,  8);
-        break;
     case IDC_SIZE_09:
-        setFontSize(hwndSettings,  9);
-        break;
     case IDC_SIZE_10:
-        setFontSize(hwndSettings, 10);
-        break;
+    case IDC_SIZE_11:
     case IDC_SIZE_12:
-        setFontSize(hwndSettings, 12);
-        break;
+    case IDC_SIZE_13:
     case IDC_SIZE_14:
-        setFontSize(hwndSettings, 14);
+        setFontSize(hwndSettings,  8 + (id - IDC_SIZE_08));
         break;
     case IDC_SELECT_FONT:
         selectFont(hwndSettings);
