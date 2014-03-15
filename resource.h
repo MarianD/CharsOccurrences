@@ -7,7 +7,7 @@
     #define VER_PRODUCTVERSION_STR          VER_FILEVERSION_STR
 
     #define SETTINGS                        1001
-    #define IDC_FONT_GROUP                  4001
+    #define IDC_STATIC                      (-1)
     #define IDC_SIZE_08                     4008
     #define IDC_SIZE_09                     4009
     #define IDC_SIZE_10                     4010

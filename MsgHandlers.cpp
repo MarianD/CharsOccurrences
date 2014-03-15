@@ -210,13 +210,7 @@ BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lPara
         break;      // Don't select anything
     }
 
-//    CheckRadioButton(
-//        HWND hDlg,	        // handle to dialog box
-//        int nIDFirstButton,	// identifier of first radio button in group
-//        int nIDLastButton,	// identifier of last radio button in group
-//        int nIDCheckButton	// identifier of radio button to select
-//    );
-   return 0;
+    return TRUE;        // To set the focus to the default control
 }
 
 
