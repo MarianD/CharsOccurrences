@@ -29,17 +29,17 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1394829163 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1395169475 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	"resource.h"
 	"windows.h"
 
-1394669710 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
+1395169301 source:c:\users\marian\documents\codeblocks\charsoccurrences\helpers.cpp
 	"Helpers.h"
 	"Constants.h"
 	"Classic.h"
 	"Status.h"
 
-1394669710 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
+1395158583 c:\users\marian\documents\codeblocks\charsoccurrences\helpers.h
 	<windows.h>
 	<string>
 	<commctrl.h>
@@ -138,7 +138,7 @@
 1368633322 c:\users\marian\documents\codeblocks\charsoccurrences\listclosewindow.h
 	<windows.h>
 
-1394901876 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
+1395158583 source:c:\users\marian\documents\codeblocks\charsoccurrences\wndprocs.cpp
 	"WndProcs.h"
 	"MsgHandlers.h"
 	"Constants.h"
@@ -245,7 +245,7 @@
 
 1394902559 c:\users\marian\documents\codeblocks\charsoccurrences\resource.h
 
-1394901994 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
+1395220330 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
 	"MsgHandlers.h"
 	"Constants.h"
 	"Helpers.h"
@@ -254,7 +254,7 @@
 	"resource.h"
 	<wingdi.h>
 
-1394901983 c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.h
+1395169391 c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.h
 	<windows.h>
 	<windowsx.h>
 	<commctrl.h>

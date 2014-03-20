@@ -9,6 +9,7 @@
 #include "resource.h"
 #include <wingdi.h>
 
+HHOOK hHook;        //TODO: vyhodiù po nahradenÌ spr·vnym
 
 //
 //  Process LVN_COLUMNCLICK notification code
@@ -210,6 +211,8 @@ BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lPara
         break;      // Don't select anything
     }
 
+    hHook = SetWindowsHookEx(WH_GETMESSAGE, HookMsgProc, NULL, GetCurrentThreadId());
+
     return TRUE;        // To set the focus to the default control
 }
 
@@ -233,4 +236,10 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
     default:
         break;
     }
+}
+
+
+void Settings_OnDestroy(HWND hwndSettings)
+{
+    UnhookWindowsHookEx(hHook);
 }

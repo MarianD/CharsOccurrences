@@ -45,6 +45,7 @@ SettingsProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
 		HANDLE_MSG (hWnd, WM_INITDIALOG, Settings_OnInitDialog);
 		HANDLE_MSG (hWnd, WM_COMMAND,    Settings_OnCommand);
+		HANDLE_MSG (hWnd, WM_DESTROY,    Settings_OnDestroy);
     default:
         return FALSE;       // To indicate non-processed message
     }

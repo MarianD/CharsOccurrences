@@ -39,4 +39,8 @@
 
     void
     setHeadersArrows(HWND hwndListView, int lastClickedColumn);
+
+    LRESULT FAR PASCAL
+    HookMsgProc(int nCode, WPARAM wParam, LPARAM lParam);
+
 #endif // ndef

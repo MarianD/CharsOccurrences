@@ -30,4 +30,7 @@
     void
     Settings_OnCommand(HWND hwndSettings, int id, HWND hwndCtl, UINT codeNotify);
 
+    void
+    Settings_OnDestroy(HWND hwndSettings);
+
 #endif // MSGHANDLERS_H_INCLUDED

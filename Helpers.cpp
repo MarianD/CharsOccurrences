@@ -8,12 +8,16 @@
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
+extern HHOOK hHook;         //TODO: vyhodi po nahradení správnym
+HWND docas_hwndSettings;    //TODO: vyhodi po nahradení správnym
 
 /********************** Helper functions *************************/
 
 void hideAllChildren(const HWND hwndTabCtrl)
 {
     Status  * pStatus  = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+
+    docas_hwndSettings = pStatus->getHwndSettings();//TODO: vyhodi po nahradení správnym
 
     ShowWindow(pStatus->getHwndRichEdit(),       SW_HIDE);
     ShowWindow(pStatus->getHwndHistogramAlpha(), SW_HIDE);
@@ -313,3 +317,27 @@ void setHeadersArrows(HWND hwndListView, int lastClickedColumn)
 }
 
 
+LRESULT FAR PASCAL HookMsgProc(int nCode, WPARAM wParam, LPARAM lParam)
+{
+   LPMSG lpMsg        = (LPMSG) lParam;
+
+   if ( nCode >= 0 && PM_REMOVE == wParam )
+   {
+      // Don't translate non-input events.
+      if ( (lpMsg->message >= WM_KEYFIRST && lpMsg->message <= WM_KEYLAST) )
+      {
+         if (IsDialogMessage(docas_hwndSettings, lpMsg))
+         {
+            // The value returned from this hookproc is ignored,
+            // and it cannot be used to tell Windows the message has been handled.
+            // To avoid further processing, convert the message to WM_NULL
+            // before returning.
+            lpMsg->message = WM_NULL;
+            lpMsg->lParam  = 0;
+            lpMsg->wParam  = 0;
+         }
+      }
+   }
+
+   return CallNextHookEx(hHook, nCode, wParam, lParam);
+}
