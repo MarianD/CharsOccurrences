@@ -1,3 +1,10 @@
+21 March 2014
+   released version 1.7.1 of CharsOccurrences
+
+     Change log:
+        -Added: More font sizes in the Settings tab
+        -Added: Full support of the keyboard in the Settings tab
+
 12 March 2014
    released version 1.7.0 of CharsOccurrences
 

@@ -29,7 +29,7 @@
 1032084572 source:c:\users\marian\documents\codeblocks\CharsOccurrences\stdafx.cpp
 	"stdafx.h"
 
-1395169475 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
+1395413813 source:c:\users\marian\documents\codeblocks\charsoccurrences\resource.rc
 	"resource.h"
 	"windows.h"
 
@@ -45,7 +45,7 @@
 	<commctrl.h>
 	<richedit.h>
 
-1394828985 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1395413931 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1368747354 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
@@ -243,9 +243,9 @@
 	<mcx.h>
 	<imm.h>
 
-1394902559 c:\users\marian\documents\codeblocks\charsoccurrences\resource.h
+1395414040 c:\users\marian\documents\codeblocks\charsoccurrences\resource.h
 
-1395400093 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
+1395400623 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
 	"MsgHandlers.h"
 	"WndProcs.h"
 	"Constants.h"

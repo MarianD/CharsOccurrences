@@ -1,9 +1,22 @@
+Version 1.7.1  -  Released on 21.03.2014
+    [Change]: Full support of the keyboard in the Settings tab
+    [Improvement]: More font sizes in the Settings tab
+
+Version 1.7.0  -  Released on 12.03.2014
+    [Feature]: In the new "Settings" tab it is possible to change the font size for the tabs "Text", "Vertical", "Horizontal", and "About"
+    [Change]: Larger default widths of the columns for 32-bit version due to larger font in the column headers
+    [Change]: If in the Quick View was selected the tab "Settings", it will automatically switch to the tab "Text" after choosing an other file
+
+[Feature]: Added the new tab "Settings"
+
+[Change]: Changing the font in the List Views to 12pt
+
 Version 1.6.4  -  Released on 29.01.2014
     [Feature]: Font size for tabs "Text", "Vertical", "Horizontal" and "About" may be set in the .INI file (section [Font], key FontSize)
 	
 Version 1.6.3  -  Released on 25.01.2014
-    [Change]: If In Quick View was selected the tab "About", it will automatically switch to the tab "Text" after choosing other file
-    [Fix]: In Quick View in the "Text" tab after switching to other file it retained the position of the previous (if it content was scrolled), so the other file was not displayed from the beginning.
+    [Change]: If in the Quick View was selected the tab "About", it will automatically switch to the tab "Text" after choosing other file
+    [Fix]: In the Quick View in the "Text" tab after switching to other file it retained the position of the previous (if it content was scrolled), so the other file was not displayed from the beginning.
 	
 Version 1.6.2  -  Released on 18.01.2014
     [Improvement]: More plausible display of Non-ANSI files in the Text tab
