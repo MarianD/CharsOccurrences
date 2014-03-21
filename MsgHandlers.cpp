@@ -10,8 +10,6 @@
 #include "resource.h"
 #include <wingdi.h>
 
-HHOOK hHook;        //TODO: vyhodi po nahradení správnym
-
 //
 //  Process LVN_COLUMNCLICK notification code
 //  of WM_NOTIFY message for window/dialog: TabCtrl
@@ -212,7 +210,8 @@ BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lPara
         break;      // Don't select anything
     }
 
-    hHook = SetWindowsHookEx(WH_GETMESSAGE, HookMsgProc, NULL, GetCurrentThreadId());
+    HHOOK hHook = SetWindowsHookEx(WH_GETMESSAGE, HookMsgProc, NULL, GetCurrentThreadId());
+    pStatus->setHHook(hHook);
 
     return TRUE;        // To set the focus to the default control
 }
@@ -240,7 +239,13 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
 }
 
 
-void Settings_OnDestroy(HWND /*hwndSettings*/)
+void Settings_OnDestroy(HWND hwndSettings)
 {
+    HWND     hwndTabCtrl = GetParent(hwndSettings);
+    Status * pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    HHOOK    hHook       = pStatus->getHHook();
+
     UnhookWindowsHookEx(hHook);
+
+    pStatus->setHHook(0);
 }

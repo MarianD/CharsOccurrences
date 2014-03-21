@@ -19,6 +19,7 @@
         int     lastClickedColumnAlpha;
         int     lastClickedColumnDigit;
         int     fontSize;                 // In points; 1 point = 1/72 of inch
+        HHOOK   hHook;
     public:
         Status();
        ~Status();
@@ -48,6 +49,8 @@
         void    setLastClickedColumnDigit (int col)     {lastClickedColumnDigit = col;}
         int     getFontSize               () const      {return fontSize;}
         void    setFontSize               (int fSize)   {fontSize = fSize;}
+        HHOOK   getHHook                  () const      {return hHook;}
+        void    setHHook                  (HHOOK hook)  {hHook = hook;}
         void    moveAllChildWindows       (const PRECT pRect);
     private:
         Status             (const Status&);     // Declarations only to prevent not wanted

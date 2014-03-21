@@ -8,7 +8,6 @@
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
-extern HHOOK hHook;         //TODO: vyhodiù po nahradenÌ spr·vnym
 
 /********************** Helper functions *************************/
 

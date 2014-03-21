@@ -6,7 +6,6 @@
 #include "Constants.h"
 #include "Status.h"
 
-extern HHOOK hHook;        //TODO: vyhodi po nahradení správnym
 
 LRESULT CALLBACK
 NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -20,14 +19,17 @@ NewTabCtrlProc(HWND hwndTabCtrl, UINT uMsg, WPARAM wParam, LPARAM lParam)
         HANDLE_MSG (hwndTabCtrl, WM_NOTIFY, TabCtrl_OnNotify);
     default:
         return CallWindowProc(oldTabCtrlProc, hwndTabCtrl, uMsg, wParam, lParam);
-
     }
 }
 
 
 LRESULT CALLBACK HookMsgProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
-   LPMSG lpMsg = (LPMSG) lParam;
+    LPMSG   lpMsg         = (LPMSG) lParam;
+    HWND     hwndSettings = GetParent(lpMsg->hwnd);
+    HWND     hwndTabCtrl  = GetParent(hwndSettings);
+    Status * pStatus      = (Status *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    HHOOK    hHook        = pStatus->getHHook();
 
    if (nCode >= 0 && PM_REMOVE == wParam)
    {
@@ -35,7 +37,7 @@ LRESULT CALLBACK HookMsgProc(int nCode, WPARAM wParam, LPARAM lParam)
       if ( (lpMsg->message >= WM_KEYFIRST && lpMsg->message <= WM_KEYLAST) )
       {
 
-         if (IsDialogMessage(GetParent(lpMsg->hwnd), lpMsg))
+         if (IsDialogMessage(hwndSettings, lpMsg))
          {
             // The value returned from this hookproc is ignored,
             // and it cannot be used to tell Windows the message has been handled.
@@ -48,7 +50,7 @@ LRESULT CALLBACK HookMsgProc(int nCode, WPARAM wParam, LPARAM lParam)
       }
    }
 
-   return CallNextHookEx(hHook, nCode, wParam, lParam);
+    return CallNextHookEx(hHook, nCode, wParam, lParam);
 }
 
 
