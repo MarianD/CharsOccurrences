@@ -2,6 +2,7 @@
 //
 
 #include "MsgHandlers.h"
+#include "WndProcs.h"
 #include "Constants.h"
 #include "Helpers.h"
 #include "Classic.h"
@@ -239,7 +240,7 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
 }
 
 
-void Settings_OnDestroy(HWND hwndSettings)
+void Settings_OnDestroy(HWND /*hwndSettings*/)
 {
     UnhookWindowsHookEx(hHook);
 }

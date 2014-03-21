@@ -15,4 +15,7 @@
     LRESULT CALLBACK
     SettingsProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+    LRESULT CALLBACK
+    HookMsgProc(int nCode, WPARAM wParam, LPARAM lParam);
+
 #endif // WNDPROCS_H
