@@ -19,7 +19,7 @@ HWND CreateRichEditWindow(HWND ParentWindow, RECT * pRect, int id)
      */
     pcharFormat->cbSize    = sizeof(charFormat);
     pcharFormat->dwMask    = CFM_BOLD | CFM_FACE | CFM_SIZE;
-    pcharFormat->dwEffects = CFE_BOLD;
+    pcharFormat->dwEffects = pStatus->isFontBold() ? CFE_BOLD : 0;
     pcharFormat->yHeight   = pStatus->getFontSize() * cn::TwipsInInch / cn::PointsInInch;     // yHeight is in twips
     _tcscpy(pcharFormat->szFaceName, TEXT("Courier New"));
 

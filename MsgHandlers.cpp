@@ -233,11 +233,11 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
     case IDC_SIZE_14:
         setFontSize(hwndSettings,  8 + (id - IDC_SIZE_08));
         break;
-    case IDC_SELECT_FONT:
-        selectFont(hwndSettings);
-        break;
     case IDC_BOLD:
         setFontBold(hwndSettings, IsDlgButtonChecked(hwndSettings, IDC_BOLD) == BST_CHECKED ? true : false);
+        break;
+    case IDC_SELECT_FONT:
+        selectFont(hwndSettings);
         break;
     default:
         break;

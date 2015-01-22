@@ -1,3 +1,6 @@
+Version 1.7.2  -  Released on 22.01.2015
+	[Feature]: In the "Settings" tab it is possible to change the font style to bold (and back to normal) for the tabs "Text", "Vertical", "Horizontal", and "About"
+
 Version 1.7.1  -  Released on 21.03.2014
     [Change]: Full support of the keyboard in the Settings tab
     [Improvement]: More font sizes in the Settings tab

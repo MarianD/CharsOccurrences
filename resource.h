@@ -1,8 +1,8 @@
 #ifndef RESOURCE_H_INCLUDED
     #define RESOURCE_H_INCLUDED
 
-    #define VER_FILEVERSION                 1, 7, 1, 1407
-    #define VER_FILEVERSION_STR             "1.7.1 Revision 1407\0"
+    #define VER_FILEVERSION                 1, 7, 2, 1491
+    #define VER_FILEVERSION_STR             "1.7.2 Revision 1491\0"
     #define VER_PRODUCTVERSION              VER_FILEVERSION
     #define VER_PRODUCTVERSION_STR          VER_FILEVERSION_STR
 

@@ -45,7 +45,7 @@
 	<commctrl.h>
 	<richedit.h>
 
-1395415551 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
+1421918128 c:\users\marian\documents\codeblocks\charsoccurrences\version.h
 
 1401097614 source:c:\users\marian\documents\codeblocks\charsoccurrences\main.cpp
 	"Main.h"
@@ -243,9 +243,9 @@
 	<mcx.h>
 	<imm.h>
 
-1421885484 c:\users\marian\documents\codeblocks\charsoccurrences\resource.h
+1421918188 c:\users\marian\documents\codeblocks\charsoccurrences\resource.h
 
-1395419151 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
+1421907399 source:c:\users\marian\documents\codeblocks\charsoccurrences\msghandlers.cpp
 	"MsgHandlers.h"
 	"WndProcs.h"
 	"Constants.h"

@@ -1,3 +1,9 @@
+22 January 2015
+   released version 1.7.2 of CharsOccurrences
+
+     Change log:
+        -Added: Checkbox "Bold" in the Settings tab
+
 21 March 2014
    released version 1.7.1 of CharsOccurrences
 
