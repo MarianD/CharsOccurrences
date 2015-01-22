@@ -1,5 +1,5 @@
-#ifndef CHARSOCCURRENCES_H
-    #define CHARSOCCURRENCES_H
+#ifndef EXPORTS_H
+    #define EXPORTS_H
 
     #include <windows.h>
 

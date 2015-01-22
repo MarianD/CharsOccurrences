@@ -187,8 +187,8 @@ void setFontSize(HWND hwndSettings, int size)
      *  Font settings
      */
     pcharFormat->cbSize    = sizeof(charFormat);
-    pcharFormat->dwMask    = CFM_BOLD | CFM_FACE | CFM_SIZE;
-    pcharFormat->dwEffects = CFE_BOLD;
+    pcharFormat->dwMask    = /*CFM_BOLD |*/ CFM_FACE | CFM_SIZE;
+//    pcharFormat->dwEffects = CFE_BOLD;
     pcharFormat->yHeight   = size * cn::TwipsInInch / cn::PointsInInch;     // yHeight is in twips
     _tcscpy(pcharFormat->szFaceName, TEXT("Courier New"));
 
@@ -196,6 +196,26 @@ void setFontSize(HWND hwndSettings, int size)
     SendMessage(hwndRichEdit, EM_SETCHARFORMAT, SCF_ALL, (LPARAM) pcharFormat);
 
     pStatus->setFontSize(size);
+}
+
+void setFontBold(HWND hwndSettings, bool isBold)
+{
+    HWND       hwndTabCtrl = GetParent(hwndSettings);
+    Status   * pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
+    CHARFORMAT charFormat,
+              *pcharFormat = &charFormat;
+
+    /*
+     *  Font settings
+     */
+    pcharFormat->cbSize    = sizeof(charFormat);
+    pcharFormat->dwMask    = CFM_BOLD;
+    pcharFormat->dwEffects = isBold ? CFE_BOLD : 0;
+
+    HWND hwndRichEdit      = pStatus->getHwndRichEdit();
+    SendMessage(hwndRichEdit, EM_SETCHARFORMAT, SCF_ALL, (LPARAM) pcharFormat);
+
+    pStatus->setFontBold(isBold);
 }
 
 void selectFont(HWND hwndSettings)

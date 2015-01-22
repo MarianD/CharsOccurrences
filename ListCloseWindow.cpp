@@ -16,6 +16,7 @@ ListCloseWindow(HWND hwndTabCtrl)
 	TCHAR   strlastClColAlpha[3];
 	TCHAR   strlastClColDigit[3];
 	TCHAR   strfontSize      [4];
+	TCHAR   strfontBold      [2];
 	TCHAR * iniFile = new TCHAR[_MAX_PATH + lstrlen(cn::IniFile) + 1];
 
     /*
@@ -38,12 +39,14 @@ ListCloseWindow(HWND hwndTabCtrl)
     _stprintf(strlastClColAlpha, TEXT("%d"), pStatus->getLastClickedColumnAlpha());
     _stprintf(strlastClColDigit, TEXT("%d"), pStatus->getLastClickedColumnDigit());
     _stprintf(strfontSize,       TEXT("%d"), pStatus->getFontSize());
+    _stprintf(strfontBold,       TEXT("%d"), pStatus->isFontBold() ? 1 : 0);
 
   	getFullIniFilePath(iniFile);
     WritePrivateProfileString(cn::IniFileTabsSection, cn::IniFileLastChosenTabKey,  strLastChosenTab,  iniFile);
     WritePrivateProfileString(cn::IniFileSortSection, cn::IniFileLastClColAlphaKey, strlastClColAlpha, iniFile);
     WritePrivateProfileString(cn::IniFileSortSection, cn::IniFileLastClColDigitKey, strlastClColDigit, iniFile);
     WritePrivateProfileString(cn::IniFileFontSection, cn::IniFileFontSize,          strfontSize,       iniFile);
+    WritePrivateProfileString(cn::IniFileFontSection, cn::IniFileFontBold,          strfontBold,       iniFile);
 
     delete[] iniFile;
 }

@@ -19,6 +19,7 @@
         const int  MinPocetMiest        =    5;
         const int  StlpcovaMedzera      =   14;
         const long defaultFontSize      =   12;     // In points; 1 point = 1/72 of inch
+        const int  defaultFontBold      =    1;     // true
         const long TwipsInInch          = 1440;
         const long PointsInInch         =   72;
         const int colWidth[4]           =
@@ -103,6 +104,7 @@
         const TCHAR * const IniFileLastClColDigitKey = TEXT("DigitsTab");
         const TCHAR * const IniFileFontSection       = TEXT("Font");
         const TCHAR * const IniFileFontSize          = TEXT("FontSize");
+        const TCHAR * const IniFileFontBold          = TEXT("FontBold");
     }
 
 #endif // ndef

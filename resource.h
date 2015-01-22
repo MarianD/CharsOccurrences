@@ -16,4 +16,5 @@
     #define IDC_SIZE_13                     4013
     #define IDC_SIZE_14                     4014
     #define IDC_SELECT_FONT                 4007
+    #define IDC_BOLD                        4020
 #endif // RESOURCE_H_INCLUDED

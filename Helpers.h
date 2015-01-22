@@ -35,6 +35,9 @@
     setFontSize(HWND hwndSettings, int size);
 
     void
+    setFontBold(HWND hwndSettings, bool isBold);
+
+    void
     selectFont(HWND hwndSettings);
 
     void

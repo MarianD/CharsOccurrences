@@ -21,6 +21,7 @@ Status::Status()
     lastClickedColumnAlpha (1),
     lastClickedColumnDigit (1),
     fontSize (cn::defaultFontSize),
+    fontBold (cn::defaultFontBold == 1 ? true : false),
     hHook(0)
 {
 }

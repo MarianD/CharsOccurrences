@@ -46,6 +46,8 @@ FONT 10, "Tahoma", 0, 0, 1
   CONTROL "1&2",            IDC_SIZE_12,     "Button", BS_AUTORADIOBUTTON | BS_RIGHT, 20,  92, 20,  10
   CONTROL "1&3",            IDC_SIZE_13,     "Button", BS_AUTORADIOBUTTON | BS_RIGHT, 20, 108, 20,  10
   CONTROL "1&4",            IDC_SIZE_14,     "Button", BS_AUTORADIOBUTTON | BS_RIGHT, 20, 124, 20,  10
+  CONTROL "Font s&tyle",    IDC_STATIC,      "Button", BS_GROUPBOX,                   60,  12, 42,  30
+  CONTROL "  &Bold",        IDC_BOLD,        "Button", BS_AUTOCHECKBOX,               70,  28, 30,  10
 //CONTROL "Select font...", IDC_SELECT_FONT, "Button", WS_TABSTOP,                    74,  52, 50,  14
 }
 

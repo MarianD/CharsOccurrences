@@ -47,20 +47,24 @@ ListLoad(HWND ParentWindow, char* FileToLoad, int /*ShowFlags*/)
         TCHAR * iniFile = new TCHAR[_MAX_PATH + lstrlen(cn::IniFile) + 1];
         getFullIniFilePath(iniFile);
 
-        int lastChosenTab          = GetPrivateProfileInt(cn::IniFileTabsSection,
-                                                          cn::IniFileLastChosenTabKey,  0, iniFile);
-        int lastClickedColumnAlpha = GetPrivateProfileInt(cn::IniFileSortSection,
-                                                          cn::IniFileLastClColAlphaKey, 1, iniFile);
-        int lastClickedColumnDigit = GetPrivateProfileInt(cn::IniFileSortSection,
-                                                          cn::IniFileLastClColDigitKey, 1, iniFile);
-        int fontSize               = GetPrivateProfileInt(cn::IniFileFontSection,
-                                                          cn::IniFileFontSize, cn::defaultFontSize, iniFile);
+        int  lastChosenTab          = GetPrivateProfileInt(cn::IniFileTabsSection,
+                                                           cn::IniFileLastChosenTabKey,  0, iniFile);
+        int  lastClickedColumnAlpha = GetPrivateProfileInt(cn::IniFileSortSection,
+                                                           cn::IniFileLastClColAlphaKey, 1, iniFile);
+        int  lastClickedColumnDigit = GetPrivateProfileInt(cn::IniFileSortSection,
+                                                           cn::IniFileLastClColDigitKey, 1, iniFile);
+        int  fontSize               = GetPrivateProfileInt(cn::IniFileFontSection,
+                                                           cn::IniFileFontSize, cn::defaultFontSize, iniFile);
+        bool fontBold               = (bool)
+                                      GetPrivateProfileInt(cn::IniFileFontSection,
+                                                           cn::IniFileFontBold, cn::defaultFontBold, iniFile);
         delete[] iniFile;
 
         pStatus->setLastChosenTab         (lastChosenTab);
         pStatus->setLastClickedColumnAlpha(lastClickedColumnAlpha);
         pStatus->setLastClickedColumnDigit(lastClickedColumnDigit);
         pStatus->setFontSize              (fontSize);
+        pStatus->setFontBold              (fontBold);
 
     // Získanie obdånika pre zobrazovaciu èas Tab Control
     GetClientRect(hwndTabCtrl, &rect);

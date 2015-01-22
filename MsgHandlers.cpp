@@ -193,6 +193,7 @@ BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lPara
     HWND     hwndTabCtrl = GetParent(hwndSettings);
     Status * pStatus     = (Status  *) GetProp(hwndTabCtrl, cn::PointerToStatus);
     int      fontSize    = pStatus->getFontSize();
+    bool     fontBold    = pStatus->isFontBold();
     int      offset      = fontSize - 8;
 
     switch (fontSize)
@@ -209,6 +210,8 @@ BOOL Settings_OnInitDialog(HWND hwndSettings, HWND /*hwndFocus*/, LPARAM /*lPara
     default:
         break;      // Don't select anything
     }
+
+    (void) CheckDlgButton(hwndSettings, IDC_BOLD, fontBold ? BST_CHECKED : BST_UNCHECKED);
 
     HHOOK hHook = SetWindowsHookEx(WH_GETMESSAGE, HookMsgProc, NULL, GetCurrentThreadId());
     pStatus->setHHook(hHook);
@@ -232,6 +235,9 @@ void Settings_OnCommand(HWND hwndSettings, int id, HWND /*hwndCtl*/, UINT /*code
         break;
     case IDC_SELECT_FONT:
         selectFont(hwndSettings);
+        break;
+    case IDC_BOLD:
+        setFontBold(hwndSettings, IsDlgButtonChecked(hwndSettings, IDC_BOLD) == BST_CHECKED ? true : false);
         break;
     default:
         break;
