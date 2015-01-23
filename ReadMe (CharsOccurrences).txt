@@ -1,4 +1,4 @@
-CharsOccurrences v 1.6.1 - plugin for Total Commander 5.51 and newer.
+CharsOccurrences v 1.7.2 - plugin for Total Commander 5.51 and newer.
 ---------------------------------------------------------------------
 This plugin is freeware.
 
@@ -25,10 +25,13 @@ order of the columns by dragging their headers.
 Tab with two vertical static lists shows also percentages
 of occurrences and the sum of all occurrences.
 
-The last chosen tab and the order of the items of the
-individual sortable lists are saved and automatically restored
-at the opening the next file and at the new opening of the
-Lister, and even after exit and restart of the Total Commander.
+The font size and bold style of the most tabs is adjustable
+in the Settings tab.
+
+The font size and style, the last chosen tab and the order of the
+items of the individual sortable lists are saved and automatically
+restored at the opening the next file and at the new opening of
+the Lister, and even after exit and restart of the Total Commander.
 
 
 Limitations:
@@ -37,7 +40,8 @@ In the current version of the plugin it shows only occurrences
 of the English ASCII letters (case insensitively), and
 occurrences of the digits.
 
-No manual settings are meanwhile provided.
+Only the setting of the font size and bold style is meanwhile
+provided.
 
 
 Usage:
@@ -49,7 +53,7 @@ if another plugins have higher priority.
 
 Plugin's author:
 ----------------
-    Marian Denes, Slovakia
+Marian Denes, Slovakia
 
 
 This software is provided "as-is". No warranty provided.
